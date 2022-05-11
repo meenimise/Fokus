@@ -5,30 +5,25 @@ import {
     ShoppingCartIcon,
     UserGroupIcon,
     CogIcon,
-    ChevronRightIcon 
   } from '@heroicons/react/solid';
 
 function SidebarItems() {
     return [
         {
-            href: '/',
-            destination: '/',
+            href: '/navigation/Home',
+            url: '/',
             title: 
                 <div className="flex-row container w-[150px]">
                     Home
                 </div>,            
-            icon: 
+            icon:   
                 <div className="flex-row container w-[24px]">
                     <HomeIcon></HomeIcon>
-                </div>,
-            arrow:
-                <div className="flex-row-reverse container w-[18px]">
-                    <ChevronRightIcon></ChevronRightIcon>
-                </div>            
+                </div>,      
         },
         {
-            href: '/TimeManagement',
-            destination: '/time',
+            href: '/navigation/TimeManagement',
+            url: '/time',
             title:
                 <div className="flex-row container w-[150px]">
                     Time Management
@@ -36,15 +31,11 @@ function SidebarItems() {
             icon:
                 <div className="flex-row container w-[24px]">
                     <ChartBarIcon></ChartBarIcon>
-                </div>,
-            arrow:
-                <div className="flex-row-reverse container w-[18px]">
-                    <ChevronRightIcon></ChevronRightIcon>
-                </div>                    
+                </div>,                  
         },
         {
-            href: '/Store',
-            destination: '/store',
+            href: '/navigation/Store',
+            url: '/store',
             title: 
                 <div className="flex-row container w-[150px]">
                     Fokus Store
@@ -52,15 +43,11 @@ function SidebarItems() {
             icon:
                 <div className="flex-row container w-[24px]">
                     <ShoppingCartIcon></ShoppingCartIcon>
-                </div>,
-            arrow:
-                <div className="flex-row-reverse container w-[18px]">
-                    <ChevronRightIcon></ChevronRightIcon>
-                </div>                    
+                </div>,                  
         },
         {
-            href: '/Leaderboard',
-            destination: '/leaderboard',
+            href: '/navigation/Leaderboard',
+            url: '/leaderboard',
             title:
                 <div className="flex-row container w-[150px]">
                     Leaderboard
@@ -68,15 +55,11 @@ function SidebarItems() {
             icon:
                 <div className="flex-row container w-[24px]">
                     <UserGroupIcon></UserGroupIcon>
-                </div>,
-            arrow:
-                <div className="flex-row-reverse container w-[18px]">
-                    <ChevronRightIcon></ChevronRightIcon>
-                </div>                    
+                </div>,               
         },
         {
-            href: '/Settings',
-            destination: '/settings',
+            href: '/navigation/Settings',
+            url: '/settings',
             title: 
                 <div className="flex-row container w-[150px]">
                     Settings
@@ -84,11 +67,7 @@ function SidebarItems() {
             icon:
                 <div className="flex-row container w-[24px]">
                     <CogIcon></CogIcon>
-                </div>,
-            arrow:
-                <div className="flex-row-reverse container w-[18px]">
-                    <ChevronRightIcon></ChevronRightIcon>
-                </div>                    
+                </div>,                   
         },
     ];  
 }
