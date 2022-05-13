@@ -1,22 +1,23 @@
+import { SessionProvider } from 'next-auth/react'
+import Head from 'next/head';
 import '../styles/globals.css'
-import Sidebar from '../components/Sidebar'
-import Link from 'next/link';
-import {useRouter} from 'next/router';
-import SidebarItems from '../components/SidebarItems';
 
-function getHref(path) {
-  return SidebarItems().find(x => x.url === path).href;
-}
-
-function MyApp({Component, pageProps}) {
-  const router = useRouter();
+function App({
+  Component, 
+  pageProps: { session, ...pageProps },
+}) {
   return (
     <div className='h-full w-full bg-[#FAFBFF]'>
-      <Sidebar>
-        <Component {...pageProps} />
-      </Sidebar>
+      <Head>
+        <title>Fokus</title>
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+
+      <SessionProvider session={session}>
+        <Component {...pageProps} /> 
+      </SessionProvider>
     </div>
   )
 }
 
-export default MyApp
+export default App

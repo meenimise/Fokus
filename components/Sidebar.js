@@ -27,7 +27,7 @@ function Sidebar({children}) {
                   <Link href={href} as={url}>
                     <a
                       className={`flex p-3 bg-white rounded-[10px] font-poppins font-medium text-[15px] text-purple_grey  hover:bg-purple_light hover:text-purple_grey cursor-pointer ${
-                        router.asPath === url && 'bg-purple text-white'
+                        router.pathname === href && 'bg-purple text-white'
                       }`}
                     >
                       {icon}

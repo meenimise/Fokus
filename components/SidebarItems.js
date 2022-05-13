@@ -10,7 +10,7 @@ import {
 function SidebarItems() {
     return [
         {
-            href: '/navigation/Home',
+            href: '/',
             url: '/',
             title: 
                 <div className="flex-row container w-[150px]">
@@ -22,8 +22,8 @@ function SidebarItems() {
                 </div>,      
         },
         {
-            href: '/navigation/TimeManagement',
-            url: '/time',
+            href: '/sidebar_nav/TimeManagement',
+            url: '/timemanagement',
             title:
                 <div className="flex-row container w-[150px]">
                     Time Management
@@ -34,7 +34,7 @@ function SidebarItems() {
                 </div>,                  
         },
         {
-            href: '/navigation/Store',
+            href: '/sidebar_nav/Store',
             url: '/store',
             title: 
                 <div className="flex-row container w-[150px]">
@@ -46,7 +46,7 @@ function SidebarItems() {
                 </div>,                  
         },
         {
-            href: '/navigation/Leaderboard',
+            href: '/sidebar_nav/Leaderboard',
             url: '/leaderboard',
             title:
                 <div className="flex-row container w-[150px]">
@@ -58,7 +58,7 @@ function SidebarItems() {
                 </div>,               
         },
         {
-            href: '/navigation/Settings',
+            href: '/sidebar_nav/Settings',
             url: '/settings',
             title: 
                 <div className="flex-row container w-[150px]">
