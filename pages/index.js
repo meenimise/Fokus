@@ -35,7 +35,7 @@ function useRadioButtons(name) {
 }
 
 function useTextForm(name) {
-    const [value, setState] = useState(null);
+    const [value, setState] = useState("");
   
     const handleChange = e => {
       setState(e.target.value);
@@ -224,7 +224,7 @@ function Home() {
 
                             <div className='relative h-[15%] w-[90%] mx-auto flex items-center justify-center'>
                             {
-                                (privacyValue === null || sessionNameValue === null) ?
+                                (privacyValue === null || sessionNameValue === "") ?
                                 <button type="button" class="absolute flex items-center justify-center right-0 w-[25%] h-[60%] bg-purple opacity-30 rounded-[15px] font-poppins text-sm text-white font-medium select-none" disabled>
                                     Create
                                 </button>
