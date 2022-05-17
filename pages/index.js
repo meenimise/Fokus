@@ -194,7 +194,7 @@ function Home() {
                                     <div className=' h-[50%] w-full flex items-center justify-center'>
                                         <form className='w-full h-full'>
                                             <div class="mb-6">
-                                                <label for="session_name" class="block mb-2 text-sm font-poppins font-medium select-none">Name</label>
+                                                <label for="session_name" class="block mb-2 text-sm font-poppins font-medium select-none">{"Name (required)"}</label>
 
                                                 <input type="text" name="session" id="session_name" class="bg-white border-[2px] focus:outline-purple text-sm font-poppins rounded-lg block w-full p-2.5" value={sessionNameValue} {...sessionInputProps}/>
                                             </div>
@@ -204,7 +204,7 @@ function Home() {
                                     <div className=' h-[50%] w-full'>
                                         <form className='w-full h-full'>
                                             <div class="mb-6">
-                                                <label for="privacy" class="block mb-2 text-sm font-poppins font-medium select-none">Privacy</label>
+                                                <label for="privacy" class="block mb-2 text-sm font-poppins font-medium select-none">{"Privacy (required)"}</label>
                                             </div>
 
                                             <div class="flex items-center justify-center">
