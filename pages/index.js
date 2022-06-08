@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useRouter } from 'next/router';
 import Head from 'next/head';
 import Sidebar from '../components/Sidebar';
 import SignIn from './others/SignIn';
@@ -17,6 +18,9 @@ import {
   import { theme } from '../tailwind.config';
 //Authentication
 import { useSession } from 'next-auth/react';
+//Firebase
+import { db } from '../firebase/firebaseConfig';
+import * as fs from 'firebase/firestore'
 
 function useRadioButtons(name) {
     const [value, setState] = useState(null);
@@ -36,21 +40,40 @@ function useRadioButtons(name) {
 
 function useTextForm(name) {
     const [value, setState] = useState("");
-  
+
     const handleChange = e => {
-      setState(e.target.value);
+        setState(e.target.value);
     };
-  
+
     const inputProps = {
-      name,
-      type: "text",
-      onChange: handleChange
+        name,
+        type: "text",
+        onChange: handleChange
     };
-  
+
     return [value, inputProps];
-  }
+}
+
+var sessionId;
+
+async function controlCreateSession(sessionName, sessionPrivacy) {
+    const docRef = fs.doc(fs.collection(db, "fkSessions"));
+    sessionId = docRef.id;
+    await fs.setDoc(
+        docRef, 
+        {
+            id: docRef.id,
+            name: sessionName,
+            privacy: sessionPrivacy,
+        }
+    )
+}
 
 function Home() {
+    const router = useRouter();
+    function controlNavigateSession() {
+        router.push("/sessions/" + sessionId);   
+    }
     const { data: session, status } = useSession();
     var hours = "7.5";
     var sessions = "234";
@@ -59,6 +82,7 @@ function Home() {
     const[showCircularButtonSession, setShowCircularButtonSession] = useState(false);
     const[privacyValue, privacyInputProps] = useRadioButtons();
     const[sessionNameValue, sessionInputProps] = useTextForm();
+    const[isBeingProcessed, setIsBeingProcessed] = useState(false);
 
     if (status === "loading") {
         return(null)
@@ -67,7 +91,7 @@ function Home() {
     if (status === "authenticated") {
         return(
             <Sidebar>
-                <Header headerText={'Welcome back, ' + removeVI(session.user.name, { ignoreCase: false, replaceSpecialCharacters: false }) + '! 👋'}>
+                <Header headerText={'Welcome back, ' + removeVI(session?.user.name, { ignoreCase: false, replaceSpecialCharacters: false }) + '! 👋'}>
                 </Header>
 
                 <div className='relative mt-[30px] mx-auto w-[90%] h-[510px]'>
@@ -106,19 +130,19 @@ function Home() {
                             </div>
 
                             <div className='absolute right-0 w-[30%] h-full hover:cursor-pointer'>
-                            <div className='absolute w-[56px] h-full rounded-full bg-[#D3FFE7]'>
-                                <div className='absolute scale-[60%] container my-[0px] mx-auto' style={{color: '#00AC4F'}}>
-                                    <StarIcon></StarIcon>
-                                </div>
+                                <div className='absolute w-[56px] h-full rounded-full bg-[#D3FFE7]'>
+                                    <div className='absolute scale-[60%] container my-[0px] mx-auto' style={{color: '#00AC4F'}}>
+                                        <StarIcon></StarIcon>
+                                    </div>
 
-                                <div className='absolute left-[71px] font-poppins text-sm text-grey whitespace-nowrap select-none'>
-                                    My Rank
-                                </div>
+                                    <div className='absolute left-[71px] font-poppins text-sm text-grey whitespace-nowrap select-none'>
+                                        My Rank
+                                    </div>
 
-                                <div className='absolute left-[71px] bottom-0 font-poppins text-xl text-black font-semibold whitespace-nowrap truncate select-none ...'>
-                                    {rank + "st among 36"}
-                                </div>                                  
-                            </div>  
+                                    <div className='absolute left-[71px] bottom-0 font-poppins text-xl text-black font-semibold whitespace-nowrap truncate select-none ...'>
+                                        {rank + "st among 36"}
+                                    </div>                                  
+                                </div>  
                             </div>                                  
                         </div>
                     </div>
@@ -196,7 +220,12 @@ function Home() {
                                             <div class="mb-6">
                                                 <label for="session_name" class="block mb-2 text-sm font-poppins font-medium select-none">{"Name (required)"}</label>
 
-                                                <input type="text" name="session" id="session_name" class="bg-white border-[2px] focus:outline-purple text-sm font-poppins rounded-lg block w-full p-2.5" value={sessionNameValue} {...sessionInputProps}/>
+                                                {
+                                                    isBeingProcessed == false ?
+                                                    <input type="text" name="session" id="session_name" class="bg-white border-[2px] focus:outline-purple text-sm font-poppins rounded-lg block w-full p-2.5" value={sessionNameValue} {...sessionInputProps}/>
+                                                    :
+                                                    <input type="text" name="session" id="session_name" class="bg-slate-100 border-[2px] text-sm text-grey font-poppins rounded-lg block w-full p-2.5" value={sessionNameValue} disabled/>
+                                                }
                                             </div>
                                         </form>                                        
                                     </div>
@@ -209,11 +238,21 @@ function Home() {
 
                                             <div class="flex items-center justify-center">
                                                 <div class="form-check form-check-inline">
-                                                    <input class="form-check-input appearance-none rounded-full h-5 w-5 border-2 border-gray-300 bg-white checked:bg-purple checked:border-gray-300 checked:border-[3px] transition mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="radio" name="privacyRadioOptions" id="privacy1" value="private" checked={privacyValue === "private"} {...privacyInputProps}/>
+                                                    {
+                                                        isBeingProcessed == false ?
+                                                        <input class="form-check-input appearance-none rounded-full h-5 w-5 border-2 border-gray-300 bg-white checked:bg-purple checked:border-gray-300 checked:border-[3px] transition mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="radio" name="privacyRadioOptions" id="privacy1" value="private" checked={privacyValue === "private"} {...privacyInputProps}/>
+                                                        :
+                                                        <input class="form-check-input appearance-none rounded-full h-5 w-5 border-2 border-gray-400 bg-white checked:bg-purple_grey checked:border-gray-300 checked:border-[3px] transition mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="radio" name="privacyRadioOptions" id="privacy1" value="private" checked={privacyValue === "private"} disabled/>
+                                                    }
                                                     <label class="form-check-label inline-block text-sm font-poppins select-none" for="inlineRadio10">Private</label>
                                                 </div>
-                                                <div class="ml-[130px] form-check form-check-inline"> 
-                                                    <input class="form-check-input appearance-none rounded-full h-5 w-5 border-2 border-gray-300 bg-white checked:bg-purple checked:border-gray-300 checked:border-[3px] transition mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="radio" name="privacyRadioOptionss" id="privacy2" value="public" checked={privacyValue === "public"} {...privacyInputProps}/>
+                                                <div class="ml-[130px] form-check form-check-inline">
+                                                    {
+                                                        isBeingProcessed == false ?
+                                                        <input class="form-check-input appearance-none rounded-full h-5 w-5 border-2 border-gray-300 bg-white checked:bg-purple checked:border-gray-300 checked:border-[3px] transition mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="radio" name="privacyRadioOptionss" id="privacy2" value="public" checked={privacyValue === "public"} {...privacyInputProps}/>
+                                                        :
+                                                        <input class="form-check-input appearance-none rounded-full h-5 w-5 border-2 border-gray-400 bg-white checked:bg-purple_grey checked:border-gray-300 checked:border-[3px] transition mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="radio" name="privacyRadioOptionss" id="privacy2" value="public" checked={privacyValue === "public"} disabled/>
+                                                    } 
                                                     <label class="form-check-label inline-block text-sm font-poppins select-none" for="inlineRadio20">Public</label>
                                                 </div>
                                             </div>                                            
@@ -232,7 +271,14 @@ function Home() {
                                 (
                                     showCircularButtonSession == false ?
                                     <button type="button" class="absolute flex items-center justify-center right-0 w-[25%] h-[60%] bg-purple rounded-[15px] font-poppins text-sm text-white font-medium hover:bg-purple_2 hover:cursor-pointer select-none"
-                                    onClick={() => {setShowCircularButtonSession(true); console.log(privacyValue); console.log(sessionNameValue);}}>
+                                    onClick={() => {
+                                            setShowCircularButtonSession(true); 
+                                            setIsBeingProcessed(true); 
+                                            controlCreateSession(sessionNameValue, privacyValue, sessionId);
+                                            console.log(sessionId);
+                                            setTimeout(controlNavigateSession, 5000);
+                                        }
+                                    }>
                                         Create
                                     </button>
                                     :
@@ -266,7 +312,7 @@ function Home() {
 
             <SignIn></SignIn>
         </div>
-    )
+    );
 }
 
 export default Home

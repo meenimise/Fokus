@@ -9,7 +9,7 @@ import { removeVI, DefaultOption } from 'jsrmvi';
 function Header(props) {
   const { data: session } = useSession();
   const headerText = props.headerText;
-  const name = session.user.name.split(' ');
+  const name = session?.user.name.split(' ');
 
   return (
     <div className='relative mt-[10px] mx-auto w-[90%] h-[50px]'>
@@ -20,7 +20,7 @@ function Header(props) {
       </div>
 
       <div className='absolute right-0 h-full w-[250px] drop-shadow-[0_10px_60px_rgba(226,236,249,1)] bg-white rounded-[15px] hover:cursor-pointer' onClick={() => signOut()}>
-        <img className='absolute mt-[9px] ml-[15px] w-[32px] h-[32px] rounded-full' src={session.user.image}>
+        <img className='absolute mt-[9px] ml-[15px] w-[32px] h-[32px] rounded-full' src={session?.user.image}>
         </img>
 
         <div className='absolute left-[60px] w-[50%] top-[5px] text-sm font-medium font-poppins truncate select-none ...'>

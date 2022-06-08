@@ -1,5 +1,8 @@
+import { FirebaseAdapter } from "@next-auth/firebase-adapter";
 import NextAuth from "next-auth"
 import GoogleProvider from "next-auth/providers/google";
+import { db } from '../../../firebase/firebaseConfig';
+import * as firestoreFunctions from 'firebase/firestore';
 
 export default NextAuth({
     providers: [
@@ -15,10 +18,11 @@ export default NextAuth({
             }            
         })
     ],
-    jwt: {
-        encryption: true,       
-    },
-    secret: process.env.SECRET,
+    adapter: FirebaseAdapter({
+        db: db,
+        ...firestoreFunctions,
+    }),
+    /*
     callbacks: {
         async jwt({ token, account }) {
             if (account) {
@@ -30,5 +34,6 @@ export default NextAuth({
             session.accessToken = token.accessToken;
             return session;
         },               
-    } 
+    }
+    */ 
 });
