@@ -215,26 +215,21 @@ function Home() {
 
                             <div className='relative h-[70%] w-[90%] mx-auto flex items-center justify-center'>
                                 <div className='h-[70%] w-[90%]'>
-                                    <div className=' h-[50%] w-full flex items-center justify-center'>
+                                    <div className='h-[50%] w-full flex items-center justify-center'>
                                         <form className='w-full h-full'>
-                                            <div class="mb-6">
-                                                <label for="session_name" class="block mb-2 text-sm font-poppins font-medium select-none">{"Name (required)"}</label>
-
-                                                {
-                                                    isBeingProcessed == false ?
-                                                    <input type="text" name="session" id="session_name" class="bg-white border-[2px] focus:outline-purple text-sm font-poppins rounded-lg block w-full p-2.5" value={sessionNameValue} {...sessionInputProps}/>
-                                                    :
-                                                    <input type="text" name="session" id="session_name" class="bg-slate-100 border-[2px] text-sm text-grey font-poppins rounded-lg block w-full p-2.5" value={sessionNameValue} disabled/>
-                                                }
-                                            </div>
+                                            <label for="session_name" class="block mb-2 text-sm font-poppins font-medium select-none">{"Name (required)"}</label>
+                                            {
+                                                isBeingProcessed == false ?
+                                                <input type="text" name="session" id="session_name" class="bg-white border-[2px] focus:outline-purple text-sm font-poppins rounded-lg block w-full p-2.5" value={sessionNameValue} {...sessionInputProps}/>
+                                                :
+                                                <input type="text" name="session" id="session_name" class="bg-slate-100 border-[2px] text-sm text-grey font-poppins rounded-lg block w-full p-2.5" value={sessionNameValue} disabled/>
+                                            }
                                         </form>                                        
                                     </div>
 
-                                    <div className=' h-[50%] w-full'>
+                                    <div className='h-[50%] w-full'>
                                         <form className='w-full h-full'>
-                                            <div class="mb-6">
-                                                <label for="privacy" class="block mb-2 text-sm font-poppins font-medium select-none">{"Privacy (required)"}</label>
-                                            </div>
+                                            <label for="privacy" class="block mb-2 text-sm font-poppins font-medium select-none">{"Privacy (required)"}</label>
 
                                             <div class="flex items-center justify-center">
                                                 <div class="form-check form-check-inline">
@@ -249,9 +244,9 @@ function Home() {
                                                 <div class="ml-[130px] form-check form-check-inline">
                                                     {
                                                         isBeingProcessed == false ?
-                                                        <input class="form-check-input appearance-none rounded-full h-5 w-5 border-2 border-gray-300 bg-white checked:bg-purple checked:border-gray-300 checked:border-[3px] transition mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="radio" name="privacyRadioOptionss" id="privacy2" value="public" checked={privacyValue === "public"} {...privacyInputProps}/>
+                                                        <input class="form-check-input appearance-none rounded-full h-5 w-5 border-2 border-gray-300 bg-white checked:bg-purple checked:border-gray-300 checked:border-[3px] transition mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="radio" name="privacyRadioOptions" id="privacy2" value="public" checked={privacyValue === "public"} {...privacyInputProps}/>
                                                         :
-                                                        <input class="form-check-input appearance-none rounded-full h-5 w-5 border-2 border-gray-400 bg-white checked:bg-purple_grey checked:border-gray-300 checked:border-[3px] transition mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="radio" name="privacyRadioOptionss" id="privacy2" value="public" checked={privacyValue === "public"} disabled/>
+                                                        <input class="form-check-input appearance-none rounded-full h-5 w-5 border-2 border-gray-400 bg-white checked:bg-purple_grey checked:border-gray-300 checked:border-[3px] transition mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="radio" name="privacyRadioOptions" id="privacy2" value="public" checked={privacyValue === "public"} disabled/>
                                                     } 
                                                     <label class="form-check-label inline-block text-sm font-poppins select-none" for="inlineRadio20">Public</label>
                                                 </div>
@@ -297,7 +292,6 @@ function Home() {
                     </div>
                     : null
                     }  
-
                 </div>    
             </Sidebar>                 
         )
