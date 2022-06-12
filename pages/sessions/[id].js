@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Head from 'next/head';
 //Authentication
 import { useSession } from 'next-auth/react';
@@ -60,50 +60,66 @@ function Session() {
 
   //Counter related
   const[timeCounter, setTimeCounter] = useState(0);
+  const[timeCounterLocal, setTimeCounterLocal] = useState(0);
   const[minutes, setMinutes] = useState("00");
   const[seconds, setSeconds] = useState("00");
+
   function updateTime() {
     fs.updateDoc(docRef, "time", parseInt(timeValue));
   }
+
   function convertTimer(time) {
-    setTimeCounter(time);
     var min = Math.floor(time / 60);
     var sec = time % 60;
     min < 10 ? setMinutes("0" + min) : setMinutes(min);
     sec < 10 ? setSeconds("0" + sec) : setSeconds(sec);
   }
-  function updateTimer() {
-    convertTimer(timeValue);
+
+  function updateTimer(time) {
+    convertTimer(time);
   }
-  function controlCountDown() {
-    if (timeCounter != 0) {
-      timeCounter--;
-      convertTimer(timeCounter);
+
+  useEffect(() => {
+    setTimeCounterLocal(timeCounter);
+    updateTimer(timeCounter);
+  }, [timeCounter]);
+
+  useEffect(() => {
+    if (isSessionStarted) {
+      setInterval(controlCountDown, 1000);
     }
-    endSession();
+  }, [isSessionStarted]);
+
+  function controlCountDown() {
+    if (timeCounterLocal != 0) {
+      setTimeCounterLocal(timeCounterLocal--);
+      convertTimer(timeCounterLocal);
+    }
   }
   function startSession() {
-    if (timeCounter != 0) {
+    if (timeCounterLocal != 0) {
       fs.updateDoc(docRef, "isSessionStarted", true);
     }     
   }
   function endSession() {
-    if (timeCounter === 0) {
+    if (timeCounterLocal === 0) {
       fs.updateDoc(docRef, "isSessionEnded", true);
     }
   }
 
   //Others
+
   const router = useRouter();
   const sessionId = router.asPath.replace("/sessions/", "");
   const docRef = fs.doc(db, "fkSessions", sessionId);
-
-  fs.getDoc(docRef).then((doc) => {
-      setSessionName(doc.get("name"));
-      setSessionPrivacy(doc.get("privacy"));
-      setSessionStarted(doc.get("isSessionStarted"));
-      setSessionEnded(doc.get("isSessionEnded"));
-  });  
+  
+  fs.onSnapshot(docRef, (doc) => {
+    setSessionName(doc.get("name"));
+    setSessionPrivacy(doc.get("privacy"));
+    setTimeCounter(doc.get("time"));
+    setSessionStarted(doc.get("isSessionStarted"));
+    setSessionEnded(doc.get("isSessionEnded"));
+  });
 
   if (status === "loading") {
     return(null)
@@ -114,7 +130,7 @@ function Session() {
       <>
         {
           sessionPrivacy === "private" ?
-          <Header headerText={'Session: ' + sessionName + ' 🔒'}>
+          <Header headerText={'Session: ' + sessionName + ' 🔒' + isSessionStarted}>
           </Header>
           :
           <Header headerText={'Session: ' + sessionName + ' 🌎'}>
@@ -158,8 +174,6 @@ function Session() {
                     onClick={() => 
                       {
                         startSession();
-                        isSessionStarted === true ? setInterval(controlCountDown, 1000)
-                        : null
                       }
                     }
                     >
@@ -300,7 +314,6 @@ function Session() {
                     onClick={() => {
                           setTime(true);
                           updateTime(timeValue);
-                          updateTimer();
                           setAdjustTimeClicked(false);  
                         }
                     }>
