@@ -20,7 +20,7 @@ import {
 import { useSession } from 'next-auth/react';
 //Firebase
 import { db } from '../firebase/firebaseConfig';
-import * as fs from 'firebase/firestore'
+import * as fs from 'firebase/firestore';
 
 function useRadioButtons(name) {
     const [value, setState] = useState(null);
@@ -56,7 +56,7 @@ function useTextForm(name) {
 
 var sessionId;
 
-async function controlCreateSession(sessionName, sessionPrivacy) {
+async function controlCreateSession(sessionName, sessionPrivacy, userJoinedId) {
     const docRef = fs.doc(fs.collection(db, "fkSessions"));
     sessionId = docRef.id;
     await fs.setDoc(
@@ -65,16 +65,32 @@ async function controlCreateSession(sessionName, sessionPrivacy) {
             id: docRef.id,
             name: sessionName,
             privacy: sessionPrivacy,
+            isSessionStarted: false,
+            isSessionEnded: false,
+            time: 0
         }
-    )
+    );
+    
+    const sessionDocRef = fs.doc(db, "fkSessions", sessionId);
+    const userJoinedDocRef = fs.doc(fs.collection(sessionDocRef, "usersJoined"), userJoinedId);
+    await fs.setDoc(
+        userJoinedDocRef,
+        {
+            id: userJoinedId,
+            isAdmin: true,
+            hasCompleted: false,
+            timeCompleted: ""
+        }
+    );
 }
 
 function Home() {
+    const { data: session, status } = useSession();
+
     const router = useRouter();
     function controlNavigateSession() {
         router.push("/sessions/" + sessionId);   
     }
-    const { data: session, status } = useSession();
     var hours = "7.5";
     var sessions = "234";
     var rank = "1";
@@ -269,7 +285,7 @@ function Home() {
                                     onClick={() => {
                                             setShowCircularButtonSession(true); 
                                             setIsBeingProcessed(true); 
-                                            controlCreateSession(sessionNameValue, privacyValue, sessionId);
+                                            controlCreateSession(sessionNameValue, privacyValue, session?.user.id);
                                             console.log(sessionId);
                                             setTimeout(controlNavigateSession, 5000);
                                         }

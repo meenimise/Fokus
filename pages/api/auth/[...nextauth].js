@@ -22,18 +22,21 @@ export default NextAuth({
         db: db,
         ...firestoreFunctions,
     }),
-    /*
+
     callbacks: {
-        async jwt({ token, account }) {
-            if (account) {
-              token.accessToken = account.access_token;
-            }
-            return token;
-        },        
+        async jwt({ token, user, account, profile, isNewUser }) {
+            user && (token.user = user)
+            return token
+        },
         async session({ session, token, user }) {
-            session.accessToken = token.accessToken;
-            return session;
-        },               
+            session = {
+                ...session,
+                user: {
+                    id: user.id,
+                    ...session.user
+                }
+            }
+            return session
+        }
     }
-    */ 
 });

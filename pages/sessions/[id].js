@@ -19,25 +19,29 @@ import { theme } from '../../tailwind.config';
 //Components
 import Header from '../../components/Header';
 import SignIn from '../others/SignIn';
-import { increment } from 'firebase/firestore';
+import NotiPopup from '../../components/NotiPopup';
+import SessionError from '../../components/SessionError';
 
 function Session() {
   const { data: session, status } = useSession();
-
+  const router = useRouter();
+  
   //States related
-  const[isSessionAdmin, setSessionAdmin] = useState(true);
-  const[isTimeAdjusted, setTime] = useState(false);
-  const[isSessionStarted, setSessionStarted] = useState(false);
-  const[isSessionEnded, setSessionEnded] = useState(false);
-  const[sessionName, setSessionName] = useState("");
-  const[sessionPrivacy, setSessionPrivacy] = useState("");
+  const [adminId, setAdminId] = useState();
+  const currentJoinedTime = Date.now();
+  const [latestTimeJoined, setLatestTimeJoined] = useState();
+  const [isTimeAdjusted, setTime] = useState(false);
+  const [isSessionStarted, setSessionStarted] = useState(false);
+  const [isSessionEnded, setSessionEnded] = useState(false);
+  const [sessionName, setSessionName] = useState("");
+  const [sessionPrivacy, setSessionPrivacy] = useState("");
 
   //Popups-related
-  const[isAdjustTimeClicked, setAdjustTimeClicked] = useState(false); //Radius buttons popup
-  const[isStartSessionClicked, setStartSessionClicked] = useState(false); //Noti popup
-  const[isExitClicked, setExitClicked] = useState(false); //Noti popup
-  const[isSessionConfigClicked, setSessionConfigClicked] = useState(false); //Multi options popup
-  const[isInviteFriendsClicked, setInviteFriendsClicked] = useState(false); //Text copy popup
+  const [isAdjustTimeClicked, setAdjustTimeClicked] = useState(false); //Radius buttons popup
+  const [isStartSessionClicked, setStartSessionClicked] = useState(false); //Noti popup
+  const [isExitClicked, setExitClicked] = useState(false); //Noti popup
+  const [isSessionConfigClicked, setSessionConfigClicked] = useState(false); //Multi options popup
+  const [isInviteFriendsClicked, setInviteFriendsClicked] = useState(false); //Text copy popup
 
   //Main funcs & variables
   function useRadioButtons(name) {
@@ -58,11 +62,15 @@ function Session() {
 
   const[timeValue, timeInputProps] = useRadioButtons();
 
+  function navigateToHome() {
+    router.push("/"); 
+  }
+
   //Counter related
-  const[timeCounter, setTimeCounter] = useState(0);
-  const[timeCounterLocal, setTimeCounterLocal] = useState(0);
-  const[minutes, setMinutes] = useState("00");
-  const[seconds, setSeconds] = useState("00");
+  const [timeCounter, setTimeCounter] = useState(0);
+  const [timeCounterLocal, setTimeCounterLocal] = useState(0);
+  const [minutes, setMinutes] = useState("00");
+  const [seconds, setSeconds] = useState("00");
 
   function updateTime() {
     fs.updateDoc(docRef, "time", parseInt(timeValue));
@@ -95,10 +103,12 @@ function Session() {
       setTimeCounterLocal(timeCounterLocal--);
       convertTimer(timeCounterLocal);
     }
+    endSession();
   }
   function startSession() {
     if (timeCounterLocal != 0) {
       fs.updateDoc(docRef, "isSessionStarted", true);
+      fs.updateDoc(docRef, "startedTime", Date.now());
     }     
   }
   function endSession() {
@@ -107,9 +117,7 @@ function Session() {
     }
   }
 
-  //Others
-
-  const router = useRouter();
+  //Initialize realtime data from Firestore
   const sessionId = router.asPath.replace("/sessions/", "");
   const docRef = fs.doc(db, "fkSessions", sessionId);
   
@@ -121,19 +129,45 @@ function Session() {
     setSessionEnded(doc.get("isSessionEnded"));
   });
 
-  if (status === "loading") {
-    return(null)
+  //Get session admin id
+  const usersJoinedColRef = fs.collection(docRef, "usersJoined");
+  const q = fs.query(usersJoinedColRef, fs.where("isAdmin", "==", true));
+  const querySnapshot = fs.getDocs(q)
+  querySnapshot.then((query) => {
+    query.forEach((doc) => {
+      setAdminId(doc.id);
+    });
+  });
+
+  //Add non-admin user to session
+  if (session?.user.id != null && adminId != null) {
+    const userJoinedDocRef = fs.doc(usersJoinedColRef, session?.user.id);
+    if (session?.user.id != adminId) {
+      fs.setDoc(
+          userJoinedDocRef,
+          {
+              id: session?.user.id,
+              isAdmin: false,
+              hasCompleted: false,
+              timeCompleted: "",
+              latestTimeJoined: currentJoinedTime
+          }
+      );
+    }
+    else {
+      fs.updateDoc(userJoinedDocRef, "latestTimeJoined", currentJoinedTime);
+    }
   }
 
-  if (status === "authenticated") {
-    return (
+  function displaySession() {
+    return(
       <>
         {
           sessionPrivacy === "private" ?
-          <Header headerText={'Session: ' + sessionName + ' 🔒' + isSessionStarted}>
+          <Header headerText={'Session: ' + sessionName + ' 🔒'}>
           </Header>
           :
-          <Header headerText={'Session: ' + sessionName + ' 🌎'}>
+          <Header headerText={'Session: ' + sessionName + ' 🌎' + latestTimeJoined}>
           </Header>
         }
 
@@ -145,7 +179,7 @@ function Session() {
 
             <div className='absolute right-0 h-full w-[49%] flex items-center justify-center bg-white rounded-[15px] drop-shadow-[0_10px_60px_rgba(226,236,249,1)]'>
             {
-              isSessionAdmin === true ?
+              session?.user.id === adminId ?
               <div className='absolute w-[80%] h-[80%]'>
                 <div className='absolute w-full h-[50%] flex items-center justify-center bg-white rounded-[15px] drop-shadow-[0_10px_60px_rgba(226,236,249,1)]'>
                   <h1 className='font-poppins font-semibold text-8xl text-[#8E8EC8] select-none truncate ...'>
@@ -324,9 +358,41 @@ function Session() {
               </div>                 
             </div>
             : null
-          }               
+          }
+
+          {/* Confirm completed session popup */}
+          {
+            isSessionEnded === true ?
+            <NotiPopup 
+              haveExitButton={false}
+              notiTitle="Congratulations"
+              buttonTitle="I have completed"
+              notiInfo="Hi there! Congratulation, you have completed this session. 
+              Thanks for your great efforts and please keep going, never give up! Please do not leave this site, 
+              reload it or navigate to any other pages without comfirming that you have completed this session, because
+              this achievement won't be included for you. So now please click the button below to confirm it
+              as soon as possible. You will be navigated to the home page soon to begin with another one. Thank you!"
+              extraFunction={navigateToHome}
+            >
+            </NotiPopup>
+            :
+            null   
+          }        
         </div>   
-      </>
+      </>      
+    );
+  }
+
+  if (status === "loading") {
+    return(null)
+  }
+
+  if (status === "authenticated") {
+    return (
+      (session?.user.id === adminId) || (session?.user.id != adminId && sessionPrivacy === "public") ?
+      displaySession()
+      :
+      <SessionError></SessionError>
     );
   }
 
