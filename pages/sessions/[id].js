@@ -28,8 +28,12 @@ function Session() {
   
   //States related
   const [adminId, setAdminId] = useState();
-  const currentJoinedTime = Date.now();
-  const [latestTimeJoined, setLatestTimeJoined] = useState();
+  const currentTime = Date.now();
+  const [areAllUsersReady, setUsersReadyState] = useState(false);
+  const [timeCompleted, setTimeCompleted] = useState("");
+  const [latestTimeJoined, setLatestTimeJoined] = useState("");
+  const [sessionStartedTime, setSessionStartedTime] = useState();
+  const [hasCompleted, setHasCompleted] = useState(false);
   const [isTimeAdjusted, setTime] = useState(false);
   const [isSessionStarted, setSessionStarted] = useState(false);
   const [isSessionEnded, setSessionEnded] = useState(false);
@@ -37,6 +41,7 @@ function Session() {
   const [sessionPrivacy, setSessionPrivacy] = useState("");
 
   //Popups-related
+  const [isConfirmClicked, setConfirmClicked] = useState(false); //Radius buttons popup
   const [isAdjustTimeClicked, setAdjustTimeClicked] = useState(false); //Radius buttons popup
   const [isStartSessionClicked, setStartSessionClicked] = useState(false); //Noti popup
   const [isExitClicked, setExitClicked] = useState(false); //Noti popup
@@ -66,9 +71,72 @@ function Session() {
     router.push("/"); 
   }
 
+  //Set completed time for user
+  function setUserCompleted() {
+    if (hasCompleted === false) {
+      if (session?.user.id != null) {
+        const userJoinedDocRef = fs.doc(usersJoinedColRef, session?.user.id);
+        fs.updateDoc(userJoinedDocRef, "timeCompleted", currentTime).then(() => {
+          fs.updateDoc(userJoinedDocRef, "hasCompleted", true);
+        });
+      }
+    }
+    navigateToHome();
+  }
+  
+
+  //Handle latest time joined by user
+  function startupConfirmed() {
+    setConfirmClicked(true);
+    if (session?.user.id != null) {
+      const userJoinedDocRef = fs.doc(usersJoinedColRef, session?.user.id);
+      fs.updateDoc(userJoinedDocRef, "isReady", true);
+    }
+    if (hasCompleted === false) {
+      if (session?.user.id != null) {
+        const userJoinedDocRef = fs.doc(usersJoinedColRef, session?.user.id);
+        fs.updateDoc(userJoinedDocRef, "latestTimeJoined", currentTime);
+      }
+    }
+  }
+
+  //Compare session started time to latest time joined by user
+  function hasUserLeft() {
+    if (latestTimeJoined <= sessionStartedTime) {
+      return false;
+    }
+    else {
+      return true;
+    }
+  }
+
+  //Check if all users are ready
+  function checkIfAllUsersAreReady() {
+    const q2 = fs.query(usersJoinedColRef, fs.where("isReady", "==", false));
+    const querySnapshot2 = fs.getDocs(q2)
+    querySnapshot2.then((query) => {
+      if (query.empty) {
+        setUsersReadyState(true);
+      }
+      else {
+        setUsersReadyState(false);
+      }
+    });
+  }
+
+  //Final dialog conditions
+  function canCongratsDialogBeShown() {
+    if (hasUserLeft() === true) {
+      return false;
+    }
+    else {
+      return true;
+    }
+  }
+
   //Counter related
-  const [timeCounter, setTimeCounter] = useState(0);
-  const [timeCounterLocal, setTimeCounterLocal] = useState(0);
+  const [timeCounter, setTimeCounter] = useState();
+  const [timeCounterLocal, setTimeCounterLocal] = useState();
   const [minutes, setMinutes] = useState("00");
   const [seconds, setSeconds] = useState("00");
 
@@ -105,12 +173,22 @@ function Session() {
     }
     endSession();
   }
+
+  function openStartSessionPopUp() {
+    checkIfAllUsersAreReady();
+    setStartSessionClicked(true);
+  }
+
   function startSession() {
+    setStartSessionClicked(false);
     if (timeCounterLocal != 0) {
-      fs.updateDoc(docRef, "isSessionStarted", true);
-      fs.updateDoc(docRef, "startedTime", Date.now());
+      if (areAllUsersReady === true) {
+        fs.updateDoc(docRef, "isSessionStarted", true);
+        fs.updateDoc(docRef, "startedTime", currentTime);
+      }
     }     
   }
+
   function endSession() {
     if (timeCounterLocal === 0) {
       fs.updateDoc(docRef, "isSessionEnded", true);
@@ -127,13 +205,14 @@ function Session() {
     setTimeCounter(doc.get("time"));
     setSessionStarted(doc.get("isSessionStarted"));
     setSessionEnded(doc.get("isSessionEnded"));
+    setSessionStartedTime(doc.get("startedTime"));
   });
 
   //Get session admin id
   const usersJoinedColRef = fs.collection(docRef, "usersJoined");
-  const q = fs.query(usersJoinedColRef, fs.where("isAdmin", "==", true));
-  const querySnapshot = fs.getDocs(q)
-  querySnapshot.then((query) => {
+  const q1 = fs.query(usersJoinedColRef, fs.where("isAdmin", "==", true));
+  const querySnapshot1 = fs.getDocs(q1)
+  querySnapshot1.then((query) => {
     query.forEach((doc) => {
       setAdminId(doc.id);
     });
@@ -143,20 +222,26 @@ function Session() {
   if (session?.user.id != null && adminId != null) {
     const userJoinedDocRef = fs.doc(usersJoinedColRef, session?.user.id);
     if (session?.user.id != adminId) {
-      fs.setDoc(
-          userJoinedDocRef,
-          {
-              id: session?.user.id,
-              isAdmin: false,
-              hasCompleted: false,
-              timeCompleted: "",
-              latestTimeJoined: currentJoinedTime
-          }
-      );
+      if (isConfirmClicked === false) {
+        if (isSessionEnded === false) {
+          fs.setDoc(
+            userJoinedDocRef,
+            {
+                id: session?.user.id,
+                isAdmin: false,
+                hasCompleted: false,
+                isReady: false
+            }
+          );
+        }
+      }
     }
-    else {
-      fs.updateDoc(userJoinedDocRef, "latestTimeJoined", currentJoinedTime);
-    }
+
+    fs.onSnapshot(userJoinedDocRef, (doc) => {
+      setHasCompleted(doc.get("hasCompleted"));
+      setLatestTimeJoined(doc.get("latestTimeJoined"));
+      setTimeCompleted(doc.get("timeCompleted"));
+    });
   }
 
   function displaySession() {
@@ -167,7 +252,7 @@ function Session() {
           <Header headerText={'Session: ' + sessionName + ' 🔒'}>
           </Header>
           :
-          <Header headerText={'Session: ' + sessionName + ' 🌎' + latestTimeJoined}>
+          <Header headerText={'Session: ' + sessionName + ' 🌎'}>
           </Header>
         }
 
@@ -207,7 +292,7 @@ function Session() {
                     <div className='absolute right-0 h-full w-[49%] flex items-center justify-center bg-white rounded-[15px] drop-shadow-[0_10px_60px_rgba(226,236,249,1)] hover:cursor-pointer hover:bg-purple_light'
                     onClick={() => 
                       {
-                        startSession();
+                        openStartSessionPopUp();
                       }
                     }
                     >
@@ -362,22 +447,68 @@ function Session() {
 
           {/* Confirm completed session popup */}
           {
-            isSessionEnded === true ?
+            isConfirmClicked == true ? 
+            (
+              canCongratsDialogBeShown() === true ?
+              (isSessionEnded === true ?
+                <NotiPopup 
+                  haveExitButton={false}
+                  notiTitle="Congratulations"
+                  buttonTitle="I have completed"
+                  notiInfo="Hi there! Congratulation, you have completed this session. 
+                  Thanks for your great efforts and please keep going, never give up! Please do not leave this site, 
+                  reload it or navigate to any other pages without comfirming that you have completed this session, because
+                  this achievement won't be included for you. So now please click the button below to confirm it
+                  as soon as possible. You will be navigated to the home page soon to begin with another one. Thank you!"
+                  extraFunction={setUserCompleted}
+                >
+                </NotiPopup>
+                :
+                null
+              )
+              :
+              <NotiPopup 
+                haveExitButton={false}
+                notiTitle="You have failed"
+                buttonTitle="I will try again"
+                notiInfo="It looks like you have left this session before it ended, or you join while it is still running. As we said, your result
+                won't be included for you. We are sorry about that and hope you won't give up next time. You will be navigated to 
+                the home page soon to begin with another one. Thank you!"
+                extraFunction={navigateToHome}
+              >
+              </NotiPopup>   
+            )
+            : null
+          }
+
+          {/* Confirmed at startup popup */}
             <NotiPopup 
               haveExitButton={false}
-              notiTitle="Congratulations"
-              buttonTitle="I have completed"
-              notiInfo="Hi there! Congratulation, you have completed this session. 
-              Thanks for your great efforts and please keep going, never give up! Please do not leave this site, 
-              reload it or navigate to any other pages without comfirming that you have completed this session, because
-              this achievement won't be included for you. So now please click the button below to confirm it
-              as soon as possible. You will be navigated to the home page soon to begin with another one. Thank you!"
-              extraFunction={navigateToHome}
+              notiTitle="Before you start"
+              buttonTitle="I understand"
+              notiInfo="Hi there! Before you start please keep these things in mind: when the
+              session starts do not leave this session by reloading, navigating to another pages or closing the browser. Because
+              your result won't be included for you. Now please click the button I UNDERSTAND below now to confirm that
+              you have understood. If you are the session Admin please make sure all the users in this session are ready
+              including you so that you can start this session. Thank you and good luck!"
+              extraFunction={startupConfirmed}
             >
             </NotiPopup>
-            :
-            null   
-          }        
+
+            {/* Confirm start session popup */}
+            {
+              isStartSessionClicked === true ?
+              <NotiPopup 
+                haveExitButton={true}
+                notiTitle="Do you want to start this session?"
+                buttonTitle="Start session"
+                notiInfo="Please make sure all other members have pressed the I UNDERSTAND button
+                to be ready. Then you just need to press the button below to start this session."
+                extraFunction={startSession}
+              >
+              </NotiPopup> 
+              : null 
+            }            
         </div>   
       </>      
     );

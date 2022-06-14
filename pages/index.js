@@ -67,7 +67,8 @@ async function controlCreateSession(sessionName, sessionPrivacy, userJoinedId) {
             privacy: sessionPrivacy,
             isSessionStarted: false,
             isSessionEnded: false,
-            time: 0
+            time: 0,
+            startedTime: 1000000000000000000
         }
     );
     
@@ -79,7 +80,7 @@ async function controlCreateSession(sessionName, sessionPrivacy, userJoinedId) {
             id: userJoinedId,
             isAdmin: true,
             hasCompleted: false,
-            timeCompleted: ""
+            latestTimeJoined: 0
         }
     );
 }
