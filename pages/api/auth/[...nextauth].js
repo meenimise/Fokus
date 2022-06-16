@@ -5,6 +5,7 @@ import { db } from '../../../firebase/firebaseConfig';
 import * as firestoreFunctions from 'firebase/firestore';
 
 export default NextAuth({
+    site: process.env.NEXTAUTH_URL,
     providers: [
         GoogleProvider({
             clientId: process.env.GOOGLE_ID,
