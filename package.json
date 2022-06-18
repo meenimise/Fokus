@@ -15,7 +15,6 @@
     "firebase-admin": "^10.2.0",
     "jsrmvi": "^1.0.0",
     "next": "^12.1.5",
-    "next-auth": "^4.3.4",
     "package-lock": "^1.0.5",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
