@@ -4,7 +4,7 @@ import GoogleProvider from "next-auth/providers/google";
 import { db } from '../../../firebase/firebaseConfig';
 import * as firestoreFunctions from 'firebase/firestore';
 
-const options = {
+export default NextAuth({
     providers: [
         GoogleProvider({
             clientId: process.env.GOOGLE_ID,
@@ -40,6 +40,4 @@ const options = {
             return session
         }
     }
-}
-    
-export default (req, res) => NextAuth(req, res, options)
+});
