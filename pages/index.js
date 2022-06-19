@@ -15,7 +15,7 @@ import {
     ViewGridAddIcon,
     XCircleIcon,
   } from '@heroicons/react/solid';
-  import { theme } from '../tailwind.config';
+import { theme } from '../tailwind.config';
 //Authentication
 import { useSession } from 'next-auth/react';
 //Firebase
@@ -116,7 +116,7 @@ function Home() {
         result += " : " + (min < 10 ? "0" + min : min);
         result += " : " + (seconds < 10 ? "0" + seconds : seconds);
         return result;
-     }
+    }
 
     function countTodayTime(_sessionsList) {
         var _todayTime = 0;
@@ -145,7 +145,6 @@ function Home() {
                 setTodayTime(countTodayTime(sessionsList));
                 setTotalSessions(sessionsList.length);
             });
-            console.log(sessionsList);
         }
     });
 
