@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import Sidebar from '../components/Sidebar';
@@ -93,14 +93,61 @@ function Home() {
     function controlNavigateSession() {
         router.push("/sessions/" + sessionId);   
     }
-    var hours = "7.5";
-    var sessions = "234";
     var rank = "1";
-    const[showPopUpCreateSession, setShowPopUpCreateSession] = useState(false);
-    const[showCircularButtonSession, setShowCircularButtonSession] = useState(false);
-    const[privacyValue, privacyInputProps] = useRadioButtons();
-    const[sessionNameValue, sessionInputProps] = useTextForm();
-    const[isBeingProcessed, setIsBeingProcessed] = useState(false);
+    const [showPopUpCreateSession, setShowPopUpCreateSession] = useState(false);
+    const [showCircularButtonSession, setShowCircularButtonSession] = useState(false);
+    const [privacyValue, privacyInputProps] = useRadioButtons();
+    const [sessionNameValue, sessionInputProps] = useTextForm();
+    const [isBeingProcessed, setIsBeingProcessed] = useState(false);
+
+    const [todayTime, setTodayTime] = useState(0);
+    const [totalTime, setTotalTime] = useState(0);
+    const [totalSessions, setTotalSessions] = useState(0);
+
+    const sessionsList = [];
+
+    function convertSeconds(sec) {
+        var hrs = Math.floor(sec / 3600);
+        var min = Math.floor((sec - (hrs * 3600)) / 60);
+        var seconds = sec - (hrs * 3600) - (min * 60);
+        seconds = Math.round(seconds * 100) / 100
+       
+        var result = (hrs < 10 ? "0" + hrs : hrs);
+        result += " : " + (min < 10 ? "0" + min : min);
+        result += " : " + (seconds < 10 ? "0" + seconds : seconds);
+        return result;
+     }
+
+    function countTodayTime(_sessionsList) {
+        var _todayTime = 0;
+        const toDay = new Date();
+        for (var i = 0; i < _sessionsList.length; i++) {
+            const dateCompleted = new Date(_sessionsList[i].timeCompleted);
+            if (toDay.toDateString() === dateCompleted.toDateString()) {
+                _todayTime = _todayTime + _sessionsList[i].time;
+            }
+        }
+        return _todayTime;
+    }
+
+    //Get data
+    useEffect(() => {
+        if (session?.user.id != null) {
+            const userDocRef = fs.doc(fs.collection(db, "fkUsers"), session?.user.id);
+            const achievementColRef = fs.collection(userDocRef, "achievements");
+            const q = fs.query(achievementColRef);
+            const querySnapshot = fs.getDocs(q);
+            querySnapshot.then((query) => {
+                query.forEach((doc) => {
+                    sessionsList.push(doc.data());
+                });
+                //setTodayTime(sessionsList.map(i => i.time).reduce((a, b)=> a + b));
+                setTodayTime(countTodayTime(sessionsList));
+                setTotalSessions(sessionsList.length);
+            });
+            console.log(sessionsList);
+        }
+    });
 
     if (status === "loading") {
         return(null)
@@ -126,7 +173,7 @@ function Home() {
                                     </div>
 
                                     <div className='absolute left-[71px] bottom-0 font-poppins text-xl text-black font-semibold whitespace-nowrap truncate select-none ...'>
-                                        {hours + " hours"}
+                                        {convertSeconds(todayTime)}
                                     </div>                
                                 </div>  
                             </div>
@@ -142,7 +189,7 @@ function Home() {
                                     </div>
 
                                     <div className='absolute left-[71px] bottom-0 font-poppins text-xl text-black font-semibold whitespace-nowrap truncate select-none ...'>
-                                        {sessions}
+                                        {totalSessions}
                                     </div>                  
                                 </div>             
                             </div>
@@ -158,7 +205,7 @@ function Home() {
                                     </div>
 
                                     <div className='absolute left-[71px] bottom-0 font-poppins text-xl text-black font-semibold whitespace-nowrap truncate select-none ...'>
-                                        {rank + "st among 36"}
+                                        {rank + "st in 36"}
                                     </div>                                  
                                 </div>  
                             </div>                                  
@@ -178,7 +225,7 @@ function Home() {
                                     Be a powerful Session Administrator
                                 </div>
 
-                                <div className='absolute ml-[110px] bottom-0 h-[70px] w-[70px]' style={{color: theme.extend.colors.purple}}>
+                                <div className='absolute ml-[110px] bottom-0 h-[65px] w-[65px]' style={{color: theme.extend.colors.purple}}>
                                     <PlusCircleIcon></PlusCircleIcon>
                                 </div>
                             </div>
@@ -194,7 +241,7 @@ function Home() {
                                     Stay "fokused" with other members
                                 </div>
 
-                                <div className='absolute ml-[110px] bottom-0 h-[70px] w-[70px]' style={{color: theme.extend.colors.purple}}>
+                                <div className='absolute ml-[110px] bottom-0 h-[65px] w-[65px]' style={{color: theme.extend.colors.purple}}>
                                     <ViewGridAddIcon></ViewGridAddIcon>
                                 </div>
                             </div>

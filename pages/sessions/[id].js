@@ -241,7 +241,7 @@ function Session() {
   //Get session admin id
   const usersJoinedColRef = fs.collection(docRef, "usersJoined");
   const q1 = fs.query(usersJoinedColRef, fs.where("isAdmin", "==", true));
-  const querySnapshot1 = fs.getDocs(q1)
+  const querySnapshot1 = fs.getDocs(q1);
   querySnapshot1.then((query) => {
     query.forEach((doc) => {
       setAdminId(doc.id);

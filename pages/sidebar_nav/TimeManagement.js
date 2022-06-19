@@ -2,6 +2,8 @@ import React from 'react';
 import Sidebar from '../../components/Sidebar';
 import { useSession } from 'next-auth/react';
 import Home from '../index';
+//Components
+import PieChart from '../../components/PieChart';
 
 function TimeManagement() {
   const { data: session, status } = useSession();
@@ -16,7 +18,7 @@ function TimeManagement() {
     return (
       <Sidebar>
         <div className="flex h-full flex-col justify-center items-center">
-          <h1 className="text-4xl mb-5 font-bold">Time Management</h1>
+          <PieChart></PieChart>
         </div>
       </Sidebar>
     )

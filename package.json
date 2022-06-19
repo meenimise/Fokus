@@ -11,6 +11,7 @@
   "dependencies": {
     "@heroicons/react": "^1.0.6",
     "@next-auth/firebase-adapter": "^0.1.2-pr.183-76202b42.8",
+    "chartjs": "^0.3.24",
     "firebase": "^9.8.1",
     "firebase-admin": "^11.0.0",
     "jsrmvi": "^1.0.0",
