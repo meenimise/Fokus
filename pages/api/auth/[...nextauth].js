@@ -23,7 +23,7 @@ export default NextAuth({
         ...firestoreFunctions,
     }),
     secret: process.env.SECRET,
-
+    url: process.env.NEXTAUTH_URL,
     callbacks: {
         async jwt({ token, user, account, profile, isNewUser }) {
             user && (token.user = user)
