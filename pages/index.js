@@ -80,7 +80,8 @@ async function controlCreateSession(sessionName, sessionPrivacy, userJoinedId) {
             id: userJoinedId,
             isAdmin: true,
             hasCompleted: false,
-            latestTimeJoined: 0
+            latestTimeJoined: 0,
+            isAchievementCreated: false,
         }
     );
 }

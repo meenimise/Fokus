@@ -30,10 +30,11 @@ function Session() {
   const [adminId, setAdminId] = useState();
   const currentTime = Date.now();
   const [areAllUsersReady, setUsersReadyState] = useState(false);
-  const [timeCompleted, setTimeCompleted] = useState("");
+  const [timeCompleted, setTimeCompleted] = useState();
   const [latestTimeJoined, setLatestTimeJoined] = useState("");
   const [sessionStartedTime, setSessionStartedTime] = useState();
   const [hasCompleted, setHasCompleted] = useState(false);
+  const [isAchievementCreated, setAchievementCreated] = useState(false);
   const [isTimeAdjusted, setTime] = useState(false);
   const [isSessionStarted, setSessionStarted] = useState(false);
   const [isSessionEnded, setSessionEnded] = useState(false);
@@ -71,6 +72,33 @@ function Session() {
     router.push("/"); 
   }
 
+  //Create user achievement
+  async function createUserAchievement() {
+    if (session?.user.id != null) {
+      const userJoinedDocRef = fs.doc(usersJoinedColRef, session?.user.id);
+      fs.updateDoc(userJoinedDocRef, "isAchievementCreated", true);
+
+      const userDocRef = fs.doc(fs.collection(db, "fkUsers"), session?.user.id);
+      const achievementDocRef = fs.doc(fs.collection(userDocRef, "achievements"));
+
+      await fs.setDoc(
+        achievementDocRef, 
+        {
+          time: timeCounter,
+          timeCompleted: timeCompleted
+        }
+      );
+    }
+  }
+
+  useEffect(() => {
+    if (timeCompleted != null && isAchievementCreated === false && hasCompleted === true) {
+      createUserAchievement().then(() => {
+        navigateToHome();
+      });
+    }
+  }, [timeCompleted, hasCompleted]);
+
   //Set completed time for user
   function setUserCompleted() {
     if (hasCompleted === false) {
@@ -81,7 +109,9 @@ function Session() {
         });
       }
     }
-    navigateToHome();
+    else {
+      navigateToHome();
+    }
   }
   
 
@@ -92,8 +122,8 @@ function Session() {
       const userJoinedDocRef = fs.doc(usersJoinedColRef, session?.user.id);
       fs.updateDoc(userJoinedDocRef, "isReady", true);
     }
-    if (hasCompleted === false) {
-      if (session?.user.id != null) {
+    if (session?.user.id != null) {
+      if (hasCompleted === false) {
         const userJoinedDocRef = fs.doc(usersJoinedColRef, session?.user.id);
         fs.updateDoc(userJoinedDocRef, "latestTimeJoined", currentTime);
       }
@@ -230,7 +260,8 @@ function Session() {
                 id: session?.user.id,
                 isAdmin: false,
                 hasCompleted: false,
-                isReady: false
+                isReady: false,
+                isAchievementCreated: false
             }
           );
         }
@@ -241,6 +272,7 @@ function Session() {
       setHasCompleted(doc.get("hasCompleted"));
       setLatestTimeJoined(doc.get("latestTimeJoined"));
       setTimeCompleted(doc.get("timeCompleted"));
+      setAchievementCreated(doc.get("isAchievementCreated"));
     });
   }
 
