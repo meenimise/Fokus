@@ -1,0 +1,43 @@
+{
+  "name": "@next-auth/firebase-adapter",
+  "version": "0.1.2-pr.183-76202b42.8+76202b4",
+  "description": "Firebase adapter for next-auth.",
+  "homepage": "https://next-auth.js.org",
+  "repository": "https://github.com/nextauthjs/adapters",
+  "bugs": {
+    "url": "https://github.com/nextauthjs/adapters/issues"
+  },
+  "author": "Ron Houben <ron.houben85@gmail.com>",
+  "contributors": [
+    "Nico Domino <yo@ndo.dev>",
+    "Alex Meuer <github@alexmeuer.com>"
+  ],
+  "main": "dist/index.js",
+  "files": [
+    "dist",
+    "index.d.ts"
+  ],
+  "license": "ISC",
+  "keywords": [
+    "next-auth",
+    "next.js",
+    "firebase"
+  ],
+  "private": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "FIRESTORE_EMULATOR_HOST=localhost:8080 firebase emulators:exec --only firestore --project next-auth-test jest"
+  },
+  "peerDependencies": {
+    "firebase": "^9.0.0-beta.8",
+    "next-auth": ">=4"
+  },
+  "devDependencies": {
+    "firebase": "^9.0.0-beta.8",
+    "firebase-tools": "^9.16.5"
+  },
+  "gitHead": "76202b4262b455a59cf5f957f6da90b674fd2bf1"
+}
