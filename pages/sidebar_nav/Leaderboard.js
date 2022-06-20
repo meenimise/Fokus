@@ -7,24 +7,31 @@ import { db } from '../../firebase/firebaseConfig';
 import * as fs from 'firebase/firestore';
 //Components
 import RankItem from '../../components/RankItem';
+import { useSetState } from 'react-use';
 
 function Leaderboard() {
   const { data: session, status } = useSession();
+  const [leaderboardList, setLeaderboardList] = useState([]);
+  const [amountofUsers, setAmountOfUsers] = useState(1);
 
-  const usersColRef = fs.collection(db, "fkUsers");
-  const systemUsersColRef = fs.collection(db, "users");
+  useEffect(() => {
+    if (leaderboardList.length <= amountofUsers) { 
+      updateLeaderboard();
+    }
+  }, [amountofUsers]);
 
-  const leaderboardList = [];
-
-  //Save items to leaderboard list
-  async function saveToLeaderboardList() {
+  function updateLeaderboard() {
+    const usersColRef = fs.collection(db, "fkUsers");
+    const systemUsersColRef = fs.collection(db, "users");
     const q1 = fs.query(usersColRef);
     const querySnapshot1 = fs.getDocs(q1);
   
     const q2 = fs.query(systemUsersColRef);
     const querySnapshot2 = fs.getDocs(q2);
-
-    await querySnapshot1.then((query1) => {
+    querySnapshot1.then((query1) => {
+      if (leaderboardList.length >= 1) {
+        setAmountOfUsers(query1.size);
+      }
       query1.forEach((doc1) => {
           querySnapshot2.then((query2) => {
             query2.forEach((doc2) => {
@@ -38,42 +45,35 @@ function Leaderboard() {
                     sessionsDataList.push(doc3.data());
                   });
                 }).then(() => {
-                  leaderboardList.push({
-                    id: doc2.id, 
-                    name: doc2.get("name"),
-                    image: doc2.get("image"),
-                    totalTime: sessionsDataList.map(i => i.time).reduce((a, b)=> a + b),
-                    totalSessions: sessionsDataList.length
-                  });
-                })
+                  setLeaderboardList(leaderboardList => leaderboardList.concat(
+                    {
+                      id: doc2.id, 
+                      name: doc2.get("name"),
+                      image: doc2.get("image"),
+                      totalTime: sessionsDataList.map(i => i.time).reduce((a, b)=> a + b),
+                      totalSessions: sessionsDataList.length
+                    }
+                  ));
+                });
               }
             });
         });
       });
-    });    
+    });
   }
-
-  useEffect(() => {
-    saveToLeaderboardList();
-    console.log(leaderboardList);
-  }, [leaderboardList.length]);
 
   if (status === "loading") {
     return(null);
   }
 
-  const list=[{name: "ok", id: 123456, image: "asdfasd", totalTime: 10, totalSessions: 5},
-  {name: "ok", id: 123456, image: "asdfasd", totalTime: 10, totalSessions: 5},
-  {name: "ok", id: 123456, image: "asdfasd", totalTime: 10, totalSessions: 5}]
-
   if (status === "authenticated") {
     return (
       <Sidebar>
-        <div className="relative pt-[30px] flex h-full w-[full] justify-center overflow-auto">
-          <div className='absolute w-[90%] h-[95%] grid grid-cols-1 gap-y-[20px]'>
+        <div className="relative pt-[30px] flex h-full w-full justify-center">
+          <div className='relative w-[90%] h-[95%] grid grid-cols-1 gap-y-[10px]'>
             <RankItem
-                leaderboardList={list}
-                >
+              leaderboardList={leaderboardList}
+              >
             </RankItem>
           </div>
         </div>
