@@ -93,8 +93,8 @@ function Home() {
     function controlNavigateSession() {
         router.push("/sessions/" + sessionId);   
     }
-    function controlNavigateToTimeManagement() {
-        router.push("/timemanagement");   
+    function controlNavigateInNavBar(where) {
+        router.push("/" + where);   
     }
     var rank = "1";
     const [showPopUpCreateSession, setShowPopUpCreateSession] = useState(false);
@@ -164,7 +164,7 @@ function Home() {
                 <div className='relative mt-[30px] mx-auto w-[90%] h-[410px]'>
                     <div className='absolute w-full h-[96px] drop-shadow-[0_10px_60px_rgba(226,236,249,1)] bg-white rounded-[15px]'>
                         <div className='relative mt-[20px] container mx-auto w-[92%] h-[56px]'>
-                            <div className='absolute w-[30%] h-full hover:cursor-pointer' onClick={() => controlNavigateToTimeManagement()}>
+                            <div className='absolute w-[30%] h-full hover:cursor-pointer' onClick={() => controlNavigateInNavBar("timemanagement")}>
                                 <div className='absolute w-[56px] h-full rounded-full bg-[#FFE8DB]'>
                                     <div className='absolute scale-[60%] container my-[0px] mx-auto' style={{color: '#FF965A'}}>
                                         <ClockIcon></ClockIcon>
@@ -196,7 +196,7 @@ function Home() {
                                 </div>             
                             </div>
 
-                            <div className='absolute right-0 w-[30%] h-full hover:cursor-pointer'>
+                            <div className='absolute right-0 w-[30%] h-full hover:cursor-pointer' onClick={() => controlNavigateInNavBar("leaderboard")}>
                                 <div className='absolute w-[56px] h-full rounded-full bg-[#D3FFE7]'>
                                     <div className='absolute scale-[60%] container my-[0px] mx-auto' style={{color: '#00AC4F'}}>
                                         <StarIcon></StarIcon>
