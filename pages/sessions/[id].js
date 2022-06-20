@@ -21,6 +21,7 @@ import Header from '../../components/Header';
 import SignIn from '../others/SignIn';
 import NotiPopup from '../../components/NotiPopup';
 import SessionError from '../../components/SessionError';
+import { doc } from 'firebase/firestore';
 
 function Session() {
   const { data: session, status } = useSession();
@@ -78,16 +79,19 @@ function Session() {
       const userJoinedDocRef = fs.doc(usersJoinedColRef, session?.user.id);
       fs.updateDoc(userJoinedDocRef, "isAchievementCreated", true);
 
-      const userDocRef = fs.doc(fs.collection(db, "fkUsers"), session?.user.id);
-      const achievementDocRef = fs.doc(fs.collection(userDocRef, "achievements"));
-
-      await fs.setDoc(
-        achievementDocRef, 
-        {
-          time: timeCounter,
-          timeCompleted: timeCompleted
-        }
-      );
+      const usersColRef = fs.collection(db, "fkUsers");
+      fs.setDoc(fs.doc(usersColRef, session?.user.id), {
+      }).then(() => {
+        const userDocRef = fs.doc(usersColRef, session?.user.id);
+        const achievementDocRef = fs.doc(fs.collection(userDocRef, "achievements"));
+        fs.setDoc(
+          achievementDocRef, 
+          {
+            time: timeCounter,
+            timeCompleted: timeCompleted
+          }
+        );
+      })
     }
   }
 
