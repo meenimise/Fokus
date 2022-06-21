@@ -2,7 +2,7 @@ import React from 'react'
 
 function SessionError() {
   return (
-    <div>SessionError</div>
+    <div>{"SessionError"}</div>
   )
 }
 

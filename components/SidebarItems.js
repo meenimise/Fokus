@@ -14,7 +14,7 @@ function SidebarItems() {
             url: '/',
             title: 
                 <div className="flex-row container w-[150px]">
-                    Home
+                    {"Home"}
                 </div>,            
             icon:   
                 <div className="flex-row container w-[24px]">
@@ -26,7 +26,7 @@ function SidebarItems() {
             url: '/timemanagement',
             title:
                 <div className="flex-row container w-[150px]">
-                    Time Management
+                    {"Time Management"}
                 </div>,            
             icon:
                 <div className="flex-row container w-[24px]">
@@ -38,7 +38,7 @@ function SidebarItems() {
             url: '/store',
             title: 
                 <div className="flex-row container w-[150px]">
-                    Fokus Store
+                    {"Fokus Store"}
                 </div>,                
             icon:
                 <div className="flex-row container w-[24px]">
@@ -50,7 +50,7 @@ function SidebarItems() {
             url: '/leaderboard',
             title:
                 <div className="flex-row container w-[150px]">
-                    Leaderboard
+                    {"Leaderboard"}
                 </div>,                
             icon:
                 <div className="flex-row container w-[24px]">
@@ -62,7 +62,7 @@ function SidebarItems() {
             url: '/settings',
             title: 
                 <div className="flex-row container w-[150px]">
-                    Settings
+                    {"Settings"}
                 </div>,                
             icon:
                 <div className="flex-row container w-[24px]">

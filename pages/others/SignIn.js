@@ -16,7 +16,7 @@ function SignIn() {
             </div>
 
             <div className='flex justify-center items-center w-full h-[40%] mx-auto font-poppins font-semibold text-purple text-xl select-none overflow-x-clip'>
-                Be ready to explore the Fokus® World.
+                {"Be ready to explore the Fokus® World."}
             </div>
 
             <div className='w-[50%] h-[40%] mx-auto'>
@@ -26,7 +26,7 @@ function SignIn() {
                         </img>
 
                         <div className='absolute w-[37.5%] h-full grid place-items-center text-[12.5pt] font-poppins font-medium text-grey truncate ... select-none'>
-                            Sign in with Google
+                            {"Sign in with Google"}
                         </div>
                     </div>
                 </div>
@@ -40,7 +40,7 @@ function SignIn() {
                             </img>
 
                             <div className='absolute w-[37.5%] h-full grid place-items-center text-[12.5pt] font-poppins font-medium text-grey truncate ... select-none'>
-                                Sign in with GitHub
+                                {"Sign in with GitHub"}
                             </div>
                     </div>
                 </div>
@@ -54,7 +54,7 @@ function SignIn() {
                         </img>
 
                         <div className='absolute w-[43%] h-full grid place-items-center text-[12pt] font-poppins font-medium text-grey truncate ... select-none'>
-                            Sign in with Facebook
+                            {"Sign in with Facebook"}
                         </div>
                     </div>
                 </div>                                             

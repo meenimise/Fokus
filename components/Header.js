@@ -28,7 +28,7 @@ function Header(props) {
         </div>
 
         <div className='absolute left-[60px] top-[25px] text-[#757575] text-xs font-poppins truncate select-none ...'>
-          Fokus Member
+          {"Fokus Member"}
         </div>
 
         <div className='absolute top-[12px] right-[15px] h-[24px] w-[24px]' style={{color: '#757575'}}>

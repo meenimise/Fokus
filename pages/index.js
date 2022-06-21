@@ -171,7 +171,7 @@ function Home() {
                                     </div>
 
                                     <div className='absolute left-[71px] font-poppins text-sm text-grey select-none'>
-                                        Today
+                                        {"Today"}
                                     </div>
 
                                     <div className='absolute left-[71px] bottom-0 font-poppins text-xl text-black font-semibold whitespace-nowrap truncate select-none ...'>
@@ -187,7 +187,7 @@ function Home() {
                                     </div>
 
                                     <div className='absolute left-[71px] font-poppins text-sm text-grey whitespace-nowrap select-none'>
-                                        Total Sessions
+                                        {"Total Sessions"}
                                     </div>
 
                                     <div className='absolute left-[71px] bottom-0 font-poppins text-xl text-black font-semibold whitespace-nowrap truncate select-none ...'>
@@ -203,7 +203,7 @@ function Home() {
                                     </div>
 
                                     <div className='absolute left-[71px] font-poppins text-sm text-grey whitespace-nowrap select-none'>
-                                        My Rank
+                                        {"My Rank"}
                                     </div>
 
                                     <div className='absolute left-[71px] bottom-0 font-poppins text-xl text-black font-semibold whitespace-nowrap truncate select-none ...'>
@@ -220,11 +220,11 @@ function Home() {
                         >
                             <div className='relative w-[300px] h-[120px]'>
                                 <div className='absolute container grid place-items-center font-poppins font-semibold text-black text-[12pt] whitespace-nowrap truncate select-none ...'>
-                                    Create a new Session
+                                    {"Create a new Session"}
                                 </div>
 
                                 <div className='absolute mt-[25px] container grid place-items-center font-poppins text-grey text-[8pt] whitespace-nowrap truncate select-none ...'>
-                                    Be a powerful Session Administrator
+                                    {"Be a powerful Session Administrator"}
                                 </div>
 
                                 <div className='absolute ml-[110px] bottom-0 h-[65px] w-[65px]' style={{color: theme.extend.colors.purple}}>
@@ -236,11 +236,11 @@ function Home() {
                         <div className='absolute right-0 w-[49%] h-full grid items-center justify-center drop-shadow-[0_10px_60px_rgba(226,236,249,1)] bg-white rounded-[15px] hover:cursor-pointer hover:bg-purple_light'>
                             <div className='relative w-[300px] h-[120px]'>
                                 <div className='absolute container grid place-items-center font-poppins font-semibold text-black text-[12pt] whitespace-nowrap truncate select-none ...'>
-                                    Join an existing Session
+                                    {"Join an existing Session"}
                                 </div>
 
                                 <div className='absolute mt-[25px] container grid place-items-center font-poppins text-grey text-[8pt] whitespace-nowrap truncate select-none ...'>
-                                    Stay "fokused" with other members
+                                    {"Stay FOKUSED with other members"}
                                 </div>
 
                                 <div className='absolute ml-[110px] bottom-0 h-[65px] w-[65px]' style={{color: theme.extend.colors.purple}}>
@@ -267,7 +267,7 @@ function Home() {
                     <div className='flex items-center justify-center h-full w-full'>
                         <div className='w-[60%] h-[90%] drop-shadow-[0_10px_60px_rgba(226,236,249,1)] bg-white rounded-[15px]'>
                             <div className='h-[15%] w-full flex items-center justify-center font-poppins text-xm font-medium select-none'>
-                                Create Session
+                                {"Create Session"}
 
                                 <div className='absolute right-[15px] h-[40px] w-[40px] hover:cursor-pointer' style={{color: theme.extend.colors.purple}} onMouseOver={({target})=>target.style.color=theme.extend.colors.purple_2} onMouseOut={({target})=>target.style.color=theme.extend.colors.purple}
                                 onClick={() => setShowPopUpCreateSession(false)}
@@ -323,7 +323,7 @@ function Home() {
                             {
                                 (privacyValue === null || sessionNameValue === "") ?
                                 <button type="button" class="absolute flex items-center justify-center right-0 w-[25%] h-[60%] bg-purple opacity-30 rounded-[15px] font-poppins text-sm text-white font-medium select-none" disabled>
-                                    Create
+                                    {"Create"}
                                 </button>
                                 :
                                 (
@@ -337,7 +337,7 @@ function Home() {
                                             setTimeout(controlNavigateSession, 5000);
                                         }
                                     }>
-                                        Create
+                                        {"Create"}
                                     </button>
                                     :
                                     <button type="button" class="absolute flex items-center justify-center right-0 w-[30%] h-[60%] bg-purple_grey rounded-[15px] font-poppins text-sm text-white font-medium select-none" disabled>
@@ -346,7 +346,7 @@ function Home() {
                                             <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                                         </svg>
     
-                                        Creating...
+                                        {"Creating..."}
                                     </button>                                    
                                 )
                             }
@@ -363,7 +363,7 @@ function Home() {
     return (
         <div>
             <Head>
-                <title>Fokus | Sign In</title>
+                <title>{"Fokus | Sign In"}</title>
                 <link rel="icon" href="/favicon.ico" />
             </Head>
 

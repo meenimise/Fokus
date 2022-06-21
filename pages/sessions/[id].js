@@ -319,7 +319,7 @@ function Session() {
 
                         <div className='absolute right-0 h-full w-[80%] flex items-center justify-center'>
                           <h1 className='font-poppins font-medium text-[10.5pt] text-[#8E8EC8] truncate ... select-none'>
-                            Adjust Session Time
+                            {"Adjust Session Time"}
                           </h1>
                         </div>
                       </div>
@@ -340,7 +340,7 @@ function Session() {
 
                           <div className='absolute right-0 h-full w-[80%] flex items-center justify-center'>
                             <h1 className='font-poppins font-medium text-[10.5pt] text-[#8E8EC8] truncate ... select-none'>
-                              Start This Session
+                              {"Start This Session"}
                             </h1>
                           </div>
                       </div>
@@ -371,7 +371,7 @@ function Session() {
 
                   <div className='absolute right-0 h-full w-[80%] flex items-center justify-center'>
                     <h1 className='font-poppins font-medium text-[10.5pt] text-[#8E8EC8] truncate ... select-none'>
-                      Invite Your Friends To Join
+                      {"Invite Your Friends To Join"}
                     </h1>
                   </div>
                 </div>
@@ -386,7 +386,7 @@ function Session() {
 
                   <div className='absolute right-0 h-full w-[80%] flex items-center justify-center'>
                     <h1 className='font-poppins font-medium text-[10.5pt] text-[#8E8EC8] truncate ... select-none'>
-                      Session Configuration
+                      {"Session Configuration"}
                     </h1>
                   </div>
                 </div>
@@ -401,7 +401,7 @@ function Session() {
 
                   <div className='absolute right-0 h-full w-[80%] flex items-center justify-center'>
                     <h1 className='font-poppins font-medium text-[10.5pt] text-[#FA3E3E] truncate ... select-none'>
-                      Exit Or Give Up This Session
+                      {"Exit Or Give Up This Session"}
                     </h1>
                   </div>
                 </div>
@@ -462,7 +462,7 @@ function Session() {
                 {
                     timeValue === null ?
                     <button type="button" class="absolute flex items-center justify-center right-0 w-[25%] h-[60%] bg-purple opacity-30 rounded-[15px] font-poppins text-sm text-white font-medium select-none" disabled>
-                        Set Time
+                        {"Set Time"}
                     </button>
                     :
                     <button type="button" class="absolute flex items-center justify-center right-0 w-[25%] h-[60%] bg-purple rounded-[15px] font-poppins text-sm text-white font-medium hover:bg-purple_2 hover:cursor-pointer select-none"
@@ -472,7 +472,7 @@ function Session() {
                           setAdjustTimeClicked(false);  
                         }
                     }>
-                        Set Time
+                        {"Set Time"}
                     </button>                                  
                 }
                 </div> 
@@ -566,7 +566,7 @@ function Session() {
   return(
     <div>
       <Head>
-          <title>Fokus | Sign In</title>
+          <title>{"Fokus | Sign In"}</title>
           <link rel="icon" href="/favicon.ico" />
       </Head>
 
