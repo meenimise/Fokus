@@ -1,8 +1,7 @@
 {
-  "extends": "next",
+  "extends": "next/core-web-vitals",
   "rules": {
-    // "react/no-unescaped-entities": 0,
-    "@next/next/no-page-custom-font": "off",
+    "react/no-unescaped-entities": 0,
     "react/no-unknown-property": [2, { "ignore": ["class", "for", "stroke-width"] }]
   }
 }
