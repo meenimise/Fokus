@@ -240,7 +240,7 @@ function Home() {
                                 </div>
 
                                 <div className='absolute mt-[25px] container grid place-items-center font-poppins text-grey text-[8pt] whitespace-nowrap truncate select-none ...'>
-                                    {'Stay "fokused" with other members'}
+                                    Stay "fokused" with other members
                                 </div>
 
                                 <div className='absolute ml-[110px] bottom-0 h-[65px] w-[65px]' style={{color: theme.extend.colors.purple}}>
@@ -257,7 +257,7 @@ function Home() {
                             </div>
 
                             <div className='absolute right-0 h-full grid items-center justify-center w-[49%] font-poppins text-purple text-sm select-none'>
-                                {'"Create a Session or join one with your friends via the specific ID, you’ll never find avoiding your mobile phones while dealing with tasks a big trouble. Stay FOKUSED now or never."'}
+                                {"Create a Session or join one with your friends via the specific ID, you will never find avoiding your mobile phones while dealing with tasks a big trouble. Stay 'FOKUSED' now or never."}
                             </div>         
                         </div>
                     </div>
