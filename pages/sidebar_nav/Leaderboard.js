@@ -11,7 +11,7 @@ import { useSetState } from 'react-use';
 
 function Leaderboard() {
   const { data: session, status } = useSession();
-  const [leaderboardList, setLeaderboardList] = useState([]);
+  const [leaderboardList, setLeaderboardList] = useState([null]);
   const [amountofUsers, setAmountOfUsers] = useState(1);
 
   useEffect(() => {

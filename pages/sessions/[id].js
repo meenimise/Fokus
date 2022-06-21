@@ -28,7 +28,7 @@ function Session() {
   const router = useRouter();
   
   //States related
-  const [adminId, setAdminId] = useState();
+  const [adminId, setAdminId] = useState(null);
   const currentTime = Date.now();
   const [areAllUsersReady, setUsersReadyState] = useState(false);
   const [timeCompleted, setTimeCompleted] = useState();
@@ -169,8 +169,8 @@ function Session() {
   }
 
   //Counter related
-  const [timeCounter, setTimeCounter] = useState();
-  const [timeCounterLocal, setTimeCounterLocal] = useState();
+  const [timeCounter, setTimeCounter] = useState(null);
+  const [timeCounterLocal, setTimeCounterLocal] = useState(null);
   const [minutes, setMinutes] = useState("00");
   const [seconds, setSeconds] = useState("00");
 

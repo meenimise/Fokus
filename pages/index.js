@@ -99,8 +99,8 @@ function Home() {
     var rank = "1";
     const [showPopUpCreateSession, setShowPopUpCreateSession] = useState(false);
     const [showCircularButtonSession, setShowCircularButtonSession] = useState(false);
-    const [privacyValue, privacyInputProps] = useRadioButtons();
-    const [sessionNameValue, sessionInputProps] = useTextForm();
+    const [privacyValue, privacyInputProps] = useRadioButtons(null);
+    const [sessionNameValue, sessionInputProps] = useTextForm(null);
     const [isBeingProcessed, setIsBeingProcessed] = useState(false);
 
     const [todayTime, setTodayTime] = useState(0);
