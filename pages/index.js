@@ -23,7 +23,7 @@ import { db } from '../firebase/firebaseConfig';
 import * as fs from 'firebase/firestore';
 
 function useRadioButtons(name) {
-    const [value, setState] = useState(null);
+    const [value, setState] = useState(0);
   
     const handleChange = e => {
       setState(e.target.value);
@@ -99,8 +99,8 @@ function Home() {
     var rank = "1";
     const [showPopUpCreateSession, setShowPopUpCreateSession] = useState(false);
     const [showCircularButtonSession, setShowCircularButtonSession] = useState(false);
-    const [privacyValue, privacyInputProps] = useRadioButtons(null);
-    const [sessionNameValue, sessionInputProps] = useTextForm(null);
+    const [privacyValue, privacyInputProps] = useRadioButtons("");
+    const [sessionNameValue, sessionInputProps] = useTextForm("");
     const [isBeingProcessed, setIsBeingProcessed] = useState(false);
 
     const [todayTime, setTodayTime] = useState(0);
