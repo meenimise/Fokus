@@ -1,6 +1,8 @@
 {
   "extends": "next",
   "rules": {
+    "react/no-unescaped-entities": 0,
+    "@next/next/no-page-custom-font": "off",
     "react/no-unknown-property": [2, { "ignore": ["class", "for", "stroke-width"] }]
   }
 }
