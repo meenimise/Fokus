@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Context } from 'react';
 import Sidebar from '../../components/Sidebar';
 import { useSession } from 'next-auth/react';
 import Home from '../index';
@@ -11,7 +11,7 @@ import { useSetState } from 'react-use';
 
 function Leaderboard() {
   const { data: session, status } = useSession();
-  const [leaderboardList, setLeaderboardList] = useState([null]);
+  const [leaderboardList, setLeaderboardList] = useState([]);
   const [amountofUsers, setAmountOfUsers] = useState(1);
 
   useEffect(() => {
