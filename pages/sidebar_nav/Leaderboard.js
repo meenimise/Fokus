@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Context } from 'react';
+import React, { useState, useEffect } from 'react';
 import Sidebar from '../../components/Sidebar';
 import { useSession } from 'next-auth/react';
 import Home from '../index';
