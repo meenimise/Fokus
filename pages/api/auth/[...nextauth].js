@@ -1,7 +1,7 @@
-import { FirebaseAdapter } from "@next-auth/firebase-adapter";
+import { FirestoreAdapter } from "@next-auth/firebase-adapter";
 import NextAuth from "next-auth"
 import GoogleProvider from "next-auth/providers/google";
-import { db } from '../../../firebase/firebaseConfig';
+import { db } from "../../../firebase/firebaseConfig";
 import * as firestoreFunctions from 'firebase/firestore';
 
 export default NextAuth({
@@ -18,7 +18,7 @@ export default NextAuth({
             }            
         })
     ],
-    adapter: FirebaseAdapter({
+    adapter: FirestoreAdapter({
         db: db,
         ...firestoreFunctions,
     }),
