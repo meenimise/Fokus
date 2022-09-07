@@ -169,8 +169,8 @@ function Session() {
   }
 
   //Counter related
-  const [timeCounter, setTimeCounter] = useState(0);
-  const [timeCounterLocal, setTimeCounterLocal] = useState(0);
+  const [timeCounter, setTimeCounter] = useState();
+  const [timeCounterLocal, setTimeCounterLocal] = useState();
   const [minutes, setMinutes] = useState("00");
   const [seconds, setSeconds] = useState("00");
 
