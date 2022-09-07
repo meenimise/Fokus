@@ -19,7 +19,7 @@ import { theme } from '../tailwind.config';
 //Authentication
 import { useSession } from 'next-auth/react';
 //Firebase
-import { db } from '../firebase/firebaseConfig';
+import { db } from '../firebase/firebase.config';
 import * as fs from 'firebase/firestore';
 
 function useRadioButtons(name) {

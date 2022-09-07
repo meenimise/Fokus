@@ -3,7 +3,7 @@ import Head from 'next/head';
 //Authentication
 import { useSession } from 'next-auth/react';
 //Firebase
-import { db } from '../../firebase/firebaseConfig';
+import { db } from '../../firebase/firebase.config';
 import * as fs from 'firebase/firestore';
 import { useRouter } from 'next/router';
 //Icons

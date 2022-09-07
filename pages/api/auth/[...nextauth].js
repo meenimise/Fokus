@@ -1,7 +1,7 @@
-import { FirestoreAdapter } from "@next-auth/firebase-adapter";
+import { FirebaseAdapter } from "@next-auth/firebase-adapter";
 import NextAuth from "next-auth"
 import GoogleProvider from "next-auth/providers/google";
-import { db } from "../../../firebase/firebaseConfig";
+import { db } from "../../../firebase/firebase.config";
 import * as firestoreFunctions from 'firebase/firestore';
 
 export default NextAuth({
@@ -18,9 +18,9 @@ export default NextAuth({
             }            
         })
     ],
-    adapter: FirestoreAdapter({
+    adapter: FirebaseAdapter({
         db: db,
-        ...firestoreFunctions,
+        ...firestoreFunctions
     }),
     secret: process.env.SECRET,
     url: process.env.NEXTAUTH_URL,

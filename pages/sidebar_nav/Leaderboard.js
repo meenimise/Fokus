@@ -3,7 +3,7 @@ import Sidebar from '../../components/Sidebar';
 import { useSession } from 'next-auth/react';
 import Home from '../index';
 //Firebase
-import { db } from '../../firebase/firebaseConfig';
+import { db } from '../../firebase/firebase.config';
 import * as fs from 'firebase/firestore';
 //Components
 import RankItem from '../../components/RankItem';

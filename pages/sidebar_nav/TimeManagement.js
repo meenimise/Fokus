@@ -5,7 +5,7 @@ import Home from '../index';
 //Components
 import PieChart from '../../components/PieChart';
 //Firebase
-import { db } from '../../firebase/firebaseConfig';
+import { db } from '../../firebase/firebase.config';
 import * as fs from 'firebase/firestore';
 
 function TimeManagement() {
