@@ -1,4 +1,4 @@
-import { FirebaseAdapter } from "@next-auth/firebase-adapter";
+import { FirebaseAdapter } from "../../../rewritten/@next-auth/firebase-adapter";
 import NextAuth from "next-auth"
 import GoogleProvider from "next-auth/providers/google";
 import { db } from "../../../firebase/firebase.config";
