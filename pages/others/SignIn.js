@@ -39,7 +39,7 @@ function SignIn() {
                             <img className='absolute left-[15px] h-full scale-[90%]' src={GitHub.src}>
                             </img>
 
-                            <div className='absolute w-[37.5%] h-full grid place-items-center text-[12.5pt] font-poppins font-medium text-grey truncate ... select-none'>
+                            <div className='absolute w-[37.5%] h-full grid place-items-center text-[12.5pt] font-poppins font-medium text-grey truncate ... select-none' onClick={() => signIn()}>
                                 {"Sign in with GitHub"}
                             </div>
                     </div>
