@@ -34,12 +34,12 @@ function SignIn() {
                 <div className='w-full h-[8%]'>
                 </div>
 
-                <div className='w-full h-[28%] grid place-items-center drop-shadow-[0_10px_60px_rgba(226,236,249,1)] bg-white rounded-[15px] hover:cursor-pointer hover:bg-purple_light'>
+                <div className='w-full h-[28%] grid place-items-center drop-shadow-[0_10px_60px_rgba(226,236,249,1)] bg-white rounded-[15px] hover:cursor-pointer hover:bg-purple_light' onClick={() => signIn()}>
                     <div className='absolute grid place-items-center h-full w-full'>
                             <img className='absolute left-[15px] h-full scale-[90%]' src={GitHub.src}>
                             </img>
 
-                            <div className='absolute w-[37.5%] h-full grid place-items-center text-[12.5pt] font-poppins font-medium text-grey truncate ... select-none' onClick={() => signIn()}>
+                            <div className='absolute w-[37.5%] h-full grid place-items-center text-[12.5pt] font-poppins font-medium text-grey truncate ... select-none'>
                                 {"Sign in with GitHub"}
                             </div>
                     </div>
@@ -48,7 +48,7 @@ function SignIn() {
                 <div className='w-full h-[8%]'>
                 </div>
 
-                <div className='w-full h-[28%] grid place-items-center drop-shadow-[0_10px_60px_rgba(226,236,249,1)] bg-white rounded-[15px] hover:cursor-pointer hover:bg-purple_light'>
+                <div className='w-full h-[28%] grid place-items-center drop-shadow-[0_10px_60px_rgba(226,236,249,1)] bg-white rounded-[15px] hover:cursor-pointer hover:bg-purple_light' onClick={() => signIn()}>
                     <div className='absolute grid place-items-center h-full w-full'>
                         <img className='absolute left-[15px] h-full scale-[60%]' src={Facebook.src}>
                         </img>
