@@ -1,6 +1,7 @@
 import { FirebaseAdapter } from "../../../rewritten/@next-auth/firebase-adapter";
-import NextAuth from "next-auth"
+import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
+import GitHubProvider from "next-auth/providers/github";
 import { db } from "../../../firebase/firebase.config";
 import * as firestoreFunctions from 'firebase/firestore';
 
@@ -16,7 +17,11 @@ export default NextAuth({
                     response_type: "code"
                 }
             }            
-        })
+        }),
+        GitHubProvider({
+            clientId: process.env.GITHUB_ID,
+            clientSecret: process.env.GITHUB_SECRET
+        })     
     ],
     adapter: FirebaseAdapter({
         db: db,
