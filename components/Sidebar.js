@@ -26,8 +26,8 @@ function Sidebar({children}) {
                 <li className='ml-[28px] mr-[28px] mb-[40px]' key={title}>
                   <Link href={href} as={url}>
                     <a
-                      className={`flex p-3 bg-white rounded-[10px] font-poppins font-medium text-[15px] text-purple  hover:bg-purple_light hover:text-purple cursor-pointer ${
-                        router.pathname === href && 'bg-purple text-white'
+                      className={`flex p-3 bg-white rounded-[10px] font-poppins font-medium text-[15px] text-steel_teal  hover:bg-light_morning_blue hover:text-steel_teal cursor-pointer ${
+                        router.pathname === href &&  'bg-steel_teal text-[#ffffff]'
                       }`}
                     >
                       {icon}
