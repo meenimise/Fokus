@@ -18,13 +18,13 @@ function NotiPopup(props) {
         {
             isExitButtonClicked === false ?
             <div className='relative flex items-center justify-center h-full w-full'>
-                <div className='absolute w-[60%] h-[85%] drop-shadow-[0_10px_60px_rgba(226,236,249,1)] bg-white rounded-[15px]'>
+                <div className='absolute w-[60%] h-[85%] drop-shadow-[0_10px_60px_rgba(235,245,243,1)] bg-white rounded-[15px]'>
                     <div className='h-[15%] w-full flex items-center justify-center font-poppins text-xm font-medium select-none'>
                         {notiTitle}
 
                         {
                             haveExitButton === true ?
-                            <div className='absolute right-[15px] h-[40px] w-[40px] hover:cursor-pointer' style={{color: theme.extend.colors.purple}} onMouseOver={({target})=>target.style.color=theme.extend.colors.purple_2} onMouseOut={({target})=>target.style.color=theme.extend.colors.purple}
+                            <div className='absolute right-[15px] h-[40px] w-[40px] hover:cursor-pointer' style={{color: theme.extend.colors.steel_teal}} onMouseOver={({target})=>target.style.color=theme.extend.colors.morning_blue} onMouseOut={({target})=>target.style.color=theme.extend.colors.steel_teal}
                             onClick={() => setExitButtonClicked(true)}
                             >
                                 <XCircleIcon></XCircleIcon>
@@ -46,7 +46,7 @@ function NotiPopup(props) {
 
                     <div className='relative h-[15%] w-[90%] mx-auto flex items-center justify-center'>
                     {
-                        <button type="button" class="absolute flex items-center justify-center right-0 w-[25%] h-[60%] bg-purple rounded-[15px] font-poppins text-sm text-white font-medium hover:bg-purple_2 hover:cursor-pointer select-none"
+                        <button type="button" class="absolute flex items-center justify-center right-0 w-[25%] h-[60%] bg-steel_teal rounded-[15px] font-poppins text-sm text-white font-medium hover:bg-morning_blue hover:cursor-pointer select-none"
                         onClick={() => {
                                 setExitButtonClicked(true);
                                 extraFunction(); 

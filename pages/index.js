@@ -269,7 +269,7 @@ function Home() {
                             <div className='h-[15%] w-full flex items-center justify-center font-poppins text-xm font-medium select-none'>
                                 {"Create Session"}
 
-                                <div className='absolute right-[15px] h-[40px] w-[40px] hover:cursor-pointer' style={{color: theme.extend.colors.purple}} onMouseOver={({target})=>target.style.color=theme.extend.colors.purple_2} onMouseOut={({target})=>target.style.color=theme.extend.colors.purple}
+                                <div className='absolute right-[15px] h-[40px] w-[40px] hover:cursor-pointer' style={{color: theme.extend.colors.steel_teal}} onMouseOver={({target})=>target.style.color=theme.extend.colors.morning_blue} onMouseOut={({target})=>target.style.color=theme.extend.colors.steel_teal}
                                 onClick={() => setShowPopUpCreateSession(false)}
                                 >
                                     <XCircleIcon></XCircleIcon>
@@ -283,7 +283,7 @@ function Home() {
                                             <label for="session_name" class="block mb-2 text-sm font-poppins font-medium select-none">{"Name (required)"}</label>
                                             {
                                                 isBeingProcessed == false ?
-                                                <input type="text" name="session" id="session_name" class="bg-white border-[2px] focus:outline-purple text-sm font-poppins rounded-lg block w-full p-2.5" value={sessionNameValue} {...sessionInputProps}/>
+                                                <input type="text" name="session" id="session_name" class="bg-white border-[2px] focus:outline-steel_teal text-sm font-poppins rounded-lg block w-full p-2.5" value={sessionNameValue} {...sessionInputProps}/>
                                                 :
                                                 <input type="text" name="session" id="session_name" class="bg-slate-100 border-[2px] text-sm text-grey font-poppins rounded-lg block w-full p-2.5" value={sessionNameValue} disabled/>
                                             }
@@ -298,18 +298,18 @@ function Home() {
                                                 <div class="form-check form-check-inline">
                                                     {
                                                         isBeingProcessed == false ?
-                                                        <input class="form-check-input appearance-none rounded-full h-5 w-5 border-2 border-gray-300 bg-white checked:bg-purple checked:border-gray-300 checked:border-[3px] transition mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="radio" name="privacyRadioOptions" id="privacy1" value="private" checked={privacyValue === "private"} {...privacyInputProps}/>
+                                                        <input class="form-check-input appearance-none rounded-full h-5 w-5 border-2 border-gray-300 bg-white checked:bg-steel_teal checked:border-gray-300 checked:border-[3px] transition mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="radio" name="privacyRadioOptions" id="privacy1" value="private" checked={privacyValue === "private"} {...privacyInputProps}/>
                                                         :
-                                                        <input class="form-check-input appearance-none rounded-full h-5 w-5 border-2 border-gray-400 bg-white checked:bg-purple_grey checked:border-gray-300 checked:border-[3px] transition mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="radio" name="privacyRadioOptions" id="privacy1" value="private" checked={privacyValue === "private"} disabled/>
+                                                        <input class="form-check-input appearance-none rounded-full h-5 w-5 border-2 border-gray-400 bg-white checked:bg-grey checked:border-gray-300 checked:border-[3px] transition mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="radio" name="privacyRadioOptions" id="privacy1" value="private" checked={privacyValue === "private"} disabled/>
                                                     }
                                                     <label class="form-check-label inline-block text-sm font-poppins select-none" for="inlineRadio10">Private</label>
                                                 </div>
                                                 <div class="ml-[130px] form-check form-check-inline">
                                                     {
                                                         isBeingProcessed == false ?
-                                                        <input class="form-check-input appearance-none rounded-full h-5 w-5 border-2 border-gray-300 bg-white checked:bg-purple checked:border-gray-300 checked:border-[3px] transition mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="radio" name="privacyRadioOptions" id="privacy2" value="public" checked={privacyValue === "public"} {...privacyInputProps}/>
+                                                        <input class="form-check-input appearance-none rounded-full h-5 w-5 border-2 border-gray-300 bg-white checked:bg-steel_teal checked:border-gray-300 checked:border-[3px] transition mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="radio" name="privacyRadioOptions" id="privacy2" value="public" checked={privacyValue === "public"} {...privacyInputProps}/>
                                                         :
-                                                        <input class="form-check-input appearance-none rounded-full h-5 w-5 border-2 border-gray-400 bg-white checked:bg-purple_grey checked:border-gray-300 checked:border-[3px] transition mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="radio" name="privacyRadioOptions" id="privacy2" value="public" checked={privacyValue === "public"} disabled/>
+                                                        <input class="form-check-input appearance-none rounded-full h-5 w-5 border-2 border-gray-400 bg-white checked:bg-grey checked:border-gray-300 checked:border-[3px] transition mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="radio" name="privacyRadioOptions" id="privacy2" value="public" checked={privacyValue === "public"} disabled/>
                                                     } 
                                                     <label class="form-check-label inline-block text-sm font-poppins select-none" for="inlineRadio20">Public</label>
                                                 </div>
@@ -322,13 +322,13 @@ function Home() {
                             <div className='relative h-[15%] w-[90%] mx-auto flex items-center justify-center'>
                             {
                                 (privacyValue === null || sessionNameValue === "") ?
-                                <button type="button" class="absolute flex items-center justify-center right-0 w-[25%] h-[60%] bg-purple opacity-30 rounded-[15px] font-poppins text-sm text-white font-medium select-none" disabled>
+                                <button type="button" class="absolute flex items-center justify-center right-0 w-[25%] h-[60%] bg-grey opacity-30 rounded-[15px] font-poppins text-sm text-white font-medium select-none" disabled>
                                     {"Create"}
                                 </button>
                                 :
                                 (
                                     showCircularButtonSession == false ?
-                                    <button type="button" class="absolute flex items-center justify-center right-0 w-[25%] h-[60%] bg-purple rounded-[15px] font-poppins text-sm text-white font-medium hover:bg-purple_2 hover:cursor-pointer select-none"
+                                    <button type="button" class="absolute flex items-center justify-center right-0 w-[25%] h-[60%] bg-steel_teal rounded-[15px] font-poppins text-sm text-white font-medium hover:bg-morning_blue hover:cursor-pointer select-none"
                                     onClick={() => {
                                             setShowCircularButtonSession(true); 
                                             setIsBeingProcessed(true); 
@@ -340,7 +340,7 @@ function Home() {
                                         {"Create"}
                                     </button>
                                     :
-                                    <button type="button" class="absolute flex items-center justify-center right-0 w-[30%] h-[60%] bg-purple_grey rounded-[15px] font-poppins text-sm text-white font-medium select-none" disabled>
+                                    <button type="button" class="absolute flex items-center justify-center right-0 w-[30%] h-[60%] bg-grey rounded-[15px] font-poppins text-sm text-white font-medium select-none" disabled>
                                         <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                                             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                                             <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>

@@ -22,7 +22,7 @@ function PieChart(props) {
   };
 
   return (
-    <div className='w-[500px] h-[500px] drop-shadow-[0_10px_60px_rgba(226,236,249,1)] bg-white rounded-[15px]'>
+    <div className='w-[500px] h-[500px] drop-shadow-[0_10px_60px_rgba(235,245,243,1)] bg-white rounded-[15px]'>
       <Pie 
         data={data}
         options={{

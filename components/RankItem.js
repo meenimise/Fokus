@@ -22,7 +22,7 @@ function RankItem(props) {
             leaderboardList.length != 0 ?   
                 leaderboardList.map((item, index) => {
                     return(
-                        <div className='w-full h-[70px] flex items-center justify-center drop-shadow-[0_10px_60px_rgba(226,236,249,1)] bg-white rounded-[15px] hover:cursor-pointer hover:bg-purple_light' key={item.id}>
+                        <div className='w-full h-[70px] flex items-center justify-center drop-shadow-[0_10px_60px_rgba(235,245,243,1)] bg-white rounded-[15px] hover:cursor-pointer hover:bg-purple_light' key={item.id}>
                             <div className='relative w-[95%] h-[50px]'>
                                 <div className='absolute w-[50px] h-[50px]'>
                                     <div className='w-full h-full flex items-center justify-center text-xl font-poppins text-[#8E8EC8] font-semibold select-none truncate ...'>
