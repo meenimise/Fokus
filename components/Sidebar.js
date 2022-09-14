@@ -6,6 +6,11 @@ import SidebarItems from './SidebarItems';
 
 function Sidebar({children}) {
   const router = useRouter();
+
+  function navigateToHome() {
+    router.push('/');
+  }
+
   return (
     <div className='min-h-screen flex flex-col'>
       <div className='flex flex-col md:flex-row flex-1'>
@@ -13,7 +18,7 @@ function Sidebar({children}) {
           <div className="box-content pt-[41px]">
           </div>
 
-          <div className="container mx-auto w-[120px] h-[32.5px]">
+          <div className="container mx-auto w-[300px] h-[81px] scale-[70%] hover:cursor-pointer" onClick={navigateToHome}>
             <Logo></Logo>
           </div>
 

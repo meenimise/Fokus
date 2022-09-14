@@ -14,6 +14,7 @@ module.exports = {
         'pink': '#DBC0DD',
 
         'steel_teal': '#6A8D92',
+        'pleased_green': '#afc6b6',
         'dark_sea_green': '#80B192',
         'morning_blue': '#8AA29E',
         'light_morning_blue': '#ebf5f3',
@@ -27,5 +28,7 @@ module.exports = {
       }
     },
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/line-clamp')
+  ],
 }
