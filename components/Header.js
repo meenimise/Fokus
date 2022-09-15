@@ -19,7 +19,7 @@ function Header(props) {
         </div>
       </div>
 
-      <div className='absolute right-0 h-full w-[250px] drop-shadow-[0_10px_60px_rgba(226,236,249,1)] bg-white rounded-[15px] hover:cursor-pointer' onClick={() => signOut()}>
+      <div className='absolute right-0 h-full w-[250px] drop-shadow-[0_10px_60px_rgba(235,245,243,1)] bg-white rounded-[15px] hover:cursor-pointer' onClick={() => signOut()}>
         <img className='absolute mt-[9px] ml-[15px] w-[32px] h-[32px] rounded-full' src={session?.user.image}>
         </img>
 

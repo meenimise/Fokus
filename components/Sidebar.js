@@ -6,6 +6,11 @@ import SidebarItems from './SidebarItems';
 
 function Sidebar({children}) {
   const router = useRouter();
+
+  function navigateToHome() {
+    router.push('/');
+  }
+
   return (
     <div className='min-h-screen flex flex-col'>
       <div className='flex flex-col md:flex-row flex-1'>
@@ -13,7 +18,7 @@ function Sidebar({children}) {
           <div className="box-content pt-[41px]">
           </div>
 
-          <div className="container mx-auto w-[120px] h-[32.5px]">
+          <div className="container mx-auto w-[300px] h-[81px] scale-[70%] hover:cursor-pointer" onClick={navigateToHome}>
             <Logo></Logo>
           </div>
 
@@ -26,8 +31,8 @@ function Sidebar({children}) {
                 <li className='ml-[28px] mr-[28px] mb-[40px]' key={title}>
                   <Link href={href} as={url}>
                     <a
-                      className={`flex p-3 bg-white rounded-[10px] font-poppins font-medium text-[15px] text-purple  hover:bg-purple_light hover:text-purple cursor-pointer ${
-                        router.pathname === href && 'bg-purple text-white'
+                      className={`flex p-3 bg-white rounded-[10px] font-poppins font-medium text-[15px] text-steel_teal  hover:bg-light_morning_blue hover:text-steel_teal cursor-pointer ${
+                        router.pathname === href &&  'bg-steel_teal text-[#ffffff]'
                       }`}
                     >
                       {icon}
