@@ -21,6 +21,10 @@ module.exports = {
   async rewrites() {
     return [
       {
+        source: "/feed",
+        destination: "/sidebar_nav/Feed",
+      },
+      {
         source: "/timemanagement",
         destination: "/sidebar_nav/TimeManagement",
       },

@@ -1,7 +1,8 @@
 import React from 'react'
 import {
     HomeIcon,
-    ChartBarIcon,
+    FireIcon,
+    ChartPieIcon,
     ShoppingCartIcon,
     UserGroupIcon,
     CogIcon,
@@ -22,6 +23,18 @@ function SidebarItems() {
                 </div>,      
         },
         {
+            href: '/sidebar_nav/Feed',
+            url: '/feed',
+            title:
+                <div className="flex-row container w-[150px]">
+                    {"My Feed"}
+                </div>,            
+            icon:
+                <div className="flex-row container w-[24px]">
+                    <FireIcon></FireIcon>
+                </div>,                  
+        },
+        {
             href: '/sidebar_nav/TimeManagement',
             url: '/timemanagement',
             title:
@@ -30,7 +43,7 @@ function SidebarItems() {
                 </div>,            
             icon:
                 <div className="flex-row container w-[24px]">
-                    <ChartBarIcon></ChartBarIcon>
+                    <ChartPieIcon></ChartPieIcon>
                 </div>,                  
         },
         {

@@ -1,5 +1,5 @@
 import React from 'react';
-import Logo from '../assets/svgs/fokus_logo.svg';
+import Logo from '../../assets/svgs/fokus_logo.svg';
 import Link from 'next/link';
 import {useRouter} from 'next/router';
 import SidebarItems from './SidebarItems';
@@ -22,13 +22,13 @@ function Sidebar({children}) {
             <Logo></Logo>
           </div>
 
-          <div className="box-content pt-[54.5px]">
+          <div className="box-content pt-[40px]">
           </div>
 
           <nav>
             <ul>
               {SidebarItems().map(({href, url, title, icon}) => (
-                <li className='ml-[28px] mr-[28px] mb-[40px]' key={title}>
+                <li className='ml-[28px] mr-[28px] mb-[28px]' key={title}>
                   <Link href={href} as={url}>
                     <a
                       className={`flex p-3 bg-white rounded-[10px] font-poppins font-medium text-[15px] text-steel_teal  hover:bg-light_morning_blue hover:text-steel_teal cursor-pointer ${
