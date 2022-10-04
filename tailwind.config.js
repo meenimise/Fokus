@@ -20,6 +20,7 @@ module.exports = {
         'light_morning_blue': '#ebf5f3',
 
         'grey': '#ACACAC',
+        'grey_message': '#e5e7eb',
         'dim_bg': '#f9f9f9'
       },
       fontFamily:
