@@ -1,23 +1,28 @@
 import React from 'react';
 
 function FirstMessageHeader(props) {
-  const profileImgUrl = props.profileImgUrl;
-  const username = props.username;
+    const _isMyMessage = props._isMyMessage;
+    const profileImgUrl = props.profileImgUrl;
+    const username = props.username;
 
-  return (
-    <div className='relative w-full h-[30px]'>
-        <div className='absolute h-full aspect-square'>
-            <img className='absolute object-cover h-full w-full rounded-full' 
-                src='https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F47%2F2020%2F08%2F24%2Fcorgi-puppy-on-floor-512536165-2000.jpg'
-            >
-            </img>
-        </div>
-
-        <div className='relative left-[40px] h-full w-[70%] inline-block align-middle truncate ... text-black font-poppins text-[10pt] font-medium select-none'>
-            Nguyen Tri Minh
-        </div>
-    </div>
-  )
+    return (
+        _isMyMessage == false ?
+        (
+            <div className='flex items-center mt-[2%]'>
+                <div class="w-[24px] h-[24px] mr-[2%]">
+                    <img src="https://www.creative-tim.com/learning-lab/tailwind-starter-kit/img/team-2-800x800.jpg" class="rounded-full" />
+                </div>
+        
+                <div className='w-[30%] inline truncate ... text-black font-poppins text-[10pt] font-medium select-none'>
+                    Nguyen Tri Minh
+                </div>
+            </div>
+        )
+        :
+        (
+            <div className='relative'></div>            
+        )
+    )
 }
 
 export default FirstMessageHeader
