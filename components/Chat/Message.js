@@ -9,8 +9,7 @@ function countWords(str) {
 function Message(props) {
   const isMyMessage = props.isMyMessage;
   const isFirstMessage = props.isFirstMessage;
-  const message = 'This is a very long message to test if it is responsive. This is a very long message to test if it is responsive.'
-
+  const message = 'Hello guys. Harry Maguire is a beast!'
   return(
     isMyMessage == false ?
     (
@@ -24,6 +23,7 @@ function Message(props) {
           >
           </FirstMessageHeader>
   
+          <div className='flex flex-row w-full'>
           {
             countWords(message) > 1 ?
             <div className='w-auto max-w-[80%] mt-[2%] p-[15px] inline-block align-top text-black font-poppins text-[10pt] break-words ... rounded-b-[10px] rounded-tr-[10px] bg-grey_message'>
@@ -34,11 +34,12 @@ function Message(props) {
               {message}
             </div>
           }
+          </div>
         </div>
       )
       :
       (
-        <div className='flex flex-col w-full'>
+        <div className='flex flex-row w-full'>
           {
             countWords(message) > 1 ?
             <div className='w-auto max-w-[80%] mt-[2%] p-[15px] inline-block align-top text-black font-poppins text-[10pt] break-words ... rounded-b-[10px] rounded-[10px] bg-grey_message'>
