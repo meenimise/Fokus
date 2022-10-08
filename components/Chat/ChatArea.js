@@ -6,7 +6,7 @@ function ChatArea() {
   return (
     <div className='relative h-[80%] w-[93%]'>
       <div className='h-full w-full'>
-        <div className='relative h-[80%] w-full bg-green-300 overflow-y-auto'>
+        <div className='relative h-[83%] w-full overflow-y-auto rounded-[15px]'>
           <Message
             isMyMessage={false} 
             isFirstMessage={true}
@@ -55,11 +55,11 @@ function ChatArea() {
           >
           </Message>
 
-          <div className='h-[10%] w-full'></div>                   
+          <div className='h-[15%] w-full'></div>                   
         </div>
    
-        <div className='relative h-[20%] w-full bg-orange-400'>
-
+        <div className='relative h-[17%] w-full rounded-[15px]'>
+          <TypingArea></TypingArea>
         </div>
       </div>
     </div>
