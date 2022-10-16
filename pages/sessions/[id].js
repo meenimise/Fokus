@@ -296,7 +296,10 @@ function Session() {
         <div className='relative mt-[20px] w-[90%] h-[80%] mx-auto'>
           <div className='absolute w-full h-[75%]'>
             <div className='absolute h-full w-[49%] flex items-center justify-center bg-white rounded-[15px] drop-shadow-[0_10px_60px_rgba(235,245,243,1)]'>
-              <ChatArea></ChatArea>
+              <ChatArea
+                sessionId={sessionId}
+              >
+              </ChatArea>
             </div>
 
             <div className='absolute right-0 h-full w-[49%] flex items-center justify-center bg-white rounded-[15px] drop-shadow-[0_10px_60px_rgba(235,245,243,1)]'>
