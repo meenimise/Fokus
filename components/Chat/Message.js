@@ -1,5 +1,6 @@
 import React from 'react';
-import FirstMessageHeader from './FirstMessageHeader';
+import { useSession } from 'next-auth/react';
+import MessageHeader from './MessageHeader';
 
 function countWords(str) {
   if (str != null) {
@@ -9,86 +10,50 @@ function countWords(str) {
 }
 
 function Message(props) {
-  const isMyMessage = props.isMyMessage;
-  const isFirstMessage = props.isFirstMessage;
+  const userId = props.userId;
   const messageContent = props.messageContent;
   const timestamp = props.timestamp;
 
+  const { data: session } = useSession();
+  const currentUserId = session?.user.id;
+
   return (
-    isMyMessage == false ?
+    userId != currentUserId ?
     (
-      isFirstMessage == true ?
-      (
-        <div className='flex flex-col w-full'>
-          <FirstMessageHeader
-            _isMyMessage={false}
-            profileImgUrl={'someurl'}
-            username={'somename'}
-          >
-          </FirstMessageHeader>
-  
-          <div className='flex flex-row w-full'>
-          {
-            countWords(messageContent) > 1 ?
-            <div className='w-auto max-w-[80%] mt-[2%] p-[15px] inline-block align-top text-black font-poppins text-[10pt] break-words ... rounded-b-[10px] rounded-tr-[10px] bg-grey_message'>
-              {messageContent}
-            </div>
-            :
-            <div className='w-auto max-w-[80%] mt-[2%] p-[15px] inline-block align-top text-black font-poppins text-[10pt] break-all ... rounded-b-[10px] rounded-tr-[10px] bg-grey_message'>
-              {messageContent}
-            </div>
-          }
-          </div>
-        </div>
-      )
-      :
-      (
+      <div className='flex flex-col w-full'>
+        <MessageHeader
+          _userId={userId}
+        >
+        </MessageHeader>
+
         <div className='flex flex-row w-full'>
-          {
-            countWords(messageContent) > 1 ?
-            <div className='w-auto max-w-[80%] mt-[2%] p-[15px] inline-block align-top text-black font-poppins text-[10pt] break-words ... rounded-b-[10px] rounded-[10px] bg-grey_message'>
-              {messageContent}
-            </div>
-            :
-            <div className='w-auto max-w-[80%] mt-[2%] p-[15px] inline-block align-top text-black font-poppins text-[10pt] break-all ... rounded-b-[10px] rounded-[10px] bg-grey_message'>
-              {messageContent}
-            </div>
-          }
-        </div>
-      )
-    )
-    :
-    (
-      isFirstMessage == true ?
-      (
-        <div className='flex flex-row-reverse w-full'>
         {
           countWords(messageContent) > 1 ?
-          <div className='w-auto max-w-[80%] mt-[2%] h-auto p-[15px] inline-block align-top text-white font-poppins text-[10pt] break-words ... rounded-b-[10px] rounded-tl-[10px] bg-steel_teal'>
+          <div className='w-auto max-w-[80%] mt-[2%] p-[15px] inline-block align-top text-black font-poppins text-[10pt] break-words ... rounded-[10px] bg-grey_message'>
             {messageContent}
           </div>
           :
-          <div className='w-auto max-w-[80%] mt-[2%] h-auto p-[15px] inline-block align-top text-white font-poppins text-[10pt] break-all ... rounded-b-[10px] rounded-tl-[10px] bg-steel_teal'>
+          <div className='w-auto max-w-[80%] mt-[2%] p-[15px] inline-block align-top text-black font-poppins text-[10pt] break-all ... rounded-[10px] bg-grey_message'>
             {messageContent}
           </div>
         }
         </div>
-      )
-      :
-      (
-        <div className='flex flex-row-reverse w-full'>
-        {
-          countWords(messageContent) > 1 ?
-          <div className='w-auto max-w-[80%] mt-[2%] h-auto p-[15px] inline-block align-top text-white font-poppins text-[10pt] break-words ... rounded-b-[10px] rounded-[10px] bg-steel_teal'>
-            {messageContent}
-          </div>
-          :
-          <div className='w-auto max-w-[80%] mt-[2%] h-auto p-[15px] inline-block align-top text-white font-poppins text-[10pt] break-all ... rounded-b-[10px] rounded-[10px] bg-steel_teal'>
-            {messageContent}
-          </div>
-        }         
+      </div>
+    )
+    :
+    (
+      <div className='flex flex-row-reverse w-full'>
+      {
+        countWords(messageContent) > 1 ?
+        <div className='w-auto max-w-[80%] mt-[2%] h-auto p-[15px] inline-block align-top text-white font-poppins text-[10pt] break-words ... rounded-[10px] bg-steel_teal'>
+          {messageContent}
         </div>
-      )      
+        :
+        <div className='w-auto max-w-[80%] mt-[2%] h-auto p-[15px] inline-block align-top text-white font-poppins text-[10pt] break-all ... rounded-[10px] bg-steel_teal'>
+          {messageContent}
+        </div>
+      }
+      </div>
     )
   )
 }
