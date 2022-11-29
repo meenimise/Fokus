@@ -2,7 +2,6 @@ import React from 'react';
 import {
   ChevronDownIcon
 } from '@heroicons/react/solid';
-import SampleAvt from '../assets/others/sample_avt.png'
 import { signOut, useSession } from 'next-auth/react';
 import { removeVI, DefaultOption } from 'jsrmvi';
 

@@ -21,6 +21,7 @@ import Header from '../../components/Header';
 import SignIn from '../others/SignIn';
 import NotiPopup from '../../components/NotiPopup';
 import SessionError from '../../components/SessionError';
+import ChatArea from '../../components/Chat/ChatArea';
 import { doc } from 'firebase/firestore';
 
 function Session() {
@@ -294,8 +295,11 @@ function Session() {
 
         <div className='relative mt-[20px] w-[90%] h-[80%] mx-auto'>
           <div className='absolute w-full h-[75%]'>
-            <div className='absolute h-full w-[49%] bg-white rounded-[15px] drop-shadow-[0_10px_60px_rgba(235,245,243,1)]'>
-
+            <div className='absolute h-full w-[49%] flex items-center justify-center bg-white rounded-[15px] drop-shadow-[0_10px_60px_rgba(235,245,243,1)]'>
+              <ChatArea
+                sessionId={sessionId}
+              >
+              </ChatArea>
             </div>
 
             <div className='absolute right-0 h-full w-[49%] flex items-center justify-center bg-white rounded-[15px] drop-shadow-[0_10px_60px_rgba(235,245,243,1)]'>

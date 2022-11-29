@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
-import Sidebar from '../components/Sidebar';
+import Sidebar from '../components/Sidebar/Sidebar';
 import SignIn from './others/SignIn';
 import Header from '../components/Header';
 import Logo from '../assets/svgs/fokus_logo.svg';
