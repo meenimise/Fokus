@@ -15,14 +15,14 @@ function Sidebar({children}) {
     <div className='min-h-screen flex flex-col'>
       <div className='flex flex-col md:flex-row flex-1'>
         <aside className='bg-white drop-shadow-[0_4px_4px_rgba(0,0,0,0.25)]'>
-          <div className="box-content pt-[41px]">
+          <div className="box-content pt-[30px]">
           </div>
 
           <div className="container mx-auto w-[300px] h-[81px] scale-[70%] hover:cursor-pointer" onClick={navigateToHome}>
             <Logo></Logo>
           </div>
 
-          <div className="box-content pt-[40px]">
+          <div className="box-content pt-[25px]">
           </div>
 
           <nav>
@@ -31,7 +31,7 @@ function Sidebar({children}) {
                 <li className='ml-[28px] mr-[28px] mb-[28px]' key={title}>
                   <Link href={href} as={url}>
                     <a
-                      className={`flex p-3 bg-white rounded-[10px] font-poppins font-medium text-[15px] text-steel_teal  hover:bg-light_morning_blue hover:text-steel_teal cursor-pointer ${
+                      className={`flex p-[4%] bg-white rounded-[10px] font-poppins font-medium text-[15px] text-steel_teal  hover:bg-light_morning_blue hover:text-steel_teal cursor-pointer ${
                         router.pathname === href &&  'bg-steel_teal text-[#ffffff]'
                       }`}
                     >

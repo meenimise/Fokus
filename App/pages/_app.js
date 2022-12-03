@@ -7,7 +7,7 @@ function App({
   pageProps: { session, ...pageProps },
 }) {
   return (
-    <div className='absolute h-full w-full bg-dim_bg'>
+    <div className='h-full w-full bg-dim_bg'>
       <Head>
         <title>Fokus</title>
         <link rel="icon" href="/favicon.ico" />
