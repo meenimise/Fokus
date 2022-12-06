@@ -11,14 +11,14 @@ function Header(props) {
   const name = session?.user.name.split(' ');
 
   return (
-    <div className='relative mt-[10px] mx-auto w-[90%] h-[50px]'>
+    <div className='relative mt-[10px] mx-auto w-[90%] h-[80px]'>
       <div className='absolute mt-[10px] h-[30px]'>
         <div className='text-black text-xl font-medium font-poppins truncate select-none ...'>
           {headerText}
         </div>
       </div>
 
-      <div className='absolute right-0 h-full w-[250px] drop-shadow-[0_10px_60px_rgba(235,245,243,1)] bg-white rounded-[15px] hover:cursor-pointer' onClick={() => signOut()}>
+      <div className='absolute top-[10px] right-0 h-[50px] w-[250px] drop-shadow-[0_10px_60px_rgba(235,245,243,1)] bg-white rounded-[15px] hover:cursor-pointer' onClick={() => signOut()}>
         <img className='absolute mt-[9px] ml-[15px] w-[32px] h-[32px] rounded-full' src={session?.user.image}>
         </img>
 
@@ -33,6 +33,10 @@ function Header(props) {
         <div className='absolute top-[12px] right-[15px] h-[24px] w-[24px]' style={{color: '#757575'}}>
           <ChevronDownIcon></ChevronDownIcon>
         </div>
+      </div>
+
+      <div className='relative h-[10px] w-full'>
+
       </div>
     </div>
   )
