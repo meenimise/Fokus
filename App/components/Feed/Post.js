@@ -7,10 +7,25 @@ import Moment from "react-moment";
 import {
     ArrowCircleUpIcon,
 } from '@heroicons/react/solid';
+//Firestore
+import { db } from '../../firebase/firebase.config';
+import * as fs from 'firebase/firestore';
 
-function Post() {
+function Post({ id, userId, caption, timestamp, img }) {
     const { data: session, status } = useSession();
     const [hasLiked, setHasLiked] = useState(false);
+
+    // Query to get user information
+    const thisUserDocRef = fs.doc(db, "users", userId);
+    const thisUserDocSnap = fs.getDoc(thisUserDocRef);
+
+    const [avatar, setAvatar] = useState();
+    const [name, setName] = useState();
+
+    thisUserDocSnap.then(doc => {
+        setAvatar(doc.get('image'));
+        setName(doc.get('name'));
+    })
 
   return (
     <div className='relative flex justify-center items-center h-[300px] w-full'>
@@ -18,7 +33,7 @@ function Post() {
             <div className='columns-2 w-[95%] h-[240px]'>
                 <img
                 className='h-full w-full rounded-[15px] object-fill'
-                src='https://live-production.wcms.abc-cdn.net.au/11bea9410703c89775ed98d4d32c6321?impolicy=wcms_crop_resize&cropH=1680&cropW=2983&xPos=17&yPos=137&width=862&height=485'
+                src={img}
                 >
                 </img>
 
@@ -26,22 +41,22 @@ function Post() {
                     <div className='w-full h-[48px] columns-2'>
                         <div className='relative h-full w-full flex items-center justify-center'>
                             <div class="w-[32px] h-[32px] mr-[5%]">
-                                <img src={session?.user.image} class="rounded-full" />
+                                <img src={avatar} class="rounded-full" />
                             </div>
                     
                             <div className='w-full inline truncate ... text-black font-poppins text-[10pt] font-medium select-none'>
-                                {removeVI(session?.user.name, { ignoreCase: false, replaceSpecialCharacters: false })}
+                                {removeVI(name, { ignoreCase: false, replaceSpecialCharacters: false })}
                             </div>
                         </div>
 
                         <div className='relative h-full w-full text-grey font-poppins text-[9pt] font-normal select-none flex items-center justify-center'>
-                            Just Now
+                            <Moment fromNow>{timestamp?.toDate()}</Moment>
                         </div>
 
                     </div>
 
                     <div className='w-full h-[144px] overflow-x-auto text-justify break-normal text-black font-poppins font-normal text-[10pt] p-2'>
-                        There was a leak in the boat. Nobody had yet noticed it, and nobody would for the next couple of hours. This was a problem since the boat was heading out to sea and while the leak was quite small at the moment, it would be much larger when it was ultimately discovered. John had planned it exactly this way.
+                        {caption}
                     </div>
 
                     <div className='w-full h-[48px] columns-2'>
