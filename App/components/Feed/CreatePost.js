@@ -17,13 +17,29 @@ import { storage } from '../../firebase/firebase.config';
 function CreatePost() {
     const { data: session, status } = useSession();
 
-    const captionRef = useRef(null);
+    const [caption, captionInputProps] = useTextForm("");
     
     const [isBeingProcessed, setIsBeingProcessed] = useState(false);
 
     const imageRef = useRef(null);
     const [image, setImage] = useState(null);
     const [imageName, setImageName] = useState(null);
+
+    function useTextForm(name) {
+        const [value, setState] = useState("");
+    
+        const handleChange = e => {
+            setState(e.target.value);
+        };
+    
+        const inputProps = {
+            name,
+            type: "text",
+            onChange: handleChange
+        };
+    
+        return [value, inputProps];
+    }
 
     //Add the image to state
     const addImageToState = (e) => {
@@ -41,7 +57,7 @@ function CreatePost() {
         setIsBeingProcessed(true);
         const docRef = await fs.addDoc(fs.collection(db, "posts"), {
             userId: session?.user?.id,
-            caption: captionRef.current.value,
+            caption: caption,
             timestamp: fs.serverTimestamp(),
         });
 
@@ -61,7 +77,6 @@ function CreatePost() {
         setImage("");
         setImageName("");
         setIsBeingProcessed(false);
-        captionRef.current.value = null;
     };
 
     return (
@@ -82,7 +97,7 @@ function CreatePost() {
                             name="caption" 
                             id="caption" 
                             class="inline-block bg-white border-[2px] focus:outline-steel_teal text-sm font-poppins rounded-lg h-full w-[94%] p-2.5 break-words" 
-                            ref={captionRef}
+                            value={caption} {...captionInputProps}
                             />
 
                             <div className='absolute h-full w-[40px] right-0 rounded-[8px] hover:cursor-pointer hover:bg-morning_blue bg-[#6A8D92]' 
@@ -107,8 +122,7 @@ function CreatePost() {
                         name="caption" 
                         id="caption" 
                         class="inline-block bg-slate-100 border-[2px] text-sm text-grey font-poppins rounded-lg h-full w-full p-2.5" 
-                        ref={captionRef}
-                        value={captionRef.current.value}
+                        value={caption}
                         disabled
                         />
                         }                                
@@ -118,15 +132,16 @@ function CreatePost() {
 
             <div className='relative h-[50%] w-[90%] mx-auto flex items-center justify-center'>
             {
-                (captionRef === null) ?
+                (caption == "") ?
                 <>
                 {
                     (image != null) ?
                     <>
-                    <div className='absolute flex left-0 w-[100px] h-[100px]'>
+                    <div className='absolute flex left-0 w-[100px] h-[100px] object-cover'>
                         <Image
-                        className='rounded-[15px]'
-                        layout='fill'
+                        className='rounded-[15px] object-cover'
+                        width="100"
+                        height="100"
                         src={image}
                         >
                         </Image>
@@ -152,8 +167,9 @@ function CreatePost() {
                     <>
                         <div className='absolute flex left-0 w-[100px] h-[100px]'>
                         <Image
-                        className='rounded-[15px]'
-                        layout='fill'
+                        className='rounded-[15px] object-cover'
+                        width="100"
+                        height="100"
                         src={image}
                         >
                         </Image>
@@ -167,10 +183,7 @@ function CreatePost() {
                     ""
                     }
                     <button type="button" class="absolute flex items-center justify-center right-0 w-[10%] h-[30%] bg-steel_teal rounded-[15px] font-poppins text-sm text-white font-medium hover:bg-morning_blue hover:cursor-pointer select-none"
-                    onClick={() => {
-                        uploadPost(); 
-                    }
-                    }>
+                    onClick={() => { uploadPost(); }}>
                     {"Post"}
                     </button>                   
                 </>
@@ -181,8 +194,9 @@ function CreatePost() {
                     <>
                         <div className='absolute flex left-0 w-[100px] h-[100px]'>
                         <Image
-                        className='rounded-[15px]'
-                        layout='fill'
+                        className='rounded-[15px] object-cover'
+                        width="100"
+                        height="100"
                         src={image}
                         >
                         </Image>

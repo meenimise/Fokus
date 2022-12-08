@@ -87,7 +87,7 @@ function Post({ id, userId, caption, timestamp, img }) {
             (
                 <div className='w-[95%] h-[240px] columns-2'>
                     <img
-                    className='h-full w-full rounded-[15px] object-fill'
+                    className='h-full w-full rounded-[15px] object-cover'
                     src={img}
                     >
                     </img>
