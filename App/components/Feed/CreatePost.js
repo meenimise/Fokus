@@ -45,17 +45,19 @@ function CreatePost() {
             timestamp: fs.serverTimestamp(),
         });
 
-        //Path for the image
-        const imagePath = ref(storage, `posts/${docRef.id}/image`);
+        if (image != null) {
+            //Path for the image
+            const imagePath = ref(storage, `posts/${docRef.id}/image`);
 
-        //Upload image to that adress
-        //Then with the snapshot declare the download URL
-        await uploadString(imagePath, image, "data_url").then(async (snapshot) => {
-            const downloadURL = await getDownloadURL(imagePath);
-            await fs.updateDoc(fs.doc(db, "posts", docRef.id), {
-                image: downloadURL,
+            //Upload image to that adress
+            //Then with the snapshot declare the download URL
+            await uploadString(imagePath, image, "data_url").then(async (snapshot) => {
+                const downloadURL = await getDownloadURL(imagePath);
+                await fs.updateDoc(fs.doc(db, "posts", docRef.id), {
+                    image: downloadURL,
+                });
             });
-        });
+        }
         setImage("");
         setImageName("");
         setIsBeingProcessed(false);
