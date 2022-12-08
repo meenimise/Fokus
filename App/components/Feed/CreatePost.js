@@ -7,27 +7,18 @@ import { removeVI, DefaultOption } from 'jsrmvi';
 import {
   PhotographIcon,
 } from '@heroicons/react/solid';
+//Firestore
+import { db } from '../../firebase/firebase.config';
+import * as fs from 'firebase/firestore';
+//Firebase Storage
+import { getDownloadURL, ref, uploadString } from "firebase/storage";
+import { storage } from '../../firebase/firebase.config';
 
 function CreatePost() {
-    function useTextForm(name) {
-    const [value, setState] = useState("");
-
-    const handleChange = e => {
-        setState(e.target.value);
-    };
-
-    const inputProps = {
-        name,
-        type: "text",
-        onChange: handleChange
-    };
-
-    return [value, inputProps];
-    }
-    
     const { data: session, status } = useSession();
 
-    const [sessionNameValue, sessionInputProps] = useTextForm("");
+    const captionRef = useRef(null);
+    
     const [isBeingProcessed, setIsBeingProcessed] = useState(false);
 
     const imageRef = useRef(null);
@@ -45,6 +36,31 @@ function CreatePost() {
             setImage(readerEvent.target.result);
         };
     };
+    //Create data of post and add it to the collection
+    const uploadPost = async () => {
+        setIsBeingProcessed(true);
+        const docRef = await fs.addDoc(fs.collection(db, "posts"), {
+            userId: session?.user?.id,
+            caption: captionRef.current.value,
+            timestamp: fs.serverTimestamp(),
+        });
+
+        //Path for the image
+        const imagePath = ref(storage, `posts/${docRef.id}/image`);
+
+        //Upload image to that adress
+        //Then with the snapshot declare the download URL
+        await uploadString(imagePath, image, "data_url").then(async (snapshot) => {
+            const downloadURL = await getDownloadURL(imagePath);
+            await fs.updateDoc(fs.doc(db, "posts", docRef.id), {
+                image: downloadURL,
+            });
+        });
+        setImage("");
+        setImageName("");
+        setIsBeingProcessed(false);
+        captionRef.current.value = null;
+    };
 
     return (
     <div className='flex justify-center items-center h-[300px] w-full'>
@@ -59,7 +75,13 @@ function CreatePost() {
                         { 
                         isBeingProcessed == false ?
                         <div className='relative flex w-full h-full'>
-                            <input placeholder={"What's on your mind " + removeVI(session?.user.name, { ignoreCase: false, replaceSpecialCharacters: false }) + "?"} type="text" name="session" id="session_name" class="inline-block bg-white border-[2px] focus:outline-steel_teal text-sm font-poppins rounded-lg h-full w-[94%] p-2.5 break-words" value={sessionNameValue} {...sessionInputProps}/>
+                            <input placeholder={"What's on your mind " + removeVI(session?.user.name, { ignoreCase: false, replaceSpecialCharacters: false }) + "?"} 
+                            type="text" 
+                            name="caption" 
+                            id="caption" 
+                            class="inline-block bg-white border-[2px] focus:outline-steel_teal text-sm font-poppins rounded-lg h-full w-[94%] p-2.5 break-words" 
+                            ref={captionRef}
+                            />
 
                             <div className='absolute h-full w-[40px] right-0 rounded-[8px] hover:cursor-pointer hover:bg-morning_blue bg-[#6A8D92]' 
                             style={{color: "#ffffff"}}
@@ -78,7 +100,15 @@ function CreatePost() {
                             </div>
                         </div>
                         :
-                        <input type="text" name="session" id="session_name" class="inline-block bg-slate-100 border-[2px] text-sm text-grey font-poppins rounded-lg h-full w-full p-2.5" value={sessionNameValue} disabled/>
+                        <input 
+                        type="text" 
+                        name="caption" 
+                        id="caption" 
+                        class="inline-block bg-slate-100 border-[2px] text-sm text-grey font-poppins rounded-lg h-full w-full p-2.5" 
+                        ref={captionRef}
+                        value={captionRef.current.value}
+                        disabled
+                        />
                         }                                
                     </div>
                 </div>
@@ -86,7 +116,7 @@ function CreatePost() {
 
             <div className='relative h-[50%] w-[90%] mx-auto flex items-center justify-center'>
             {
-                (sessionNameValue === "") ?
+                (captionRef === null) ?
                 <>
                 {
                     (image != null) ?
@@ -136,7 +166,7 @@ function CreatePost() {
                     }
                     <button type="button" class="absolute flex items-center justify-center right-0 w-[10%] h-[30%] bg-steel_teal rounded-[15px] font-poppins text-sm text-white font-medium hover:bg-morning_blue hover:cursor-pointer select-none"
                     onClick={() => {
-                        setIsBeingProcessed(true); 
+                        uploadPost(); 
                     }
                     }>
                     {"Post"}
