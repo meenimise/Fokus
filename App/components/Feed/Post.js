@@ -13,7 +13,10 @@ import * as fs from 'firebase/firestore';
 
 function Post({ id, userId, caption, timestamp, img }) {
     const { data: session, status } = useSession();
-    const [hasLiked, setHasLiked] = useState(false);
+    const [hasUpvoted, setHasUpvoted] = useState(false);
+    const [upvotes, setUpvotes] = useState([]);
+    const [comments, setComments] = useState([]);
+    const [comment, setComment] = useState("");
 
     // Query to get user information
     const thisUserDocRef = fs.doc(db, "users", userId);
@@ -26,6 +29,31 @@ function Post({ id, userId, caption, timestamp, img }) {
         setAvatar(doc.get('image'));
         setName(doc.get('name'));
     })
+
+    // When upvotes updated in the db, update the upvotes in the app as well
+    useEffect(
+        () =>
+        fs.onSnapshot(fs.collection(db, "posts", id, "upvotes"), (snapshot) =>
+            setUpvotes(snapshot.docs)
+        ), [db, id]
+    );
+
+    // Handle upvote
+    const upvotePost = async () => {
+        if (hasUpvoted) {
+            await fs.deleteDoc(fs.doc(db, "posts", id, "upvotes", session?.user?.id));
+        } else {
+            await fs.setDoc(fs.doc(db, "posts", id, "upvotes", session?.user?.id), {});
+        }
+    }
+
+    // Check if user has already upvoted posts
+    useEffect(
+        () =>
+        setHasUpvoted(
+            upvotes.findIndex((upvote) => upvote.id === session?.user?.id) !== -1
+        ), [upvotes]
+    );
 
   return (
     <div className='relative flex justify-center items-center h-[300px] w-full'>
@@ -59,7 +87,7 @@ function Post({ id, userId, caption, timestamp, img }) {
                     <div className='w-full h-[48px] columns-2'>
                         <div className='relative h-full w-full text-steel_teal font-poppins text-[9pt] font-normal select-none flex items-center justify-center'>
                             <p>
-                                100 upvotes
+                                {upvotes.length < 2 ? upvotes.length + " upvote" : upvotes.length + " upvotes"}
 
                                 <br>
                                 </br>
@@ -71,9 +99,20 @@ function Post({ id, userId, caption, timestamp, img }) {
                         </div>
 
                         <div className='relative h-full w-full columns-2'>
-                            <div className='h-full w-full flex items-center justify-center bg-steel_teal hover:bg-morning_blue hover:cursor-pointer text-white font-poppins text-[9pt] font-medium select-none rounded-[15px]'>
-                                Upvote 🚀
-                            </div>
+                            {
+                                hasUpvoted == true ?
+                                <div className='h-full w-full flex items-center justify-center bg-steel_teal hover:bg-morning_blue hover:cursor-pointer text-white font-poppins text-[9pt] font-medium select-none rounded-[15px]'
+                                    onClick={() => upvotePost()}
+                                >
+                                    Upvoted! 👏
+                                </div>
+                                :
+                                <div className='h-full w-full flex items-center justify-center bg-white border-2 border-steel_teal hover:bg-morning_blue hover:cursor-pointer text-steel_teal hover:text-white font-poppins text-[9pt] font-medium select-none rounded-[15px]'
+                                    onClick={() => upvotePost()}
+                                >
+                                    Upvote 🚀
+                                </div>                                
+                            }
 
                             <div className='h-full w-full flex items-center justify-center bg-steel_teal hover:bg-morning_blue hover:cursor-pointer text-white font-poppins text-[9pt] font-medium select-none rounded-[15px]'>
                                 Comment
@@ -117,7 +156,7 @@ function Post({ id, userId, caption, timestamp, img }) {
                         <div className='w-full h-[48px] columns-2'>
                             <div className='relative h-full w-full text-steel_teal font-poppins text-[9pt] font-normal select-none flex items-center justify-center'>
                                 <p>
-                                    100 upvotes
+                                    {upvotes.length < 2 ? upvotes.length + " upvote" : upvotes.length + " upvotes"}
     
                                     <br>
                                     </br>
@@ -129,9 +168,20 @@ function Post({ id, userId, caption, timestamp, img }) {
                             </div>
     
                             <div className='relative h-full w-full columns-2'>
-                                <div className='h-full w-full flex items-center justify-center bg-steel_teal hover:bg-morning_blue hover:cursor-pointer text-white font-poppins text-[9pt] font-medium select-none rounded-[15px]'>
-                                    Upvote 🚀
+                            {
+                                hasUpvoted == true ?
+                                <div className='h-full w-full flex items-center justify-center bg-steel_teal hover:bg-morning_blue hover:cursor-pointer text-white font-poppins text-[9pt] font-medium select-none rounded-[15px]'
+                                    onClick={() => upvotePost()}
+                                >
+                                    Upvoted! 👏
                                 </div>
+                                :
+                                <div className='h-full w-full flex items-center justify-center bg-white border-2 border-steel_teal hover:bg-morning_blue hover:cursor-pointer text-steel_teal hover:text-white font-poppins text-[9pt] font-medium select-none rounded-[15px]'
+                                    onClick={() => upvotePost()}
+                                >
+                                    Upvote 🚀
+                                </div>                                
+                            }
     
                                 <div className='h-full w-full flex items-center justify-center bg-steel_teal hover:bg-morning_blue hover:cursor-pointer text-white font-poppins text-[9pt] font-medium select-none rounded-[15px]'>
                                     Comment
