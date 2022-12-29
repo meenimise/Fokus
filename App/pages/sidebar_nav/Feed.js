@@ -5,6 +5,7 @@ import Home from '..';
 import Header from '../../components/Header';
 import CreatePost from '../../components/Feed/CreatePost';
 import Post from '../../components/Feed/Post';
+import NotiPopup from '../../components/NotiPopup';
 //Firebase
 import { db } from '../../firebase/firebase.config';
 import * as fs from 'firebase/firestore';
@@ -12,6 +13,12 @@ import * as fs from 'firebase/firestore';
 function Feed() {
   const { data: session, status } = useSession();
   const [posts, setPosts] = useState([]);
+
+  const [isCommentClicked, setCommentClicked] = useState(false);
+
+  const commentClickState = (state) => {
+    setCommentClicked(state);
+  }
 
   useEffect(() => {
     const unSubscribe = fs.onSnapshot(
@@ -34,6 +41,20 @@ function Feed() {
   if (status === "authenticated") {
     return (
       <Sidebar>
+        {/* Popup comments section */}
+        {
+          isCommentClicked == true ?
+          <NotiPopup
+              notiTitle="Comments"
+              hasButton={false}
+              hasExitButton={true}
+              extraFunctionOnClosed={() => setCommentClicked(false)}
+          >
+          </NotiPopup>
+          :
+          null
+        }
+
         <Header headerText={'My Feed 📰'}>
         </Header>
         
@@ -49,8 +70,9 @@ function Feed() {
               img={post.data().image}
               caption={post.data().caption}
               timestamp={post.data().timestamp}
+              commentClickState={commentClickState}
             />
-          ))}                                                                                                                                                                         
+          ))}
         </div>
       </Sidebar>
     )

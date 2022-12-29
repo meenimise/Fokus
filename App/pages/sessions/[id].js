@@ -492,8 +492,9 @@ function Session() {
               canCongratsDialogBeShown() === true ?
               (isSessionEnded === true ?
                 <NotiPopup 
-                  haveExitButton={false}
+                  hasExitButton={false}
                   notiTitle="Congratulations"
+                  hasButton={true}
                   buttonTitle="I have completed"
                   notiInfo="Hi there! Congratulation, you have completed this session. 
                   Thanks for your great efforts and please keep going, never give up! Please do not leave this site, 
@@ -508,8 +509,9 @@ function Session() {
               )
               :
               <NotiPopup 
-                haveExitButton={false}
+                hasExitButton={false}
                 notiTitle="You have failed"
+                hasButton={true}
                 buttonTitle="I will try again"
                 notiInfo="It looks like you have left this session before it ended, or you join while it is still running. As we said, your result
                 won't be included for you. We are sorry about that and hope you won't give up next time. You will be navigated to 
@@ -523,8 +525,9 @@ function Session() {
 
           {/* Confirmed at startup popup */}
             <NotiPopup 
-              haveExitButton={false}
+              hasExitButton={false}
               notiTitle="Before you start"
+              hasButton={true}
               buttonTitle="I understand"
               notiInfo="Hi there! Before you start please keep these things in mind: when the
               session starts do not leave this session by reloading, navigating to another pages or closing the browser. Because
@@ -539,8 +542,9 @@ function Session() {
             {
               isStartSessionClicked === true ?
               <NotiPopup 
-                haveExitButton={true}
+                hasExitButton={true}
                 notiTitle="Do you want to start this session?"
+                hasButton={true}
                 buttonTitle="Start session"
                 notiInfo="Please make sure all other members have pressed the I UNDERSTAND button
                 to be ready. Then you just need to press the button below to start this session."

@@ -11,7 +11,7 @@ import {
 import { db } from '../../firebase/firebase.config';
 import * as fs from 'firebase/firestore';
 
-function Post({ id, userId, caption, timestamp, img }) {
+function Post({ id, userId, caption, timestamp, img, commentClickState }) {
     const { data: session, status } = useSession();
     const [hasUpvoted, setHasUpvoted] = useState(false);
     const [upvotes, setUpvotes] = useState([]);
@@ -114,7 +114,13 @@ function Post({ id, userId, caption, timestamp, img }) {
                                 </div>                                
                             }
 
-                            <div className='h-full w-full flex items-center justify-center bg-steel_teal hover:bg-morning_blue hover:cursor-pointer text-white font-poppins text-[9pt] font-medium select-none rounded-[15px]'>
+                            <div className='h-full w-full flex items-center justify-center bg-steel_teal hover:bg-morning_blue hover:cursor-pointer text-white font-poppins text-[9pt] font-medium select-none rounded-[15px]'
+                                onClick={
+                                    () => {
+                                        commentClickState(true);
+                                    }
+                                }
+                            >
                                 Comment
                             </div>                            
                         </div>                        
@@ -183,7 +189,13 @@ function Post({ id, userId, caption, timestamp, img }) {
                                 </div>                                
                             }
     
-                                <div className='h-full w-full flex items-center justify-center bg-steel_teal hover:bg-morning_blue hover:cursor-pointer text-white font-poppins text-[9pt] font-medium select-none rounded-[15px]'>
+                                <div className='h-full w-full flex items-center justify-center bg-steel_teal hover:bg-morning_blue hover:cursor-pointer text-white font-poppins text-[9pt] font-medium select-none rounded-[15px]'
+                                    onClick={
+                                        () => {
+                                            commentClickState(true);
+                                        }
+                                    }
+                                >
                                     Comment
                                 </div>                            
                             </div>                        

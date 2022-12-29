@@ -5,7 +5,7 @@ import { removeVI, DefaultOption } from 'jsrmvi';
 import { db } from '../../firebase/firebase.config';
 import * as fs from 'firebase/firestore';
 
-function MessageHeader(props) {
+function CommentHeader(props) {
     const _userId = props._userId;
 
     const { data: session } = useSession();
@@ -43,4 +43,4 @@ function MessageHeader(props) {
     )
 }
 
-export default MessageHeader
+export default CommentHeader
