@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useSession } from 'next-auth/react';
 import TypingArea from './TypingArea';
 import Comment from './Comment';
-import ScrollIntoView from 'react-scroll-into-view';
+// import ScrollIntoView from 'react-scroll-into-view';
 //Firestore
 import { useFirestoreQuery } from '../../firestore/Query';
 import { db } from '../../firebase/firebase.config';
@@ -19,9 +19,9 @@ function CommentArea(props) {
   const comments = useFirestoreQuery(fs.query(thisCommentsColRef, fs.orderBy('timestamp'), fs.limitToLast(50)));
 
   return (
-    <div className='relative h-[80%] w-[93%]'>
+    <div className='relative h-[95%] w-[93%]'>
       <div className='h-full w-full'>
-        <ScrollIntoView selector='#footer' className='relative h-[83%] w-full overflow-y-auto rounded-[15px] scroll-smooth'>
+        <div className='relative h-[83%] w-full overflow-y-auto rounded-[15px] scroll-smooth'>
           {
             comments?.map(item => {
               return (
@@ -33,9 +33,8 @@ function CommentArea(props) {
                 </Comment>
               )
             })
-          }
-          <div id='#footer' className='h-[15%] w-full'></div>                   
-        </ScrollIntoView>
+          }                
+        </div>
    
         <div className='relative h-[17%] w-full rounded-[15px]'>
           <TypingArea></TypingArea>

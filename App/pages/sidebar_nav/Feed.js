@@ -6,6 +6,7 @@ import Header from '../../components/Header';
 import CreatePost from '../../components/Feed/CreatePost';
 import Post from '../../components/Feed/Post';
 import NotiPopup from '../../components/NotiPopup';
+import CommentArea from '../../components/Comment/CommentArea';
 //Firebase
 import { db } from '../../firebase/firebase.config';
 import * as fs from 'firebase/firestore';
@@ -16,8 +17,14 @@ function Feed() {
 
   const [isCommentClicked, setCommentClicked] = useState(false);
 
+  const [thisPostId, setThisPostId] = useState("");
+
   const commentClickState = (state) => {
     setCommentClicked(state);
+  }
+
+  const getThisPostId = (id) => {
+    setThisPostId(id);
   }
 
   useEffect(() => {
@@ -48,6 +55,12 @@ function Feed() {
               notiTitle="Comments"
               hasButton={false}
               hasExitButton={true}
+              notiInfo={
+                <CommentArea
+                  postId={thisPostId}
+                >
+                </CommentArea>
+              }
               extraFunctionOnClosed={() => setCommentClicked(false)}
           >
           </NotiPopup>
@@ -71,6 +84,7 @@ function Feed() {
               caption={post.data().caption}
               timestamp={post.data().timestamp}
               commentClickState={commentClickState}
+              getThisPostId={getThisPostId}
             />
           ))}
         </div>

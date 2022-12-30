@@ -11,12 +11,11 @@ import {
 import { db } from '../../firebase/firebase.config';
 import * as fs from 'firebase/firestore';
 
-function Post({ id, userId, caption, timestamp, img, commentClickState }) {
+function Post({ id, userId, caption, timestamp, img, commentClickState, getThisPostId }) {
     const { data: session, status } = useSession();
     const [hasUpvoted, setHasUpvoted] = useState(false);
     const [upvotes, setUpvotes] = useState([]);
     const [comments, setComments] = useState([]);
-    const [comment, setComment] = useState("");
 
     // Query to get user information
     const thisUserDocRef = fs.doc(db, "users", userId);
@@ -37,6 +36,14 @@ function Post({ id, userId, caption, timestamp, img, commentClickState }) {
             setUpvotes(snapshot.docs)
         ), [db, id]
     );
+
+    // Update comments
+    useEffect(
+        () =>
+        fs.onSnapshot(fs.collection(db, "posts", id, "comments"), (snapshot) =>
+            setComments(snapshot.docs)
+        ), [db, id]
+    );    
 
     // Handle upvote
     const upvotePost = async () => {
@@ -92,7 +99,7 @@ function Post({ id, userId, caption, timestamp, img, commentClickState }) {
                                 <br>
                                 </br>
                                 
-                                500 comments
+                                {comments.length < 2 ? comments.length + " comment" : comments.length + " comments"}
                             </p>
 
 
@@ -118,6 +125,7 @@ function Post({ id, userId, caption, timestamp, img, commentClickState }) {
                                 onClick={
                                     () => {
                                         commentClickState(true);
+                                        getThisPostId(id);
                                     }
                                 }
                             >
@@ -167,7 +175,7 @@ function Post({ id, userId, caption, timestamp, img, commentClickState }) {
                                     <br>
                                     </br>
                                     
-                                    500 comments
+                                    {comments.length < 2 ? comments.length + " comment" : comments.length + " comments"}
                                 </p>
     
     
@@ -193,6 +201,7 @@ function Post({ id, userId, caption, timestamp, img, commentClickState }) {
                                     onClick={
                                         () => {
                                             commentClickState(true);
+                                            getThisPostId(id);
                                         }
                                     }
                                 >

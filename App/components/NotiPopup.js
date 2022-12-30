@@ -68,14 +68,8 @@ function NotiPopup(props) {
                             </div>                            
                         </>
                         :
-                        <div className='relative h-[85%] w-[90%] mx-auto flex items-center justify-center'>
-                            <div className='h-[70%] w-[90%]'>
-                                <div className='h-full w-full'>
-                                    <div className='absolute w-[90%] h-full text-sm font-poppins font-medium select-none break-words ...'>
-                                        {notiInfo}                                          
-                                    </div>                                        
-                                </div>
-                            </div>
+                        <div className='relative h-[85%] w-full flex items-center justify-center'>
+                            {notiInfo}                                          
                         </div>                        
                     } 
                 </div>                 

@@ -24,22 +24,15 @@ function CommentHeader(props) {
     })
 
     return (
-        _userId != currentUserId ?
-        (
-            <div className='flex items-center mt-[2%]'>
-                <div class="w-[24px] h-[24px] mr-[2%]">
-                    <img src={avatar} class="rounded-full" />
-                </div>
-        
-                <div className='w-[30%] inline truncate ... text-black font-poppins text-[10pt] font-medium select-none'>
-                    {removeVI(name, { ignoreCase: false, replaceSpecialCharacters: false })}
-                </div>
+        <div className='flex items-center mt-[2%]'>
+            <div class="w-[24px] h-[24px] mr-[2%]">
+                <img src={avatar} class="rounded-full" />
             </div>
-        )
-        :
-        (
-            <div className='relative'></div>            
-        )
+
+            <div className='w-[30%] inline truncate ... text-black font-poppins text-[10pt] font-medium select-none'>
+                {removeVI(name, { ignoreCase: false, replaceSpecialCharacters: false })}
+            </div>
+        </div>
     )
 }
 
