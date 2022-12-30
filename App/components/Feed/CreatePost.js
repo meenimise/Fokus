@@ -97,7 +97,7 @@ function CreatePost() {
                             name="caption" 
                             id="caption" 
                             class="inline-block bg-white border-[2px] focus:outline-steel_teal text-sm font-poppins rounded-lg h-full w-[94%] p-2.5 break-words" 
-                            value={caption} {...captionInputProps}
+                            {...captionInputProps}
                             />
 
                             <div className='absolute h-full w-[40px] right-0 rounded-[8px] hover:cursor-pointer hover:bg-morning_blue bg-[#6A8D92]' 
@@ -183,7 +183,10 @@ function CreatePost() {
                     ""
                     }
                     <button type="button" class="absolute flex items-center justify-center right-0 w-[10%] h-[30%] bg-steel_teal rounded-[15px] font-poppins text-sm text-white font-medium hover:bg-morning_blue hover:cursor-pointer select-none"
-                    onClick={() => { uploadPost(); }}>
+                        onClick={() => { 
+                                uploadPost(); 
+                            }
+                        }>
                     {"Post"}
                     </button>                   
                 </>

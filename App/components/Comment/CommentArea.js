@@ -21,7 +21,7 @@ function CommentArea(props) {
   return (
     <div className='relative h-[95%] w-[93%]'>
       <div className='h-full w-full'>
-        <div className='relative h-[83%] w-full overflow-y-auto rounded-[15px] scroll-smooth'>
+        <div className='relative h-[80%] w-full overflow-y-auto rounded-[15px] scroll-smooth'>
           {
             comments?.map(item => {
               return (
@@ -35,9 +35,12 @@ function CommentArea(props) {
             })
           }                
         </div>
+
+        <div className='relative h-[5%] w-full'>
+        </div>
    
-        <div className='relative h-[17%] w-full rounded-[15px]'>
-          <TypingArea></TypingArea>
+        <div className='relative h-[15%] w-full rounded-[15px]'>
+          <TypingArea postId={postId}></TypingArea>
         </div>
       </div>
     </div>
