@@ -36,8 +36,8 @@ module.exports = {
         source: "/leaderboard",
         destination: "/sidebar_nav/Leaderboard",
       },      {
-        source: "/settings",
-        destination: "/sidebar_nav/Settings",
+        source: "/assistant",
+        destination: "/sidebar_nav/Assistant",
       },
     ];
   }, 

@@ -6,6 +6,7 @@ import {
     ShoppingCartIcon,
     UserGroupIcon,
     CogIcon,
+    ChatIcon,
   } from '@heroicons/react/solid';
 
 function SidebarItems() {
@@ -71,15 +72,15 @@ function SidebarItems() {
                 </div>,               
         },
         {
-            href: '/sidebar_nav/Settings',
-            url: '/settings',
+            href: '/sidebar_nav/Assistant',
+            url: '/assistant',
             title: 
                 <div className="flex-row container w-[150px]">
-                    {"Settings"}
+                    {"Assistant"}
                 </div>,                
             icon:
                 <div className="flex-row container w-[24px]">
-                    <CogIcon></CogIcon>
+                    <ChatIcon></ChatIcon>
                 </div>,                   
         },
     ];  
