@@ -1,6 +1,7 @@
 import React from 'react';
-import { useSession } from 'next-auth/react';
 import MessageHeader from './MessageHeader';
+// Chatbot helper functions
+import { createMarkup } from '../../utils/helper';
 
 function countWords(str) {
   if (str != null) {
@@ -10,35 +11,30 @@ function countWords(str) {
 }
 
 function Message(props) {
-  const userId = props.userId;
-  const messageContent = props.commentContent;
-  const timestamp = props.timestamp;
-
-  const { data: session } = useSession();
-  const currentUserId = session?.user.id;
+  const messageOwner = props.messageOwner;
+  const messageContent = props.messageContent;
 
   return (
-    userId != currentUserId ?
+    !messageOwner ?
     (
       <div className='flex flex-col w-full'>
-        <MessageHeader
-          _userId={userId}
-        >
+        <MessageHeader>
         </MessageHeader>
 
         <div className='flex flex-row w-full'>
         {
           countWords(messageContent) > 1 ?
           <div className='w-auto max-w-[80%] mt-[2%] p-[15px] inline-block align-top text-black font-poppins text-[10pt] break-words ... rounded-[10px] bg-grey_message'>
-            {messageContent}
+            <span dangerouslySetInnerHTML={createMarkup(messageContent)} />
           </div>
           :
           <div className='w-auto max-w-[80%] mt-[2%] p-[15px] inline-block align-top text-black font-poppins text-[10pt] break-all ... rounded-[10px] bg-grey_message'>
-            {messageContent}
+            <span dangerouslySetInnerHTML={createMarkup(messageContent)} />
           </div>
         }
         </div>
       </div>
+      
     )
     :
     (
@@ -55,7 +51,7 @@ function Message(props) {
       }
       </div>
     )
-  )
+  );
 }
 
 export default Message

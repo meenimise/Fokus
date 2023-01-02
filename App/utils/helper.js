@@ -1,6 +1,6 @@
 // Credit: https://strapi.io/blog/how-to-create-a-chat-bot-assistant-using-next-js-tailwind-css-and-strapi?utm_source=dev.to&utm_medium=post&utm_campaign=blog
 
-const baseUrl = process.env.CHATBOT_BASE_URL;
+const baseUrl = "fokuschatbot-production.up.railway.app/api";
 
 export const createMarkup = (text) => {
   return {__html: text};
@@ -11,19 +11,21 @@ export const tranformInterchanges = (interchanges, initial = false) => {
   let initialText = initial ? `<b>Welcome to Fokus, I'm Foxy and glad to have you here 🥰.</b> <br/>
  Tell me what you would like to know: <br/> <br/> `: ''
   
-  interchanges.map((e, i) => {
-      initialText += `${(i+1)}. ${e.question} <br /> <br />`
+  interchanges?.data.map((e, i) => {
+      initialText += `${(i+1)}. ${e.attributes.question} <br /> <br />`
   })
   return initialText
 }
 
 // Scan user's question to find proper response
 export const searchInterchange = (interchanges, question) => {
-  let result = interchanges.find(e => e.question.toLowerCase().includes(question.toLowerCase()))
-  if(result) return result.answer
+  let result = interchanges.data.find(e => e.attributes.question.toLowerCase().includes(question.toLowerCase()))
+
+  if (result) return result.attributes.answer
+  
   return `Sorry I don't understand your question, please try again 😔.<br><br>
-    Here are the options again: <br/> <br/>
-    ${tranformInterchanges(interchanges)}
+  Here are the options again: <br/> <br/>
+  ${tranformInterchanges(interchanges)}
   `
 }
 
@@ -59,7 +61,7 @@ export const getBotAnswer = async (interchanges, setInterchange, question, prevS
   await showBotTyping(setInterchange, prevState, setAllow)
   setInterchange([...prevState, {
     owner: false,
-    text: searchInterchange(interchanges,question)
+    text: searchInterchange(interchanges, question)
   }])
   scrollDown()
 }

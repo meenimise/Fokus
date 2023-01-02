@@ -1,50 +1,110 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useSession } from 'next-auth/react';
-import TypingArea from './TypingArea';
 import Message from './Message';
 // import ScrollIntoView from 'react-scroll-into-view';
-//Firestore
-import { useFirestoreQuery } from '../../firestore/Query';
-import { db } from '../../firebase/firebase.config';
-import * as fs from 'firebase/firestore';
+//Icons
+import {
+  PaperAirplaneIcon
+} from '@heroicons/react/solid';
+import { theme } from '../../tailwind.config';
+// Chatbot helper functions
+import {tranformInterchanges, showBotTyping, getBotAnswer, fetchQuery } from '../../utils/helper';
 
-function MessageArea(props) {
-  const postId = props.postId;
-  const { data: session } = useSession();
-  const currentUserId = session?.user.id;
+function MessageArea() {
+  const [interchanges, setInterchanges] = useState();
+  const [userQuestion, setUserQuestion] = useState("");
+  const [allow, setAllow] = useState(false);
+  const [interchange, setInterchange] = useState([]);
 
-  // Connect to the comments collection of this post and query comments
-  // const thisPostDocRef = fs.doc(db, "posts", postId);
-  // const thisCommentsColRef = fs.collection(thisPostDocRef, "comments");
-  // const comments = useFirestoreQuery(fs.query(thisCommentsColRef, fs.orderBy('timestamp'), fs.limitToLast(50)));
+  useEffect(() => {
+    (async() => {
+      const data = await fetchQuery('interchanges');
+      setInterchanges(data);
+    })();
+  }, []);
+
+  const botIsTyping = async () => {
+    await showBotTyping(setInterchange, [], setAllow);
+  }
+
+  useEffect(() => {
+      botIsTyping().then(() => {
+        setInterchange([{
+          owner: false,
+          text: tranformInterchanges(interchanges, true)
+         }]);
+      }
+      );
+   }, [interchanges])
+
+  // Handle submit question
+  function handleSubmit() {
+    if(!userQuestion || userQuestion == "" || !allow) return;
+    const uQ = userQuestion;
+    const newInterchange = [...interchange, {
+      owner: true,
+      text: userQuestion
+    }]
+  
+    setInterchange(newInterchange);
+    setUserQuestion('');
+    setAllow(false);
+    getBotAnswer(interchanges, setInterchange,  uQ, newInterchange, setAllow);
+  }
 
   return (
     <div className='relative h-[95%] w-[93%]'>
       <div className='h-full w-full'>
         <div className='relative h-[80%] w-full overflow-y-auto rounded-[15px] scroll-smooth'>
-          {/* {
-            comments?.map(item => {
+          {
+            interchange?.map(item => {
               return (
-                <Comment
-                userId={item?.userId} 
-                commentContent={item?.commentContent}
-                timestamp={item?.timestamp}
+                <Message
+                  messageOwner={item.owner}
+                  messageContent={item.text}
                 >
-                </Comment>
+                </Message>
               )
             })
-          }                 */}
+          }
+          <div className='relative h-[20%]' id="scrollTo"></div>                       
         </div>
 
-        <div className='relative h-[5%] w-full'>
+        <div className='relative h-[10%] w-full'>
         </div>
    
         <div className='relative h-[15%] w-full rounded-[15px]'>
-          <TypingArea postId={postId}></TypingArea>
+          {/* Typing area */}
+          <div className='relative h-[70%] w-full'>
+            <div className='absolute h-full w-[85%] drop-shadow-[0_10px_60px_rgba(235,245,243,1)]'>
+              <input value={userQuestion} onChange={ (e) => { setUserQuestion(e.target.value)}} type="text" class="bg-white border-[2px] focus:outline-steel_teal text-[10pt] font-poppins rounded-lg inline-block h-full w-full p-2.5"/>
+            </div>
+
+            <div className='absolute right-0 h-full w-[15%] flex items-center justify-center'>
+              <div className='h-full aspect-square scale-[85%] rounded-full rotate-90 bg-steel_teal drop-shadow-[0_10px_60px_rgba(235,245,243,1)] hover:cursor-pointer'
+                onClick={
+                  () => {
+                    handleSubmit();
+                }
+              }
+              >
+                <PaperAirplaneIcon className='scale-[45%]' style={{color: '#ffffff'}}>
+                </PaperAirplaneIcon>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   )
 }
 
-export default CommentArea
+export default MessageArea
+
+// export async function getStaticProps() {
+//   const interchanges = await fetchQuery('interchanges')
+//   return {
+//     props: {
+//       interchanges
+//     }
+//   }
+// }
