@@ -2,6 +2,9 @@
   "extends": "next",
   "rules": {
     "react/no-unescaped-entities": 0,
-    "react/no-unknown-property": [2, { "ignore": ["class", "for", "stroke-width"] }]
+    "react/no-unknown-property": [2, { "ignore": ["class", "for", "stroke-width"] }],
+    "react/no-children-prop": [1, {
+      "allowFunctions": true
+    }]
   }
 }
