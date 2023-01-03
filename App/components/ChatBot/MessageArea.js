@@ -8,6 +8,7 @@ import {
 import { theme } from '../../tailwind.config';
 // Chatbot helper functions
 import {tranformInterchanges, showBotTyping, getBotAnswer, fetchQuery, scrollDown } from '../../utils/helper';
+import useSWR from 'swr'
 
 function MessageArea() {
   const [interchanges, setInterchanges] = useState();
@@ -15,12 +16,22 @@ function MessageArea() {
   const [allow, setAllow] = useState(false);
   const [interchange, setInterchange] = useState([]);
 
+  // useEffect(() => {
+  //   (async() => {
+  //     const data = await fetchQuery('interchanges');
+  //     setInterchanges(data);
+  //   })();
+  // }, []);
+
+  const baseUrl = process.env.NEXT_PUBLIC_CHATBOT_BASE_URL;
+
+  const fetcher = (url) => fetch(url).then((res) => res.json());
+
+  const { data } = useSWR(baseUrl + "/interchanges", fetcher);
+
   useEffect(() => {
-    (async() => {
-      const data = await fetchQuery('interchanges');
-      setInterchanges(data);
-    })();
-  }, []);
+    setInterchanges(data);
+  }, [data]);
 
   const botIsTyping = async () => {
     await showBotTyping(setInterchange, [], setAllow);

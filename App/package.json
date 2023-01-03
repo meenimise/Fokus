@@ -28,6 +28,7 @@
     "react-scroll-into-view": "^1.12.0",
     "react-use": "^17.4.0",
     "rehype-raw": "^6.1.1",
+    "swr": "^2.0.0",
     "typescript": "^4.7.4",
     "yarn": "^1.22.19"
   },
