@@ -31,29 +31,23 @@ export const searchInterchange = (interchanges, question) => {
 
 // Show bot typing
 export const showBotTyping = async (setInterchange, prevState, setAllow) => {
-  scrollDown()
   await new Promise(resolve => setTimeout(resolve, 1000));
   setInterchange([...prevState, {
     owner: false,
-    text: 'Foxy is typing.'
+    text: '<b>Foxy</b> is typing.'
   }])
-  scrollDown()
   await new Promise(resolve => setTimeout(resolve, 1000));
   setInterchange([...prevState, {
     owner: false,
-    text: 'Foxy is typing..'
+    text: '<b>Foxy</b> is typing..'
   }])
-  scrollDown()
   await new Promise(resolve => setTimeout(resolve, 1000));
   setInterchange([...prevState, {
     owner: false,
-    text: 'Foxy is typing...'
+    text: '<b>Foxy</b> is typing...'
   }])
-  scrollDown()
-  
   await new Promise(resolve => setTimeout(resolve, 1000));
   setAllow(true)
-  scrollDown()
 }
 
 // Send the user question to the bot and then update the chat with the bot response
@@ -63,12 +57,11 @@ export const getBotAnswer = async (interchanges, setInterchange, question, prevS
     owner: false,
     text: searchInterchange(interchanges, question)
   }])
-  scrollDown()
 }
 
 // Bring the current message sent by either the bot or the user into view
-const scrollDown = () => {
-  document.getElementById('scrollTo').scrollIntoView({behavior: "smooth", block: "start"});
+export const scrollDown = () => {
+  document.getElementById('scrollTo').scrollIntoView({behavior: "smooth", block: 'nearest', inline: 'start'});
 }
 
 export const fetchQuery = async (path, params = null) => {

@@ -42,7 +42,7 @@ function Message(props) {
     )
     :
     (
-      <div className='flex flex-row-reverse w-full'>
+      <div className='flex flex-row-reverse w-[96%]'>
       {
         countWords(messageContent) > 1 ?
         <div className='w-auto max-w-[80%] mt-[2%] h-auto p-[15px] inline-block align-top text-white font-poppins text-[10pt] break-words ... rounded-[10px] bg-steel_teal'>

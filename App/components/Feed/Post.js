@@ -87,7 +87,7 @@ function Post({ id, userId, caption, timestamp, img, commentClickState, getThisP
 
                     </div>
 
-                    <div className='w-full h-[144px] overflow-x-auto text-justify break-normal text-black font-poppins font-normal text-[10pt] p-2'>
+                    <div className='w-full h-[144px] overflow-x-auto text-justify break-normal text-black font-poppins font-normal text-[10pt] p-4 scrollbar-thin scrollbar-thumb-grey scrollbar-track-grey_message scrollbar-thumb-rounded-full scrollbar-track-rounded-full'>
                         {caption}
                     </div>
 
@@ -163,7 +163,7 @@ function Post({ id, userId, caption, timestamp, img, commentClickState, getThisP
     
                         </div>
     
-                        <div className='w-full h-[144px] overflow-x-auto text-justify break-normal text-black font-poppins font-normal text-[10pt] p-2'>
+                        <div className='w-full h-[144px] overflow-x-auto text-justify break-normal text-black font-poppins font-normal text-[10pt] p-4 scrollbar-thin scrollbar-thumb-grey scrollbar-track-grey_message scrollbar-thumb-rounded-full scrollbar-track-rounded-full'>
                             {caption}
                         </div>
     

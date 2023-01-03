@@ -71,7 +71,7 @@ function Feed() {
         <Header headerText={'My Feed 📰'}>
         </Header>
         
-        <div className='relative h-[460px] w-full items-center justify-center overflow-auto scroll-smooth'>
+        <div className='relative h-[460px] w-full items-center justify-center overflow-auto scroll-smooth scrollbar-thin scrollbar-thumb-grey scrollbar-track-grey_message scrollbar-thumb-rounded-full scrollbar-track-rounded-full'>
           <CreatePost>
           </CreatePost>
 

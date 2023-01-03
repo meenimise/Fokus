@@ -7,7 +7,7 @@ import {
 } from '@heroicons/react/solid';
 import { theme } from '../../tailwind.config';
 // Chatbot helper functions
-import {tranformInterchanges, showBotTyping, getBotAnswer, fetchQuery } from '../../utils/helper';
+import {tranformInterchanges, showBotTyping, getBotAnswer, fetchQuery, scrollDown } from '../../utils/helper';
 
 function MessageArea() {
   const [interchanges, setInterchanges] = useState();
@@ -35,6 +35,10 @@ function MessageArea() {
       }
       );
    }, [interchanges])
+
+   useEffect(() => {
+    scrollDown();
+ }, [interchange]);
 
   // Handle submit question
   const handleSubmit = async (event) => {

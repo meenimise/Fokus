@@ -7,6 +7,7 @@ import Comment from './Comment';
 import { useFirestoreQuery } from '../../firestore/Query';
 import { db } from '../../firebase/firebase.config';
 import * as fs from 'firebase/firestore';
+import { scrollDown } from '../../utils/helper';
 
 function CommentArea(props) {
   const postId = props.postId;
@@ -18,10 +19,14 @@ function CommentArea(props) {
   const thisCommentsColRef = fs.collection(thisPostDocRef, "comments");
   const comments = useFirestoreQuery(fs.query(thisCommentsColRef, fs.orderBy('timestamp'), fs.limitToLast(50)));
 
+  useEffect(() => {
+    scrollDown();
+ }, [comments]);
+
   return (
     <div className='relative h-[95%] w-[93%]'>
       <div className='h-full w-full'>
-        <div className='relative h-[80%] w-full overflow-y-auto rounded-[15px] scroll-smooth'>
+        <div className='relative h-[80%] w-full overflow-y-auto rounded-[15px] scroll-smooth scrollbar-thin scrollbar-thumb-grey scrollbar-track-grey_message scrollbar-thumb-rounded-full scrollbar-track-rounded-full'>
           {
             comments?.map(item => {
               return (
@@ -33,7 +38,8 @@ function CommentArea(props) {
                 </Comment>
               )
             })
-          }                
+          }
+          <div className='relative h-[50%]' id="scrollTo"></div>                    
         </div>
 
         <div className='relative h-[5%] w-full'>
