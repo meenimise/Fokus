@@ -25,11 +25,12 @@ function ChatArea(props) {
   return (
     <div className='relative h-[80%] w-[93%]'>
       <div className='h-full w-full'>
-        <div key={""} className='relative h-[83%] w-full overflow-y-auto rounded-[15px] scroll-smooth scrollbar-thin scrollbar-thumb-grey scrollbar-track-grey_message scrollbar-thumb-rounded-full scrollbar-track-rounded-full'>
+        <div className='relative h-[83%] w-full overflow-y-auto rounded-[15px] scroll-smooth scrollbar-thin scrollbar-thumb-grey scrollbar-track-grey_message scrollbar-thumb-rounded-full scrollbar-track-rounded-full'>
           {
             messages?.map(item => {
               return (
                 <Message
+                key={item.id}
                 userId={item?.userId} 
                 messageContent={item?.messageContent}
                 timestamp={item?.timestamp}

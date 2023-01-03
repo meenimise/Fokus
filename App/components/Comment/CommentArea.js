@@ -31,6 +31,7 @@ function CommentArea(props) {
             comments?.map(item => {
               return (
                 <Comment
+                key={item.id}
                 userId={item?.userId} 
                 commentContent={item?.commentContent}
                 timestamp={item?.timestamp}

@@ -64,6 +64,7 @@ function MessageArea() {
             interchange?.map(item => {
               return (
                 <Message
+                  key={item.id}
                   messageOwner={item.owner}
                   messageContent={item.text}
                 >
