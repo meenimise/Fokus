@@ -1,6 +1,6 @@
 // Credit: https://strapi.io/blog/how-to-create-a-chat-bot-assistant-using-next-js-tailwind-css-and-strapi?utm_source=dev.to&utm_medium=post&utm_campaign=blog
 
-const baseUrl = "fokuschatbot-production.up.railway.app/api";
+const baseUrl = process.env.NEXT_PUBLIC_CHATBOT_BASE_URL;
 
 export const createMarkup = (text) => {
   return {__html: text};
