@@ -76,7 +76,7 @@ function SidebarItems() {
             url: '/assistant',
             title: 
                 <div className="flex-row container w-[150px]">
-                    {"Assistant"}
+                    {"Assistant 🦊"}
                 </div>,                
             icon:
                 <div className="flex-row container w-[24px]">

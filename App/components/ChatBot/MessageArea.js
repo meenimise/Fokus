@@ -37,7 +37,8 @@ function MessageArea() {
    }, [interchanges])
 
   // Handle submit question
-  function handleSubmit() {
+  const handleSubmit = async (event) => {
+    event.preventDefault();
     if(!userQuestion || userQuestion == "" || !allow) return;
     const uQ = userQuestion;
     const newInterchange = [...interchange, {
@@ -50,6 +51,20 @@ function MessageArea() {
     setAllow(false);
     getBotAnswer(interchanges, setInterchange,  uQ, newInterchange, setAllow);
   }
+
+  // Press Enter to submit
+  // useEffect(() => {
+  //   const keyDownHandler = event => {
+  //     if (event.key === 'Enter') {
+  //       event.preventDefault();
+  //       handleSubmit();
+  //     }
+  //   };
+  //   document.addEventListener('keydown', keyDownHandler);
+  //   return () => {
+  //     document.removeEventListener('keydown', keyDownHandler);
+  //   };
+  // }, []);
 
   return (
     <div className='relative h-[95%] w-[93%]'>
@@ -74,24 +89,18 @@ function MessageArea() {
    
         <div className='relative h-[15%] w-full rounded-[15px]'>
           {/* Typing area */}
-          <div className='relative h-[70%] w-full'>
+          <form onSubmit={handleSubmit} className='relative h-[70%] w-full'>
             <div className='absolute h-full w-[85%] drop-shadow-[0_10px_60px_rgba(235,245,243,1)]'>
               <input value={userQuestion} onChange={ (e) => { setUserQuestion(e.target.value)}} type="text" class="bg-white border-[2px] focus:outline-steel_teal text-[10pt] font-poppins rounded-lg inline-block h-full w-full p-2.5"/>
             </div>
 
             <div className='absolute right-0 h-full w-[15%] flex items-center justify-center'>
-              <div className='h-full aspect-square scale-[85%] rounded-full rotate-90 bg-steel_teal drop-shadow-[0_10px_60px_rgba(235,245,243,1)] hover:cursor-pointer'
-                onClick={
-                  () => {
-                    handleSubmit();
-                }
-              }
-              >
+              <button type='submit' className='h-full aspect-square scale-[85%] rounded-full rotate-90 bg-steel_teal drop-shadow-[0_10px_60px_rgba(235,245,243,1)] hover:cursor-pointer'>
                 <PaperAirplaneIcon className='scale-[45%]' style={{color: '#ffffff'}}>
                 </PaperAirplaneIcon>
-              </div>
+              </button>
             </div>
-          </div>
+          </form>
         </div>
       </div>
     </div>
@@ -99,12 +108,3 @@ function MessageArea() {
 }
 
 export default MessageArea
-
-// export async function getStaticProps() {
-//   const interchanges = await fetchQuery('interchanges')
-//   return {
-//     props: {
-//       interchanges
-//     }
-//   }
-// }

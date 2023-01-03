@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 function MessageHeader() {
-    const [avatar, setAvatar] = useState("https://i.ibb.co/xsggp32/ezgif-com-gif-maker.png");
+    const [avatar, setAvatar] = useState("https://i.ibb.co/9gSb2Gh/ezgif-com-gif-maker.png");
     const [name, setName] = useState("Foxy");
 
     return (

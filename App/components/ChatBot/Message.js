@@ -2,6 +2,8 @@ import React from 'react';
 import MessageHeader from './MessageHeader';
 // Chatbot helper functions
 import { createMarkup } from '../../utils/helper';
+import ReactMarkdown from 'react-markdown';
+import rehypeRaw from 'rehype-raw';
 
 function countWords(str) {
   if (str != null) {
@@ -25,11 +27,11 @@ function Message(props) {
         {
           countWords(messageContent) > 1 ?
           <div className='w-auto max-w-[80%] mt-[2%] p-[15px] inline-block align-top text-black font-poppins text-[10pt] break-words ... rounded-[10px] bg-grey_message'>
-            <span dangerouslySetInnerHTML={createMarkup(messageContent)} />
+            <ReactMarkdown children={messageContent} rehypePlugins={[rehypeRaw]} />
           </div>
           :
           <div className='w-auto max-w-[80%] mt-[2%] p-[15px] inline-block align-top text-black font-poppins text-[10pt] break-all ... rounded-[10px] bg-grey_message'>
-            <span dangerouslySetInnerHTML={createMarkup(messageContent)} />
+            <ReactMarkdown children={messageContent} rehypePlugins={[rehypeRaw]} />
           </div>
         }
         </div>

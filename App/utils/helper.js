@@ -12,7 +12,7 @@ export const tranformInterchanges = (interchanges, initial = false) => {
  Tell me what you would like to know: <br/> <br/> `: ''
   
   interchanges?.data.map((e, i) => {
-      initialText += `${(i+1)}. ${e.attributes.question} <br /> <br />`
+      initialText += `<b>${(i+1)}</b>. ${e.attributes.question} <br /> <br />`
   })
   return initialText
 }
