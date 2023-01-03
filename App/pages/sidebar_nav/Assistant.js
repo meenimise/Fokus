@@ -17,7 +17,7 @@ function Settings() {
     return (
       <Sidebar>
         <div className="flex h-full flex-col justify-center items-center">
-          <div className='h-[95%] w-[95%] flex justify-center items-center bg-white rounded-[15px] drop-shadow-[0_10px_60px_rgba(235,245,243,1)]'>
+          <div className='h-[93%] w-[90%] flex justify-center items-center bg-white rounded-[15px] drop-shadow-[0_10px_60px_rgba(235,245,243,1)]'>
             <div className='fixed h-[95%] w-full flex justify-center items-center'>
               <MessageArea></MessageArea>
             </div>

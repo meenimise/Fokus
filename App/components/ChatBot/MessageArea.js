@@ -52,24 +52,10 @@ function MessageArea() {
     getBotAnswer(interchanges, setInterchange,  uQ, newInterchange, setAllow);
   }
 
-  // Press Enter to submit
-  // useEffect(() => {
-  //   const keyDownHandler = event => {
-  //     if (event.key === 'Enter') {
-  //       event.preventDefault();
-  //       handleSubmit();
-  //     }
-  //   };
-  //   document.addEventListener('keydown', keyDownHandler);
-  //   return () => {
-  //     document.removeEventListener('keydown', keyDownHandler);
-  //   };
-  // }, []);
-
   return (
     <div className='relative h-[95%] w-[93%]'>
       <div className='h-full w-full'>
-        <div className='relative h-[80%] w-full overflow-y-auto rounded-[15px] scroll-smooth'>
+        <div className='relative h-[80%] w-full overflow-y-auto rounded-[15px] scroll-smooth scrollbar-thin scrollbar-thumb-grey scrollbar-track-grey_message scrollbar-thumb-rounded-full scrollbar-track-rounded-full'>
           {
             interchange?.map(item => {
               return (
