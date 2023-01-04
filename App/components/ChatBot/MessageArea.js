@@ -10,8 +10,9 @@ import { theme } from '../../tailwind.config';
 import {tranformInterchanges, showBotTyping, getBotAnswer, fetchQuery, scrollDown } from '../../utils/helper';
 import useSWR from 'swr'
 
-function MessageArea() {
-  const [interchanges, setInterchanges] = useState();
+function MessageArea(props) {
+  const interchanges = props.interchanges;
+  // const [interchanges, setInterchanges] = useState();
   const [userQuestion, setUserQuestion] = useState("");
   const [allow, setAllow] = useState(false);
   const [interchange, setInterchange] = useState([]);
@@ -23,17 +24,15 @@ function MessageArea() {
   //   })();
   // }, []);
 
-  const baseUrl = process.env.NEXT_PUBLIC_CHATBOT_BASE_URL;
+  // const baseUrl = process.env.NEXT_PUBLIC_CHATBOT_BASE_URL;
 
-  const fetcher = (url) => fetch(url).then((res) => res.json());
+  // const fetcher = (url) => fetch(url).then((res) => res.json());
 
-  const { data } = useSWR(baseUrl + "/interchanges", fetcher);
+  // const { data } = useSWR(baseUrl + "/interchanges", fetcher);
 
-  useEffect(() => {
-    setInterchanges(data);
-  }, [data]);
-
-  console.log(interchanges);
+  // useEffect(() => {
+  //   setInterchanges(data);
+  // }, [data]);
 
   const botIsTyping = async () => {
     await showBotTyping(setInterchange, [], setAllow);
@@ -49,7 +48,7 @@ function MessageArea() {
       );
    }, [interchanges])
 
-   useEffect(() => {
+  useEffect(() => {
     scrollDown();
  }, [interchange]);
 
