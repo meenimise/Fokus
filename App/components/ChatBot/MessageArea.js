@@ -33,6 +33,8 @@ function MessageArea() {
     setInterchanges(data);
   }, [data]);
 
+  console.log(interchanges);
+
   const botIsTyping = async () => {
     await showBotTyping(setInterchange, [], setAllow);
   }
