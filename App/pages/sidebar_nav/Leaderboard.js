@@ -70,7 +70,7 @@ function Leaderboard() {
     return (
       <Sidebar>
         <div className="relative pt-[30px] flex h-full w-full justify-center">
-          <div className='relative w-[90%] h-[95%] grid grid-cols-1 gap-y-[10px]'>
+          <div className='relative w-[90%] h-[95%] grid grid-cols-1 gap-y-[10px] overflow-auto scroll-smooth scrollbar-thin scrollbar-thumb-grey scrollbar-track-grey_message scrollbar-thumb-rounded-full scrollbar-track-rounded-full'>
             <RankItem
               leaderboardList={leaderboardList}
               >
