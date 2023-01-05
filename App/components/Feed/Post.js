@@ -72,7 +72,7 @@ function Post({ id, userId, caption, timestamp, img, commentClickState, getThisP
                 <div className='h-full w-full'>
                     <div className='w-full h-[48px] columns-2'>
                         <div className='relative h-full w-full flex items-center justify-center'>
-                            <div class="w-[32px] h-[32px] mr-[5%]">
+                            <div class="w-[32px] h-[32px] mr-[5%] flex items-center">
                                 <img src={avatar} class="rounded-full" />
                             </div>
                     
@@ -148,11 +148,11 @@ function Post({ id, userId, caption, timestamp, img, commentClickState, getThisP
                         <div className='h-full w-full'>
                             <div className='w-full h-[48px] columns-2'>
                                 <div className='relative h-full w-full flex items-center justify-center'>
-                                    <div class="w-[32px] h-[32px] mr-[5%]">
+                                    <div class="w-[32px] h-[32px] mr-[5%] flex items-center">
                                         <img src={avatar} class="rounded-full" />
                                     </div>
                             
-                                    <div className='w-full inline truncate ... text-black font-poppins text-[10pt] font-medium select-none'>
+                                    <div className='w-full flex items-center truncate ... text-black font-poppins text-[10pt] font-medium select-none'>
                                         {removeVI(name, { ignoreCase: false, replaceSpecialCharacters: false })}
                                     </div>
                                 </div>

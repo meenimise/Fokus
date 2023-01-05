@@ -89,6 +89,26 @@ async function controlCreateSession(sessionName, sessionPrivacy, userJoinedId) {
 function Home() {
     const { data: session, status } = useSession();
 
+    const [welcomeText, setWelcomeText] = useState("");
+
+    useEffect(() => {
+        // Check current time
+        var data = [
+            [0, 4, "Good night 🌙, "], 
+            [5, 11, "Good morning ☀️, "],
+            [12, 17, "Good afternoon 🌤️, "],
+            [18, 24, "Good night 🌙, "]
+        ],
+        
+        hr = new Date().getHours();
+
+        for(var i = 0; i < data.length; i++){
+            if(hr >= data[i][0] && hr <= data[i][1]){
+                setWelcomeText(data[i][2]);
+            }
+        }
+    }, [])
+
     const router = useRouter();
     function controlNavigateSession() {
         router.push("/sessions/" + sessionId);   
@@ -158,7 +178,7 @@ function Home() {
     if (status === "authenticated") {
         return(
             <Sidebar>
-                <Header headerText={'Welcome back, ' + removeVI(session?.user.name, { ignoreCase: false, replaceSpecialCharacters: false }) + '! 👋'}>
+                <Header headerText={welcomeText + removeVI(session?.user.name, { ignoreCase: false, replaceSpecialCharacters: false }) + '! 👋'}>
                 </Header>
 
                 <div className='relative mt-[30px] mx-auto w-[90%] h-[410px]'>
