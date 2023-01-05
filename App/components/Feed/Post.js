@@ -71,7 +71,7 @@ function Post({ id, userId, caption, timestamp, img, commentClickState, getThisP
             <div className='w-[95%] h-[240px]'>
                 <div className='h-full w-full'>
                     <div className='w-full h-[48px] columns-2'>
-                        <div className='relative h-full w-full flex items-center justify-center'>
+                        <div className='relative h-full w-full flex items-center pl-4'>
                             <div class="w-[32px] h-[32px] mr-[5%] flex items-center">
                                 <img src={avatar} class="rounded-full" />
                             </div>
@@ -81,7 +81,7 @@ function Post({ id, userId, caption, timestamp, img, commentClickState, getThisP
                             </div>
                         </div>
 
-                        <div className='relative h-full w-full text-grey font-poppins text-[9pt] font-normal select-none flex items-center justify-center'>
+                        <div className='relative h-full w-full text-grey font-poppins text-[9pt] font-normal select-none flex items-center flex-row-reverse pr-4'>
                             <Moment fromNow>{timestamp?.toDate()}</Moment>
                         </div>
 
@@ -92,7 +92,7 @@ function Post({ id, userId, caption, timestamp, img, commentClickState, getThisP
                     </div>
 
                     <div className='w-full h-[48px] columns-2'>
-                        <div className='relative h-full w-full text-steel_teal font-poppins text-[9pt] font-normal select-none flex items-center justify-center'>
+                        <div className='relative h-full w-full text-steel_teal font-poppins text-[9pt] font-normal select-none flex items-center p-4'>
                             <p>
                                 {upvotes.length < 2 ? upvotes.length + " upvote" : upvotes.length + " upvotes"}
 
@@ -105,7 +105,7 @@ function Post({ id, userId, caption, timestamp, img, commentClickState, getThisP
 
                         </div>
 
-                        <div className='relative h-full w-full columns-2'>
+                        <div className='relative h-full w-full columns-2 pr-4'>
                             {
                                 hasUpvoted == true ?
                                 <div className='h-full w-full flex items-center justify-center bg-steel_teal hover:bg-morning_blue hover:cursor-pointer text-white font-poppins text-[9pt] font-medium select-none rounded-[15px]'
@@ -147,7 +147,7 @@ function Post({ id, userId, caption, timestamp, img, commentClickState, getThisP
     
                         <div className='h-full w-full'>
                             <div className='w-full h-[48px] columns-2'>
-                                <div className='relative h-full w-full flex items-center justify-center'>
+                                <div className='relative h-full w-full flex items-center pl-4'>
                                     <div class="w-[32px] h-[32px] mr-[5%] flex items-center">
                                         <img src={avatar} class="rounded-full" />
                                     </div>
@@ -157,7 +157,7 @@ function Post({ id, userId, caption, timestamp, img, commentClickState, getThisP
                                     </div>
                                 </div>
         
-                                <div className='relative h-full w-full text-grey font-poppins text-[9pt] font-normal select-none flex items-center justify-center'>
+                                <div className='relative h-full w-full text-grey font-poppins text-[9pt] font-normal select-none flex items-center flex-row-reverse pr-4'>
                                     <Moment fromNow>{timestamp?.toDate()}</Moment>
                             </div>
     
@@ -168,7 +168,7 @@ function Post({ id, userId, caption, timestamp, img, commentClickState, getThisP
                         </div>
     
                         <div className='w-full h-[48px] columns-2'>
-                            <div className='relative h-full w-full text-steel_teal font-poppins text-[9pt] font-normal select-none flex items-center justify-center'>
+                            <div className='relative h-full w-full text-steel_teal font-poppins text-[9pt] font-normal select-none flex items-center p-4'>
                                 <p>
                                     {upvotes.length < 2 ? upvotes.length + " upvote" : upvotes.length + " upvotes"}
     
@@ -181,7 +181,7 @@ function Post({ id, userId, caption, timestamp, img, commentClickState, getThisP
     
                             </div>
     
-                            <div className='relative h-full w-full columns-2'>
+                            <div className='relative h-full w-full columns-2 pr-4'>
                             {
                                 hasUpvoted == true ?
                                 <div className='h-full w-full flex items-center justify-center bg-steel_teal hover:bg-morning_blue hover:cursor-pointer text-white font-poppins text-[9pt] font-medium select-none rounded-[15px]'

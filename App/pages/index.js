@@ -113,15 +113,26 @@ function Home() {
     function controlNavigateSession() {
         router.push("/sessions/" + sessionId);   
     }
+    function controlJoinSession(id) {
+        router.push("/sessions/" + id);
+    }
     function controlNavigateInNavBar(where) {
         router.push("/" + where);   
     }
     var rank = "1";
     const [showPopUpCreateSession, setShowPopUpCreateSession] = useState(false);
     const [showCircularButtonSession, setShowCircularButtonSession] = useState(false);
+
+    const [showPopUpJoinSession, setShowPopUpJoinSession] = useState(false);
+    const [showCircularButtonSession2, setShowCircularButtonSession2] = useState(false);
+
     const [privacyValue, privacyInputProps] = useRadioButtons("");
     const [sessionNameValue, sessionInputProps] = useTextForm("");
+
+    const [sessionIdValue, sessionLinkInputProps] = useTextForm("");
+
     const [isBeingProcessed, setIsBeingProcessed] = useState(false);
+    const [isBeingProcessed2, setIsBeingProcessed2] = useState(false);
 
     const [todayTime, setTodayTime] = useState(0);
     const [totalTime, setTotalTime] = useState(0);
@@ -236,7 +247,11 @@ function Home() {
 
                     <div className='absolute mt-[111px] w-full h-[142px]'>
                         <div className='absolute w-[49%] h-full grid items-center justify-center drop-shadow-[0_10px_60px_rgba(235,245,243,1)] bg-white rounded-[15px] hover:cursor-pointer hover:bg-light_morning_blue'
-                        onClick={() => setShowPopUpCreateSession(true)}
+                        onClick={() => { 
+                            if (showPopUpJoinSession == false) {
+                                setShowPopUpCreateSession(true);
+                            }
+                        }}
                         >
                             <div className='relative w-[300px] h-[120px]'>
                                 <div className='absolute container grid place-items-center font-poppins font-semibold text-black text-[12pt] whitespace-nowrap truncate select-none ...'>
@@ -253,7 +268,13 @@ function Home() {
                             </div>
                         </div>
 
-                        <div className='absolute right-0 w-[49%] h-full grid items-center justify-center drop-shadow-[0_10px_60px_rgba(235,245,243,1)] bg-white rounded-[15px] hover:cursor-pointer hover:bg-light_morning_blue'>
+                        <div className='absolute right-0 w-[49%] h-full grid items-center justify-center drop-shadow-[0_10px_60px_rgba(235,245,243,1)] bg-white rounded-[15px] hover:cursor-pointer hover:bg-light_morning_blue'
+                            onClick={() => { 
+                                if (showPopUpCreateSession == false) {
+                                    setShowPopUpJoinSession(true);
+                                }
+                            }}
+                        >
                             <div className='relative w-[300px] h-[120px]'>
                                 <div className='absolute container grid place-items-center font-poppins font-semibold text-black text-[12pt] whitespace-nowrap truncate select-none ...'>
                                     {"Join an existing Session"}
@@ -283,7 +304,7 @@ function Home() {
                     </div>
                      
                     {
-                    showPopUpCreateSession ==  true ?
+                    (showPopUpJoinSession == false && showPopUpCreateSession ==  true) ?
                     <div className='flex items-center justify-center h-full w-full'>
                         <div className='w-[60%] h-[90%] drop-shadow-[0_10px_60px_rgba(235,245,243,1)] bg-white rounded-[15px]'>
                             <div className='h-[15%] w-full flex items-center justify-center font-poppins text-xm font-medium select-none'>
@@ -353,7 +374,6 @@ function Home() {
                                             setShowCircularButtonSession(true); 
                                             setIsBeingProcessed(true); 
                                             controlCreateSession(sessionNameValue, privacyValue, session?.user.id);
-                                            console.log(sessionId);
                                             setTimeout(controlNavigateSession, 5000);
                                         }
                                     }>
@@ -374,7 +394,72 @@ function Home() {
                         </div>
                     </div>
                     : null
-                    }  
+                    }
+
+                    {
+                    (showPopUpCreateSession == false && showPopUpJoinSession ==  true) ?
+                    <div className='flex items-center justify-center h-full w-full'>
+                        <div className='w-[60%] h-[90%] drop-shadow-[0_10px_60px_rgba(235,245,243,1)] bg-white rounded-[15px]'>
+                            <div className='h-[15%] w-full flex items-center justify-center font-poppins text-xm font-medium select-none'>
+                                {"Join Session"}
+
+                                <div className='absolute right-[15px] h-[40px] w-[40px] hover:cursor-pointer' style={{color: theme.extend.colors.steel_teal}} onMouseOver={({target})=>target.style.color=theme.extend.colors.morning_blue} onMouseOut={({target})=>target.style.color=theme.extend.colors.steel_teal}
+                                onClick={() => setShowPopUpJoinSession(false)}
+                                >
+                                    <XCircleIcon></XCircleIcon>
+                                </div>                                  
+                            </div>
+
+                            <div className='relative h-[70%] w-[90%] mx-auto flex items-center justify-center'>
+                                <div className='h-[70%] w-[90%]'>
+                                    <div className='h-full w-full flex items-center justify-center'>
+                                        <form className='w-full h-full'>
+                                            <label for="session_link" class="block mb-2 text-sm font-poppins font-medium select-none">{"Session ID"}</label>
+                                            {
+                                                isBeingProcessed2 == false ?
+                                                <input type="text" name="session" id="session_name" class="bg-white border-[2px] focus:outline-steel_teal text-sm font-poppins rounded-lg block w-full p-2.5" value={sessionIdValue} {...sessionLinkInputProps}/>
+                                                :
+                                                <input type="text" name="session" id="session_name" class="bg-slate-100 border-[2px] text-sm text-grey font-poppins rounded-lg block w-full p-2.5" value={sessionIdValue} disabled/>
+                                            }
+                                        </form>                                        
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className='relative h-[15%] w-[90%] mx-auto flex items-center justify-center'>
+                            {
+                                (sessionIdValue === "") ?
+                                <button type="button" class="absolute flex items-center justify-center right-0 w-[25%] h-[60%] bg-grey opacity-30 rounded-[15px] font-poppins text-sm text-white font-medium select-none" disabled>
+                                    {"Join"}
+                                </button>
+                                :
+                                (
+                                    showCircularButtonSession2 == false ?
+                                    <button type="button" class="absolute flex items-center justify-center right-0 w-[25%] h-[60%] bg-steel_teal rounded-[15px] font-poppins text-sm text-white font-medium hover:bg-morning_blue hover:cursor-pointer select-none"
+                                    onClick={() => {
+                                            setShowCircularButtonSession2(true); 
+                                            setIsBeingProcessed2(true); 
+                                            setTimeout(controlJoinSession(sessionIdValue), 5000);
+                                        }
+                                    }>
+                                        {"Join"}
+                                    </button>
+                                    :
+                                    <button type="button" class="absolute flex items-center justify-center right-0 w-[30%] h-[60%] bg-grey rounded-[15px] font-poppins text-sm text-white font-medium select-none" disabled>
+                                        <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                        </svg>
+    
+                                        {"Joining..."}
+                                    </button>                                    
+                                )
+                            }
+                            </div>                            
+                        </div>
+                    </div>
+                    : null
+                    }                        
                 </div>    
             </Sidebar>                 
         )

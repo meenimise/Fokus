@@ -19,7 +19,7 @@ function StoreItem({ id, name, avatar, caption, timestamp, img, points, itemsLef
             <div className='w-[95%] h-[240px]'>
                 <div className='h-full w-full'>
                     <div className='w-full h-[48px] columns-2'>
-                        <div className='relative h-full w-full flex items-center justify-center'>
+                        <div className='relative h-full w-full flex items-center pl-4'>
                             <div class="w-[32px] h-[32px] mr-[5%] flex items-center">
                                 <img src={avatar} class="rounded-full" />
                             </div>
@@ -34,7 +34,7 @@ function StoreItem({ id, name, avatar, caption, timestamp, img, points, itemsLef
                             </div>
                         </div>
 
-                        <div className='relative h-full w-full text-grey font-poppins text-[9pt] font-normal select-none flex items-center justify-center'>
+                        <div className='relative h-full w-full text-grey font-poppins text-[9pt] font-normal select-none flex items-center flex-row-reverse pr-4'>
                             <Moment fromNow>{new Date(timestamp.seconds*1000)}</Moment>
                         </div>
 
@@ -45,20 +45,18 @@ function StoreItem({ id, name, avatar, caption, timestamp, img, points, itemsLef
                     </div>
 
                     <div className='w-full h-[48px] columns-2'>
-                        <div className='relative h-full w-full text-steel_teal font-poppins text-[9pt] font-normal select-none flex items-center justify-center'>
+                        <div className='relative h-full w-full text-steel_teal font-poppins text-[9pt] font-normal select-none flex items-center p-4'>
                             <p>
-                                {upvotes.length < 2 ? upvotes.length + " upvote" : upvotes.length + " upvotes"}
+                                {points + " Fokus Points"}
 
                                 <br>
                                 </br>
                                 
-                                {comments.length < 2 ? comments.length + " comment" : comments.length + " comments"}
+                                {itemsLeft + " left"}
                             </p>
-
-
                         </div>
 
-                        <div className='relative h-full w-full columns-2'>
+                        <div className='relative h-full w-full columns-2 pr-4'>
                             <div className='h-full w-full flex items-center justify-center bg-white border-2 border-steel_teal hover:bg-morning_blue hover:cursor-pointer text-steel_teal hover:text-white font-poppins text-[9pt] font-medium select-none rounded-[15px]'>
                                 Save 🛒
                             </div>                             
@@ -81,7 +79,7 @@ function StoreItem({ id, name, avatar, caption, timestamp, img, points, itemsLef
     
                         <div className='h-full w-full'>
                             <div className='w-full h-[48px] columns-2'>
-                                <div className='relative h-full w-full flex items-center justify-center'>
+                                <div className='relative h-full w-full flex items-center pl-4'>
                                     <div class="w-[32px] h-[32px] mr-[5%] flex items-center">
                                         <img src={avatar} class="rounded-full" />
                                     </div>
@@ -96,7 +94,7 @@ function StoreItem({ id, name, avatar, caption, timestamp, img, points, itemsLef
                                     </div>
                                 </div>
         
-                                <div className='relative h-full w-full text-grey font-poppins text-[9pt] font-normal select-none flex items-center justify-center'>
+                                <div className='relative h-full w-full text-grey font-poppins text-[9pt] font-normal select-none flex items-center flex-row-reverse pr-4'>
                                     <Moment fromNow>{new Date(timestamp.seconds*1000)}</Moment>
                             </div>
     
@@ -107,7 +105,7 @@ function StoreItem({ id, name, avatar, caption, timestamp, img, points, itemsLef
                         </div>
     
                         <div className='w-full h-[48px] columns-2'>
-                            <div className='relative h-full w-full text-steel_teal font-poppins text-[9pt] font-normal select-none flex items-center justify-center'>
+                            <div className='relative h-full w-full text-steel_teal font-poppins text-[9pt] font-normal select-none flex items-center p-4'>
                                 <p>
                                     {points + " Fokus Points"}
     
@@ -120,7 +118,7 @@ function StoreItem({ id, name, avatar, caption, timestamp, img, points, itemsLef
     
                             </div>
     
-                            <div className='relative h-full w-full columns-2'>
+                            <div className='relative h-full w-full columns-2 pr-4'>
                                 <div className='h-full w-full flex items-center justify-center bg-white border-2 border-steel_teal hover:bg-morning_blue hover:cursor-pointer text-steel_teal hover:text-white font-poppins text-[9pt] font-medium select-none rounded-[15px]'>
                                     Save 🛒
                                 </div>                             
