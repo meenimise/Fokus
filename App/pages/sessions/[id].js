@@ -373,7 +373,9 @@ function Session() {
                     </ShareIcon>
                   </div>
 
-                  <div className='absolute right-0 h-full w-[80%] flex items-center justify-center'>
+                  <div className='absolute right-0 h-full w-[80%] flex items-center justify-center'
+                    onClick={() => setInviteFriendsClicked(true)}
+                  >
                     <h1 className='font-poppins font-medium text-[10.5pt] text-steel_teal truncate ... select-none'>
                       {"Invite Your Friends To Join"}
                     </h1>
@@ -396,7 +398,9 @@ function Session() {
                 </div>
               </div>
 
-              <div className='absolute right-0 h-full w-[30%] flex items-center justify-center bg-white rounded-[15px] drop-shadow-[0_10px_60px_rgba(235,245,243,1)] hover:cursor-pointer hover:bg-steel_teal_light'>
+              <div className='absolute right-0 h-full w-[30%] flex items-center justify-center bg-white rounded-[15px] drop-shadow-[0_10px_60px_rgba(235,245,243,1)] hover:cursor-pointer hover:bg-steel_teal_light'
+                onClick={() => setExitClicked(true)}
+              >
                 <div className='absolute h-[40px] w-[90%]'>
                   <div className='absolute h-full w-[40px]'>
                     <LogoutIcon className='absolute w-full h-full scale-[60%] overflow-auto' style={{color: '#FA3E3E'}}>
@@ -549,10 +553,60 @@ function Session() {
                 notiInfo="Please make sure all other members have pressed the I UNDERSTAND button
                 to be ready. Then you just need to press the button below to start this session."
                 extraFunction={startSession}
+                extraFunctionOnClosed={setStartSessionClicked}
               >
               </NotiPopup> 
               : null 
-            }            
+            }
+
+            {/* Share session popup */}
+            {
+              isInviteFriendsClicked === true ?
+              <NotiPopup 
+                hasExitButton={true}
+                notiTitle="Share Session"
+                hasButton={true}
+                buttonTitle="Okay"
+                notiInfo={
+                  <p>
+                    <span className='h-[50%] w-full'>
+                      Please copy the session ID below and send it to your friends. They can join this session by using the Join Existing Session feature in the home page. Make sure that this session is public because if it is private to you, your friends cannot join.
+                    </span>
+
+                    <br></br>
+                    <br></br>
+                    <br></br>
+                    <br></br>
+
+                    <span className='w-full h-auto flex items-center justify-center font-bold text-[15pt] text-steel_teal select-all'>
+                      {sessionId}
+                    </span>
+                  </p>
+                }
+                extraFunction={setInviteFriendsClicked}
+                extraFunctionOnClosed={setInviteFriendsClicked}
+              >
+              </NotiPopup> 
+              : null 
+            }
+
+            {/* Give up session popup */}
+            {
+              isExitClicked === true ?
+              <NotiPopup 
+                hasExitButton={true}
+                notiTitle="Give Up Session"
+                hasButton={true}
+                buttonTitle="Give Up"
+                notiInfo={
+                  "Do you want to give up this session and return to the main page? If this session has been started, you cannot join again after leaving. So please consider it."
+                }
+                extraFunction={navigateToHome}
+                extraFunctionOnClosed={setExitClicked}
+              >
+              </NotiPopup> 
+              : null 
+            }                                          
         </div>   
       </>      
     );

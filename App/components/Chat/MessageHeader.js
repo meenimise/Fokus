@@ -32,7 +32,7 @@ function MessageHeader(props) {
                 </div>
         
                 <div className='w-[30%] inline truncate ... text-black font-poppins text-[10pt] font-medium select-none'>
-                    {removeVI(name, { ignoreCase: false, replaceSpecialCharacters: false })}
+                    {name}
                 </div>
             </div>
         )

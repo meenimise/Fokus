@@ -26,7 +26,7 @@ function StoreItem({ id, name, avatar, caption, timestamp, img, points, itemsLef
                     
                             <div className='w-full h-full flex items-center'>
                                 <div className='truncate ... text-black font-poppins text-[10pt] font-medium select-none w-auto h-[50%] left-0 flex items-center'>
-                                    {removeVI(name, { ignoreCase: false, replaceSpecialCharacters: false })}
+                                    {name}
                                 </div>
                                 <div class="w-[24px] h-[24px] ml-[1%]">
                                     <img src={Verified.src} className="w-full h-full scale-[60%]" />
@@ -86,7 +86,7 @@ function StoreItem({ id, name, avatar, caption, timestamp, img, points, itemsLef
                             
                                     <div className='w-full h-full flex items-center'>
                                         <div className='truncate ... text-black font-poppins text-[10pt] font-medium select-none w-auto h-[50%] left-0 flex items-center'>
-                                            {removeVI(name, { ignoreCase: false, replaceSpecialCharacters: false })}
+                                            {name}
                                         </div>
                                         <div class="w-[24px] h-[24px] ml-[1%]">
                                             <img src={Verified.src} className="w-full h-full scale-[60%]" />

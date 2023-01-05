@@ -119,7 +119,7 @@ function Home() {
     function controlNavigateInNavBar(where) {
         router.push("/" + where);   
     }
-    var rank = "1";
+
     const [showPopUpCreateSession, setShowPopUpCreateSession] = useState(false);
     const [showCircularButtonSession, setShowCircularButtonSession] = useState(false);
 
@@ -182,6 +182,60 @@ function Home() {
         }
     });
 
+    // Functions to get user rank in leader board
+    const [leaderboardList, setLeaderboardList] = useState([]);
+    const [amountofUsers, setAmountOfUsers] = useState(1);
+  
+    useEffect(() => {
+      if (leaderboardList.length <= amountofUsers) { 
+        updateLeaderboard();
+      }
+    }, [amountofUsers]);
+  
+    function updateLeaderboard() {
+      const usersColRef = fs.collection(db, "fkUsers");
+      const systemUsersColRef = fs.collection(db, "users");
+      const q1 = fs.query(usersColRef);
+      const querySnapshot1 = fs.getDocs(q1);
+    
+      const q2 = fs.query(systemUsersColRef);
+      const querySnapshot2 = fs.getDocs(q2);
+      querySnapshot1.then((query1) => {
+        if (leaderboardList.length >= 1) {
+          setAmountOfUsers(query1.size);
+        }
+        query1.forEach((doc1) => {
+            querySnapshot2.then((query2) => {
+              query2.forEach((doc2) => {
+                if (doc1.id === doc2.id) {
+                  const achievementsColRef = fs.collection(fs.doc(usersColRef, doc1.id), "achievements");
+                  const q3 = fs.query(achievementsColRef);
+                  const querySnapshot3 = fs.getDocs(q3);
+                  const sessionsDataList = [];
+                  querySnapshot3.then((query3) => {
+                    query3.forEach((doc3) => {
+                      sessionsDataList.push(doc3.data());
+                    });
+                  }).then(() => {
+                    setLeaderboardList(leaderboardList => leaderboardList.concat(
+                      {
+                        id: doc2.id, 
+                        name: doc2.get("name"),
+                        image: doc2.get("image"),
+                        totalTime: sessionsDataList.map(i => i.time).reduce((a, b)=> a + b),
+                        totalSessions: sessionsDataList.length
+                      }
+                    ));
+                  });
+                }
+              });
+          });
+        });
+      });
+    }
+    leaderboardList.sort((a, b) => b.totalTime - a.totalTime);
+    const rank = leaderboardList.findIndex(item => item.id == session?.user.id);    
+
     if (status === "loading") {
         return(null)
     }
@@ -189,7 +243,7 @@ function Home() {
     if (status === "authenticated") {
         return(
             <Sidebar>
-                <Header headerText={welcomeText + removeVI(session?.user.name, { ignoreCase: false, replaceSpecialCharacters: false }) + '! 👋'}>
+                <Header headerText={welcomeText + session?.user.name + '! 👋'}>
                 </Header>
 
                 <div className='relative mt-[30px] mx-auto w-[90%] h-[410px]'>
@@ -211,7 +265,7 @@ function Home() {
                                 </div>  
                             </div>
 
-                            <div className='absolute ml-[35%] w-[30%] h-full hover:cursor-pointer'>
+                            <div className='absolute ml-[35%] w-[30%] h-full hover:cursor-pointer' onClick={() => controlNavigateInNavBar("timemanagement")}>
                                 <div className='absolute w-[56px] h-full rounded-full bg-[#CAF1FF]'>
                                     <div className='absolute scale-[60%] container my-[0px] mx-auto' style={{color: '#0F5FC2'}}>
                                         <CheckCircleIcon></CheckCircleIcon>
@@ -238,7 +292,27 @@ function Home() {
                                     </div>
 
                                     <div className='absolute left-[71px] bottom-0 font-poppins text-xl text-black font-semibold whitespace-nowrap truncate select-none ...'>
-                                        {rank + "st in 36"}
+                                    {
+                                        rank === 0 ?
+                                        (
+                                            (rank + 1) + "st among " + leaderboardList.length 
+                                        ) :
+                                        (
+                                            rank === 1 ?
+                                            (
+                                                (rank + 1) + "nd among " + leaderboardList.length
+                                            )
+                                            :
+                                            (
+                                                rank === 2 ?
+                                                (
+                                                    (rank + 1) + "rd among " + leaderboardList.length
+                                                )
+                                                : (rank + 1) + "th among " + leaderboardList.length
+                                            )
+
+                                        )
+                                    }
                                     </div>                                  
                                 </div>  
                             </div>                                  
@@ -333,7 +407,7 @@ function Home() {
 
                                     <div className='h-[50%] w-full'>
                                         <form className='w-full h-full'>
-                                            <label for="privacy" class="block mb-2 text-sm font-poppins font-medium select-none">{"Privacy (required)"}</label>
+                                            <label for="privacy" class="block mb-2 text-sm font-poppins font-medium select-none">{"Privacy (public is default)"}</label>
 
                                             <div class="flex items-center justify-center">
                                                 <div class="form-check form-check-inline">

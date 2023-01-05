@@ -77,7 +77,7 @@ function Post({ id, userId, caption, timestamp, img, commentClickState, getThisP
                             </div>
                     
                             <div className='w-full inline truncate ... text-black font-poppins text-[10pt] font-medium select-none'>
-                                {removeVI(name, { ignoreCase: false, replaceSpecialCharacters: false })}
+                                {name}
                             </div>
                         </div>
 
@@ -153,7 +153,7 @@ function Post({ id, userId, caption, timestamp, img, commentClickState, getThisP
                                     </div>
                             
                                     <div className='w-full flex items-center truncate ... text-black font-poppins text-[10pt] font-medium select-none'>
-                                        {removeVI(name, { ignoreCase: false, replaceSpecialCharacters: false })}
+                                        {name}
                                     </div>
                                 </div>
         

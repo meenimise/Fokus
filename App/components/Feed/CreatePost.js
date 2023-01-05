@@ -92,7 +92,7 @@ function CreatePost() {
                         { 
                         isBeingProcessed == false ?
                         <div className='relative flex w-full h-full'>
-                            <input placeholder={"What's on your mind " + removeVI(session?.user.name, { ignoreCase: false, replaceSpecialCharacters: false }) + "?"} 
+                            <input placeholder={"What's on your mind " + session?.user.name + "?"} 
                             type="text" 
                             name="caption" 
                             id="caption" 

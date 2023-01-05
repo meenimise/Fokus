@@ -14,10 +14,10 @@ function PieChart(props) {
     datasets: [{
       data: [totalTimePercent, 100 - totalTimePercent],
       backgroundColor: [
-        theme.extend.colors.purple,
-        theme.extend.colors.purple_light,
+        theme.extend.colors.steel_teal,
+        theme.extend.colors.light_morning_blue,
       ],
-      borderColor: theme.extend.colors.purple
+      borderColor: theme.extend.colors.steel_teal
     }]
   };
 
@@ -31,22 +31,22 @@ function PieChart(props) {
               position: 'bottom',
               labels: {
                 font: {
-                  family: 'Poppins',
+                  family: 'SVN_Poppins',
                   size: 12,
                   weight: 'normal',
                 },
-                color: theme.extend.colors.purple
+                color: theme.extend.colors.steel_teal
               }
             },
             title: {
               display: true,
               text: 'My Fokus Chart',
               font: {
-                family: 'Poppins',
+                family: 'SVN_Poppins',
                 size: 14,
                 weight: 'bold',
               },
-              color: theme.extend.colors.purple
+              color: theme.extend.colors.steel_teal
             }
           },
           responsive: true

@@ -23,7 +23,7 @@ function Header(props) {
         </img>
 
         <div className='absolute left-[60px] w-[50%] top-[5px] text-sm font-medium font-poppins truncate select-none ...'>
-          {name.length <= 2 ? removeVI(name[0], { ignoreCase: false, replaceSpecialCharacters: false }) : removeVI(name[0] + " " + name[1], { ignoreCase: false, replaceSpecialCharacters: false })}
+          {name.length <= 2 ? name[0] : name[0] + " " + name[1]}
         </div>
 
         <div className='absolute left-[60px] top-[25px] text-[#757575] text-xs font-poppins truncate select-none ...'>
